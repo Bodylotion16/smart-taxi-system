@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Taxi | Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Smart Taxi</h1>
+        <p class="subtitle">Uw rit, onze technologie.</p>
+
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="E-mailadres" required>
+            <input type="password" id="password" placeholder="Wachtwoord" required>
+            
+            <button type="submit">Aanmelden</button>
+        </form>
+
+        <p class="footer-text">Nieuw bij ons? Registreer als:</p>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+            <a href="reg-klant.html" class="reg-link">Passagier</a>
+            <span style="color: var(--text-dim);">|</span>
+            <a href="reg-driver.html" class="reg-link">Chauffeur</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Haal de ingetypte waarden netjes op uit de velden
+            const email = document.getElementById('email').value;
+            const wachtwoord = document.getElementById('password').value;
+
+            // Schiet de data naar de login-route in server.js
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, wachtwoord })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(`Welkom terug, ${result.voornaam}!`);
+                
+                // Controleer welke rol de user heeft en stuur ze naar de juiste pagina
+                if (result.role === 'klant') {
+                    window.location.href = 'booking.html'; // Klant gaat naar de bestelpagina
+                } else if (result.role === 'taxi') {
+                    window.location.href = 'taxi.html'; // Driver gaat naar het chauffeursscherm
+                } else {
+                    alert("Systeemfout: Onbekende gebruikersrol.");
+                }
+            } else {
+                // Toon de foutmelding als het e-mailadres of wachtwoord niet klopt
+                alert("Inloggen mislukt: " + result.message);
+            }
+        });
+    </script>
+</body>
+</html>

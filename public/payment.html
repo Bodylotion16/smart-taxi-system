@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betaling Voltooien | Smart Taxi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        .payment-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .price-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            background: #f39c12;
+            color: black;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        #successMessage {
+            display: none;
+            color: #2ecc71;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body style="align-items: center; justify-content: center;">
+
+    <div class="login-container" style="max-width: 450px;">
+        <h1>Betaling</h1>
+        <p class="subtitle">Bevestig uw betaling om de rit af te sluiten.</p>
+
+        <div class="payment-box">
+            <span class="status-badge">Wachten op betaling</span>
+            <div class="price-display">SRD <span id="amountDisplay">0.00</span></div>
+            
+            <div class="detail-row">
+                <span>Rit ID (booking_id):</span>
+                <span id="bookingIdDisplay" style="color: var(--primary); font-weight: bold;">#0</span>
+            </div>
+            
+            <div class="detail-row">
+                <span>Methode (payment_method):</span>
+                <span id="methodDisplay" style="font-weight: bold; text-transform: uppercase;">CASH</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Datum:</span>
+                <span id="dateDisplay">--/--/----</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button id="payButton" onclick="verwerkBetaling()" style="background: #2ecc71;">Bevestig Betaling</button>
+            <p id="successMessage">✅ Betaling Succesvol Verwerkt!</p>
+            <p class="footer-text">Hulp nodig? Neem contact op met support.</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. Gegevens ophalen uit de URL (gestuurd door booking.html)
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('booking_id');
+        const amount = urlParams.get('amount');
+        const method = urlParams.get('method');
+
+        // 2. Velden invullen op het scherm
+        document.getElementById('amountDisplay').innerText = amount || "0.00";
+        document.getElementById('bookingIdDisplay').innerText = "#" + (bookingId || "0");
+        document.getElementById('methodDisplay').innerText = method || "onbekend";
+        document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
+
+        // 3. Functie om de betaling naar de database te sturen (PAYMENTS tabel)
+        async function verwerkBetaling() {
+            const btn = document.getElementById('payButton');
+            btn.innerText = "VERWERKEN...";
+            btn.disabled = true;
+
+            const paymentData = {
+                booking_id_FK: bookingId,
+                amount: amount,
+                payment_method: method,
+                payment_status: 'completed' // Status volgens ERD
+            };
+
+            try {
+                const response = await fetch('/api/payment-confirm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(paymentData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    btn.style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.querySelector('.status-badge').innerText = "Betaald";
+                    document.querySelector('.status-badge').style.background = "#2ecc71";
+                    
+                    setTimeout(() => {
+                        window.location.href = 'klant.html'; // Terug naar dashboard
+                    }, 2000);
+                } else {
+                    alert("Fout: " + result.message);
+                    btn.disabled = false;
+                    btn.innerText = "Bevestig Betaling";
+                }
+            } catch (err) {
+                alert("Er is een verbindingsfout opgetreden.");
+                btn.disabled = false;
+                btn.innerText = "Bevestig Betaling";
+            }
+        }
+    </script>
+</body>
+</html>
