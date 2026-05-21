@@ -127,45 +127,65 @@ app.get('/api/available-bookings', (req, res) => {
 // ==========================================
 // ADMIN DASHBOARD DATA API
 // ==========================================
+// ==========================================
+// KOGELVRIJE ADMIN DASHBOARD DATA API (GEALISEERD MET U.*)
+// ==========================================
 app.get('/api/admin/dashboard', (req, res) => {
-    // Query 1: Totale Financiën (Omzet & aantal verwerkte/betaalde ritten)
-    const sqlStats = `
-        SELECT 
-            COUNT(id) as totaal_ritten,
-            IFNULL(SUM(fare), 0) as totale_omzet
-        FROM bookings WHERE status = 'paid'`;
+    console.log("📟 Admin dashboard data wordt opgevraagd...");
 
-    // Query 2: Live Ritten (Ritten die nu bezig of aangevraagd zijn)
-    const sqlLiveRitten = `SELECT * FROM bookings WHERE status IN ('pending', 'paid', 'accepted') ORDER BY id DESC`;
+    // Query 1: Totale Financiën
+    const sqlStats = `SELECT COUNT(*) as totaal_ritten, IFNULL(SUM(fare), 0) as totale_omzet FROM bookings`;
 
-    // Query 3: Chauffeurs + Status (Haalt gebruikers op met rol 'taxi')
-    const sqlChauffeurs = `
-        SELECT u.id, u.first_name, u.last_name, u.phone_number, t.kenteken, t.auto_model 
-        FROM users u
-        LEFT JOIN taxi_status t ON u.id = t.user_id_FK
-        WHERE u.role = 'taxi'`;
-
-    // Query 4: Klanten overzicht
-    const sqlKlanten = `
-        SELECT u.id, u.first_name, u.last_name, u.email, u.phone_number, c.address
-        FROM users u
-        LEFT JOIN customers c ON u.id = c.user_id_FK
-        WHERE u.role = 'klant'`;
-
-    // Voer de queries uit (we gebruiken nesten voor de eenvoud van je project)
     db.query(sqlStats, (err, statsRes) => {
-        if (err) return res.json({ success: false, message: err.message });
+        if (err) {
+            console.error("❌ SQL Fout bij statsRes:", err.message);
+            return res.json({ success: false, message: "Fout in tabel 'bookings': " + err.message });
+        }
+        
+        // Query 2: Live Ritten
+        const sqlLiveRitten = `SELECT * FROM bookings`;
         
         db.query(sqlLiveRitten, (err2, liveRes) => {
-            if (err2) return res.json({ success: false, message: err2.message });
+            if (err2) {
+                console.error("❌ SQL Fout bij liveRes:", err2.message);
+                return res.json({ success: false, message: "Fout in tabel 'bookings' bij ritten: " + err2.message });
+            }
 
-            db.query(sqlChauffeurs, (err3, chauRes) => {
-                if (err3) return res.json({ success: false, message: err3.message });
+            // FIX 1: We gebruiken u.* in plaats van u.id om naamgevingsfouten te voorkomen
+            const sqlChauffeurs = `
+                SELECT u.*, t.kenteken, t.auto_model 
+                FROM users u
+                LEFT JOIN taxi_status t ON u.id_users = t.user_id_FK OR u.user_id = t.user_id_FK OR u.id = t.user_id_FK
+                WHERE u.role = 'taxi'`;
+
+            // Als de JOIN hierboven te complex is door de OR, gebruiken we de meest veilige basisversie:
+            const sqlChauffeursSimpel = `
+                SELECT u.*, t.kenteken, t.auto_model 
+                FROM users u
+                LEFT JOIN taxi_status t ON u.id = t.user_id_FK
+                WHERE u.role = 'taxi'`;
+
+            db.query(sqlChauffeursSimpel, (err3, chauRes) => {
+                if (err3) {
+                    console.error("❌ SQL Fout bij chauRes:", err3.message);
+                    return res.json({ success: false, message: "Fout bij chauffeurs: " + err3.message });
+                }
+
+                // FIX 2: Ook hier u.* toegepast voor de klanten
+                const sqlKlanten = `
+                    SELECT u.*, c.address
+                    FROM users u
+                    LEFT JOIN customers c ON u.id = c.user_id_FK
+                    WHERE u.role = 'klant'`;
 
                 db.query(sqlKlanten, (err4, klanRes) => {
-                    if (err4) return res.json({ success: false, message: err4.message });
+                    if (err4) {
+                        console.error("❌ SQL Fout bij klanRes:", err4.message);
+                        return res.json({ success: false, message: "Fout bij klanten: " + err4.message });
+                    }
 
-                    // Stuur alle data in één keer georganiseerd terug!
+                    // Alles is goedgekeurd en opgevangen!
+                    console.log("✅ Admin data succesvol verzonden naar browser!");
                     res.json({
                         success: true,
                         stats: statsRes[0],

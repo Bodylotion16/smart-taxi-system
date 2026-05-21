@@ -63,38 +63,37 @@
 
         // 1. Haal alle live data op van de server
         async function fetchAdminData() {
-            try {
-                const response = await fetch('/api/admin/dashboard');
-                const result = await response.json();
-                
-                const content = document.getElementById('main-content');
-                
-                if (result.success) {
-                    adminData = result;
-                    
-                    // FIX: Bepaal welk tabblad nu actief is en teken het direct op het scherm!
-                    const activeMenu = document.querySelector('.menu-item.active');
-                    if (activeMenu) {
-                        // We filteren gekke tekens of emoji's uit de tekst om de tabnaam te matchen
-                        const tabName = activeMenu.innerText.replace(/[^\w\s]/gi, '').trim().toLowerCase();
-                        renderTab(tabName);
-                    }
-                } else {
-                    // Mocht je SQL query crashen in server.js, dan zie je nu EXACT waarom op je scherm
-                    content.innerHTML = `
-                        <h2 style="color: #e74c3c;">❌ Database Fout</h2>
-                        <p>De database weigert de statistieken te leveren:</p>
-                        <pre style="background: #222; padding: 15px; border-radius: 8px; color: #ff4d4d;">${result.message}</pre>
-                    `;
-                }
-            } catch (err) {
-                console.error("Fout bij laden admin gegevens:", err);
-                document.getElementById('main-content').innerHTML = `
-                    <h2 style="color: #e74c3c;">❌ Verbindingsfout</h2>
-                    <p>Kan de data niet ophalen. Let op: je moet deze pagina openen via <strong>http://localhost:3000/admin.html</strong> en NIET via dubbelklik op het bestand!</p>
-                `;
+    try {
+        // We zetten hier NU het hardgecodeerde localhost adres in, 
+        // zodat hij NOOIT meer naar file:/// zoekt!
+        const response = await fetch('http://localhost:3000/api/admin/dashboard');
+        const result = await response.json();
+        
+        const content = document.getElementById('main-content');
+        
+        if (result.success) {
+            adminData = result;
+            
+            const activeMenu = document.querySelector('.menu-item.active');
+            if (activeMenu) {
+                const tabName = activeMenu.innerText.replace(/[^\w\s]/gi, '').trim().toLowerCase();
+                renderTab(tabName);
             }
+        } else {
+            content.innerHTML = `
+                <h2 style="color: #e74c3c;">❌ Database Fout</h2>
+                <pre style="background: #222; padding: 15px; border-radius: 8px; color: #ff4d4d;">${result.message}</pre>
+            `;
         }
+    } catch (err) {
+        console.error("Fout bij laden admin gegevens:", err);
+        document.getElementById('main-content').innerHTML = `
+            <h2 style="color: #e74c3c;">❌ Verbindingsfout</h2>
+            <p>Kan geen verbinding maken met de Node.js server op poort 3000.</p>
+            <p>Zorg dat <strong>node server.js</strong> draait in je terminal!</p>
+        `;
+    }
+}
 
         // 2. Wisselen tussen de menu tabs
         function switchTab(tabName, element) {
