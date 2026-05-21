@@ -2,62 +2,97 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Chauffeur Registratie - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../css/registration-driver.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
-<body style="justify-content:center; align-items:center; display:flex;">
-    <div class="login-container" style="max-width: 500px; text-align: left;">
+
+<body>
+
+    <div class="login-container registration-container">
+
         <h1>Chauffeur Worden</h1>
-        <p class="subtitle">Meld je aan en begin met ritten rijden.</p>
+
+        <p class="subtitle">
+            Meld je aan en begin met ritten rijden.
+        </p>
 
         <form id="driverRegForm">
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="first_name" placeholder="Voornaam" required>
-                <input type="text" id="last_name" placeholder="Achternaam" required>
-            </div>
-            
-            <input type="email" id="email" placeholder="E-mailadresse" required>
-            <input type="tel" id="phone_number" placeholder="Telefoonnummer" required>
-            <input type="text" id="license_plate" placeholder="Kenteken (bijv. PA 12-34)" required>
-            <input type="text" id="car_model" placeholder="Auto Model (bijv. Toyota Vitz)" required>
-            <input type="password" id="password" placeholder="Wachtwoord" required>
 
-            <button type="submit">Account Aanmaken</button>
-            <p class="footer-text">Al een account? <a href="index.html">Log hier in</a></p>
+            <div class="name-row">
+
+                <input
+                    type="text"
+                    id="first_name"
+                    placeholder="Voornaam"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="last_name"
+                    placeholder="Achternaam"
+                    required
+                >
+
+            </div>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="E-mailadres"
+                required
+            >
+
+            <input
+                type="tel"
+                id="phone_number"
+                placeholder="Telefoonnummer"
+                required
+            >
+
+            <input
+                type="text"
+                id="license_plate"
+                placeholder="Kenteken (bijv. PA 12-34)"
+                required
+            >
+
+            <input
+                type="text"
+                id="car_model"
+                placeholder="Auto Model (bijv. Toyota Vitz)"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Wachtwoord"
+                required
+            >
+
+            <button type="submit">
+                Account Aanmaken
+            </button>
+
+            <p class="footer-text">
+                Al een account?
+
+                <a href="login.html" class="reg-link">
+                    Log hier in
+                </a>
+            </p>
+
         </form>
+
     </div>
 
-    <script>
-        document.getElementById('driverRegForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // De ID's tussen haakjes matchen nu EXACT met de HTML hierboven
-            // De linkerkant matcht exact met wat je server.js wil ontvangen
-            const formData = {
-                voornaam: document.getElementById('first_name').value,
-                achternaam: document.getElementById('last_name').value,
-                email: document.getElementById('email').value,
-                telefoon: document.getElementById('phone_number').value,
-                kenteken: document.getElementById('license_plate').value,
-                auto_model: document.getElementById('car_model').value,
-                wachtwoord: document.getElementById('password').value,
-                rol: 'taxi' // Matcht direct met de ENUM 'taxi' in je database!
-            };
+    <script src="../js/registration-driver.js"></script>
 
-            const response = await fetch('/api/register', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
-            if(result.success) {
-                alert("Account aangemaakt! Je kunt nu inloggen als chauffeur.");
-                window.location.href = 'index.html';
-            } else {
-                alert("Fout bij aanmaken chauffeur: " + result.message);
-            }
-        });
-    </script>
 </body>
 </html>
