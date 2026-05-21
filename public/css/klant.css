@@ -1,0 +1,239 @@
+:root {
+    --primary: #f1c40f;
+    --bg-dark: #1f1f1f;
+    --bg-input: #2c2c2c;
+    --text-light: #ffffff;
+    --text-dim: #cccccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-dark);
+
+    font-family: 'Inter', sans-serif;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+/* Container */
+
+.booking-container {
+    background: var(--bg-dark);
+
+    color: var(--text-light);
+
+    width: 100%;
+    max-width: 500px;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.booking-container h1 {
+    text-align: center;
+
+    font-weight: 800;
+
+    margin-bottom: 5px;
+
+    color: var(--primary);
+}
+
+.subtitle {
+    text-align: center;
+
+    font-size: 14px;
+
+    margin-bottom: 20px;
+
+    color: var(--text-dim);
+}
+
+/* Map */
+
+#map {
+    height: 300px;
+
+    width: 100%;
+
+    border-radius: 12px;
+
+    margin-bottom: 15px;
+}
+
+/* Form */
+
+.input-group {
+    margin-bottom: 15px;
+
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: var(--primary);
+
+    margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: 1px solid #444;
+
+    background: var(--bg-input);
+
+    color: white;
+}
+
+.input-group select {
+    appearance: none;
+
+    -webkit-appearance: none;
+}
+
+/* Suggestions */
+
+.suggestions-list {
+    position: absolute;
+
+    z-index: 1000;
+
+    background: var(--bg-input);
+
+    color: white;
+
+    width: 100%;
+
+    border: 1px solid #444;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+
+    border-radius: 0 0 8px 8px;
+
+    list-style: none;
+
+    padding: 0;
+
+    margin-top: -2px;
+}
+
+.suggestions-list li {
+    padding: 10px;
+
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background: #444;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Price */
+
+.price-tag {
+    display: none;
+
+    background: rgba(241,196,15,0.1);
+
+    border: 1px solid var(--primary);
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    margin-top: 15px;
+}
+
+.price-row {
+    display: flex;
+
+    justify-content: space-between;
+}
+
+/* Buttons */
+
+#clearMap {
+    width: 100%;
+
+    background: #ff4d4d;
+
+    border: none;
+
+    color: white;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    margin-bottom: 15px;
+
+    font-weight: 700;
+}
+
+#calcBtn {
+    width: 100%;
+
+    background: var(--primary);
+
+    border: none;
+
+    color: #1f1f1f;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    margin-top: 10px;
+}
+
+.pay-btn {
+    width: 100%;
+
+    border: none;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    font-weight: 700;
+
+    margin-top: 10px;
+
+    background: #2ecc71;
+
+    color: white;
+}
