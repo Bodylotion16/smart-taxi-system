@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Dashboard | Smart Taxi</title>
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item active">🚖 Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">📍 Ride History</a>
+                <a href="favorites.html" class="nav-item">⭐ Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">💳 Payments</a>
+                <a href="profile.html" class="nav-item">👤 Profile</a>
+                <a href="settings.html" class="nav-item">⚙️ Settings</a>
+                <a href="support.html" class="nav-item">💬 Support</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Welcome 👋</h2>
+                <button id="logoutBtn">Logout</button>
+            </div>
+
+            <p class="subtitle">Welcome back! Snel een rit nodig of je status bekijken?</p>
+            
+            <div class="dashboard-grid">
+                
+                <div class="content-panel quick-book">
+                    <h3>🚖 Snel een rit boeken</h3>
+                    <form class="quick-form">
+                        <div class="input-group">
+                            <label>Van</label>
+                            <input type="text" placeholder="Ophaallocatie (bijv. Paramaribo Centrum)">
+                        </div>
+                        <div class="input-group">
+                            <label>Naar</label>
+                            <input type="text" placeholder="Bestemming (bijv. Zorg en Hoop)">
+                        </div>
+                        <button type="submit" class="btn-primary">Prijs Berekenen</button>
+                    </form>
+                </div>
+
+                <div class="content-panel active-ride-status">
+                    <h3>📍 Actieve Rit Status</h3>
+                    <div class="status-box empty">
+                        <p>Je hebt momenteel geen actieve rit.</p>
+                        <a href="book-ride.html" class="link-yellow">Plan nu een rit →</a>
+                    </div>
+                </div>
+
+                <div class="content-panel recent-rides">
+                    <h3>🕒 Recente ritten</h3>
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Route</th>
+                                <th>Prijs</th>
+                                <th>Actie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Vandaag</td>
+                                <td>Paramaribo → Zorg en Hoop</td>
+                                <td>SRD 150</td>
+                                <td><button class="btn-small">Opnieuw</button></td>
+                            </tr>
+                            <tr>
+                                <td>18 Mei</td>
+                                <td>Maretraite → Centrum</td>
+                                <td>SRD 120</td>
+                                <td><button class="btn-small">Opnieuw</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../../js/klant/dashboard.js"></script>
+
+</body>
+</html>

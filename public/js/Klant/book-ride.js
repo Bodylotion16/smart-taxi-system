@@ -389,7 +389,7 @@ document
                     encodeURIComponent(method);
 
                 window.location.href =
-                    `payment.html?booking_id=${idParam}&amount=${amountParam}&method=${methodParam}`;
+                    `../sub-pages/payments.html?booking_id=${idParam}&amount=${amountParam}&method=${methodParam}`;
 
             } else {
 
