@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Dashboard | Smart Taxi</title>
+    <!-- Koppeling naar de CSS (Zorg dat dit pad klopt met jouw mappen) -->
     <link rel="stylesheet" href="../../css/klant/dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -12,13 +13,16 @@
 
     <div class="dashboard-container">
 
+        <!-- SIDEBAR LINKS -->
         <aside class="sidebar">
             <div class="logo-area">
                 <h2>Customer Portal</h2>
             </div>
             
             <nav class="nav-menu">
-                <a href="book-ride.html" class="nav-item active">Book a Ride</a>
+                <!-- Dashboard Home is nu de actieve pagina -->
+                <a href="dashboard.html" class="nav-item active">Dashboard Home</a>
+                <a href="book-ride.html" class="nav-item">Book a Ride</a>
                 <a href="ride-history.html" class="nav-item">Ride History</a>
                 <a href="favorites.html" class="nav-item">Favorites</a>
                 <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
@@ -28,63 +32,62 @@
             </nav>
         </aside>
 
+        <!-- MAIN CONTENT RECHTS -->
         <main class="main-content">
             <div class="topbar">
                 <h2>Welkom, Anisha</h2>
                 <button id="logoutBtn">Logout</button>
             </div>
+            <p class="subtitle">Wat wil je vandaag doen?</p>
 
-            <p class="subtitle">Hier zie je jouw overzicht als klant.</p>
-            
             <div class="dashboard-grid">
                 
+                <!-- Snel een rit boeken paneel -->
                 <div class="content-panel">
                     <h3>Snel een rit boeken</h3>
                     <form class="quick-form">
                         <div class="input-group">
-                            <label>Van</label>
-                            <input type="text" placeholder="Ophaallocatie (bijv. Paramaribo Centrum)">
+                            <label for="pickup">Ophaallocatie</label>
+                            <input type="text" id="pickup" placeholder="Bijv. Amsterdam Centraal">
                         </div>
                         <div class="input-group">
-                            <label>Naar</label>
-                            <input type="text" placeholder="Bestemming (bijv. Zorg en Hoop)">
+                            <label for="dropoff">Bestemming</label>
+                            <input type="text" id="dropoff" placeholder="Bijv. Schiphol Airport">
                         </div>
-                        <button type="submit" class="btn-primary">Prijs berekenen</button>
+                        <button type="submit" class="btn-primary">Rit Zoeken</button>
                     </form>
                 </div>
 
+                <!-- Status paneel -->
                 <div class="content-panel">
-                    <h3>Actieve rit status</h3>
+                    <h3>Actuele Status</h3>
                     <div class="status-box empty">
                         <p>Je hebt momenteel geen actieve rit.</p>
-                        <a href="book-ride.html" class="link-yellow">Plan nu een rit</a>
+                        <a href="book-ride.html" class="link-yellow">Plan een nieuwe rit &rarr;</a>
                     </div>
                 </div>
 
+                <!-- Recente ritten tabel -->
                 <div class="content-panel recent-rides">
-                    <h3>Recente ritten</h3>
+                    <h3>Recente Ritten</h3>
                     <div class="table-container">
                         <table class="dashboard-table">
                             <thead>
                                 <tr>
                                     <th>Datum</th>
-                                    <th>Route</th>
+                                    <th>Van</th>
+                                    <th>Naar</th>
                                     <th>Prijs</th>
                                     <th>Actie</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Vandaag</td>
-                                    <td>Paramaribo → Zorg en Hoop</td>
-                                    <td>SRD 150</td>
-                                    <td><button type="button" class="btn-small">Opnieuw</button></td>
-                                </tr>
-                                <tr>
-                                    <td>18 Mei</td>
-                                    <td>Maretraite → Centrum</td>
-                                    <td>SRD 120</td>
-                                    <td><button type="button" class="btn-small">Opnieuw</button></td>
+                                    <td>22-05-2026</td>
+                                    <td>Station Utrecht</td>
+                                    <td>Jaarbeurs</td>
+                                    <td>€ 12,50</td>
+                                    <td><button class="btn-small">Herboek</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -93,10 +96,9 @@
 
             </div>
         </main>
-
     </div>
 
+    <!-- Koppeling naar het JS bestand (Zorg dat dit pad klopt met jouw mappen) -->
     <script src="../../js/klant/dashboard.js"></script>
-
 </body>
 </html>
