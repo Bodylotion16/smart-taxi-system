@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ritverzoeken - Smart Taxi</title>
+    <link rel="stylesheet" href="../../css/driver/ritverzoeken.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html" class="active">Ritverzoeken</a>
+        <a href="#">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="#">Status beheer</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Ritverzoeken</h1>
+            <p>Bekijk nieuwe ritten en kies of je ze accepteert of weigert.</p>
+        </div>
+
+        <div class="section">
+            <h2>Nieuw ritverzoek</h2>
+
+            <p><strong>Klant:</strong> Simran</p>
+            <p><strong>Ophaallocatie:</strong> Latour</p>
+            <p><strong>Bestemming:</strong> Lelydorp</p>
+            <p><strong>Prijsindicatie:</strong> SRD 220</p>
+            <p><strong>Status:</strong> <span class="status" id="status-simran">Nieuw</span></p>
+
+            <button onclick="acceptRide('status-simran')">Accepteren</button>
+            <button onclick="declineRide('status-simran')">Weigeren</button>
+        </div>
+
+        <div class="section">
+            <h2>Nieuw ritverzoek</h2>
+
+            <p><strong>Klant:</strong> Aman</p>
+            <p><strong>Ophaallocatie:</strong> Flora</p>
+            <p><strong>Bestemming:</strong> Centrum</p>
+            <p><strong>Prijsindicatie:</strong> SRD 120</p>
+            <p><strong>Status:</strong> <span class="status" id="status-aman">Nieuw</span></p>
+
+            <button onclick="acceptRide('status-aman')">Accepteren</button>
+            <button onclick="declineRide('status-aman')">Weigeren</button>
+        </div>
+
+        <div class="section">
+            <h2>Uitleg</h2>
+            <p>Wanneer een chauffeur een rit accepteert, wordt deze rit later gekoppeld aan de actieve rit-pagina.</p>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/ritverzoeken.js"></script>
+</body>
+</html>
