@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | Smart Taxi</title>
+    
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/support.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item">Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">Ride History</a>
+                <a href="favorites.html" class="nav-item">Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
+                <a href="profile.html" class="nav-item">Profile</a>
+                <a href="settings.html" class="nav-item">Settings</a>
+                <a href="support.html" class="nav-item active">Support</a> </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h2 class="page-title">Klantenservice & Support</h2>
+                <button id="logoutBtn">Logout</button>
+            </div>
+
+            <p class="subtitle">Heb je een probleem met een rit, betaling of je account? Stuur ons direct een bericht.</p>
+            
+            <div class="support-layout">
+                
+                <div class="content-panel panel-glow">
+                    <h3>Supportticket aanmaken</h3>
+                    <form id="supportForm" class="quick-form">
+
+                        <div class="input-group">
+                            <label>Onderwerp</label>
+                            <input type="text" id="ticketSubject" placeholder="Bijv. Probleem met betaling, verloren voorwerp..." required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Categorie</label>
+                            <select id="ticketCategory">
+                                <option value="rit">Probleem met een rit</option>
+                                <option value="betaling">Betalingen & Facturen</option>
+                                <option value="account">Account & Privacy</option>
+                                <option value="klacht">Klacht of Compliment</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Beschrijving van je probleem</label>
+                            <textarea id="ticketMessage" rows="5" placeholder="Typ hier zo gedetailleerd mogelijk je vraag of probleem..." required></textarea>
+                        </div>
+
+                        <button type="submit" id="submitTicketBtn">TICKET VERSTUREN</button>
+
+                    </form>
+                </div>
+
+                <div class="content-panel panel-glow tickets-panel">
+                    <h3>Mijn openstaande vragen</h3>
+                    
+                    <div class="tickets-list" id="ticketsList">
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <span class="ticket-id">#TK-8492</span>
+                                <span class="status-badge status-open">Open</span>
+                            </div>
+                            <h4>Ritprijs klopt niet</h4>
+                            <p>Mijn rit van gisteren gaf op de kaart SRD 120 aan, maar er is uiteindelijk SRD 150 berekend...</p>
+                            <span class="ticket-date">Vandaag, 14:22</span>
+                        </div>
+
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <span class="ticket-id">#TK-7104</span>
+                                <span class="status-badge status-pending">In behandeling</span>
+                            </div>
+                            <h4>Telefoon vergeten in taxi</h4>
+                            <p>Ik denk dat mijn Samsung is achtergebleven op de achterbank van de chauffeur bij de rit naar Maretraite...</p>
+                            <span class="ticket-date">18 Mei, 09:15</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../../js/klant/support.js"></script>
+</body>
+
+</html>

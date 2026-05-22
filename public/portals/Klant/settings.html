@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Smart Taxi</title>
+    
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/settings.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item">Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">Ride History</a>
+                <a href="favorites.html" class="nav-item">Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
+                <a href="profile.html" class="nav-item">Profile</a>
+                <a href="settings.html" class="nav-item active">Settings</a> <a href="support.html" class="nav-item">Support</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h2 class="page-title">Instellingen</h2>
+                <button id="logoutBtn">Logout</button>
+            </div>
+
+            <p class="subtitle">Beheer hier je beveiliging, notificaties en app-voorkeuren.</p>
+            
+            <div class="settings-layout">
+                
+                <div class="content-panel panel-glow">
+                    <h3>Wachtwoord wijzigen</h3>
+                    <form id="passwordForm" class="quick-form">
+                        <div class="input-group">
+                            <label>Huidig wachtwoord</label>
+                            <input type="password" id="currentPassword" placeholder="••••••••" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Nieuw wachtwoord</label>
+                            <input type="password" id="newPassword" placeholder="Minimaal 8 tekens" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Bevestig nieuw wachtwoord</label>
+                            <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn-settings">WACHTWOORD BIJWERKEN</button>
+                    </form>
+
+                    <hr class="settings-divider">
+
+                    <h3>Notificaties</h3>
+                    <div class="toggle-group">
+                        <label class="switch-container">
+                            <input type="checkbox" id="notifyEmail" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="toggle-text">
+                            <h4>E-mail notificaties</h4>
+                            <p>Ontvang ritsamenvattingen en facturen via de mail.</p>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <label class="switch-container">
+                            <input type="checkbox" id="notifySMS">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="toggle-text">
+                            <h4>SMS updates</h4>
+                            <p>Ontvang een SMS zodra de chauffeur is gearriveerd.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-panel panel-glow right-settings-panel">
+                    <h3>App-voorkeuren</h3>
+                    <div class="input-group">
+                        <label>Taal / Language</label>
+                        <select id="appLanguage">
+                            <option value="nl">Nederlands</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 15px;">
+                        <label>Thema</label>
+                        <select id="appTheme" disabled>
+                            <option value="dark">Suriname Night (Goud/Zwart)</option>
+                        </select>
+                        <small class="helper-text">Dit thema is standaard vergrendeld voor de ultieme look.</small>
+                    </div>
+
+                    <div class="danger-zone">
+                        <h3>Gevaarlijke zone</h3>
+                        <p>Zodra je je account verwijdert, zijn al je ritgegevens en favoriete locaties definitief verloren.</p>
+                        <button id="deleteAccountBtn" class="btn-danger">ACCOUNT DEACTIVEREN</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../../js/klant/main.js"></script>
+</body>
+
+</html>

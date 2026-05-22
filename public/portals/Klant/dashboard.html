@@ -1,162 +1,102 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Rit Boeken | Smart Taxi</title>
-
-    <link rel="stylesheet" href="../css/klant.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
-    >
-
+    <title>Customer Dashboard | Smart Taxi</title>
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="booking-container">
+    <div class="dashboard-container">
 
-        <h1>NIEUWE RIT</h1>
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item active">Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">Ride History</a>
+                <a href="favorites.html" class="nav-item">Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
+                <a href="profile.html" class="nav-item">Profile</a>
+                <a href="settings.html" class="nav-item">Settings</a>
+                <a href="support.html" class="nav-item">Support</a>
+            </nav>
+        </aside>
 
-        <p class="subtitle">
-            Typ je straatnaam om locaties te kiezen.
-        </p>
-
-        <div id="map"></div>
-
-        <button id="clearMap">
-            LOCATIES WISSEN
-        </button>
-
-        <form id="bookingForm">
-
-            <div class="input-group">
-
-                <label>
-                    📍 OPHAAL LOCATIE
-                </label>
-
-                <input
-                    type="text"
-                    id="pickup_location"
-                    placeholder="Typ je ophaallocatie of wacht op GPS..."
-                    autocomplete="off"
-                >
-
-                <ul
-                    id="pickup_suggestions"
-                    class="suggestions-list hidden"
-                ></ul>
-
+        <main class="main-content">
+            <div class="topbar">
+                <h2>Welkom, Anisha</h2>
+                <button id="logoutBtn">Logout</button>
             </div>
 
-            <div class="input-group">
+            <p class="subtitle">Hier zie je jouw overzicht als klant.</p>
+            
+            <div class="dashboard-grid">
+                
+                <div class="content-panel">
+                    <h3>Snel een rit boeken</h3>
+                    <form class="quick-form">
+                        <div class="input-group">
+                            <label>Van</label>
+                            <input type="text" placeholder="Ophaallocatie (bijv. Paramaribo Centrum)">
+                        </div>
+                        <div class="input-group">
+                            <label>Naar</label>
+                            <input type="text" placeholder="Bestemming (bijv. Zorg en Hoop)">
+                        </div>
+                        <button type="submit" class="btn-primary">Prijs berekenen</button>
+                    </form>
+                </div>
 
-                <label>
-                    🏁 BESTEMMING
-                </label>
+                <div class="content-panel">
+                    <h3>Actieve rit status</h3>
+                    <div class="status-box empty">
+                        <p>Je hebt momenteel geen actieve rit.</p>
+                        <a href="book-ride.html" class="link-yellow">Plan nu een rit</a>
+                    </div>
+                </div>
 
-                <input
-                    type="text"
-                    id="destination"
-                    placeholder="Typ je bestemming..."
-                    autocomplete="off"
-                >
-
-                <ul
-                    id="destination_suggestions"
-                    class="suggestions-list hidden"
-                ></ul>
-
-            </div>
-
-            <div class="input-group">
-
-                <label>
-                    BETAALMETHODE
-                </label>
-
-                <select id="payment_method">
-
-                    <option value="cash">
-                        Contant (Cash)
-                    </option>
-
-                    <option value="card">
-                        Bankpas (Card)
-                    </option>
-
-                    <option value="online">
-                        Mope / Online
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div id="priceBox" class="price-tag">
-
-                <div class="price-row">
-
-                    <span>
-                        Afstand:
-                        <strong id="distText">
-                            0
-                        </strong>
-                        km
-                    </span>
-
-                    <span>
-                        Totaal:
-                        <strong id="fareText">
-                            SRD 0.00
-                        </strong>
-                    </span>
-
+                <div class="content-panel recent-rides">
+                    <h3>Recente ritten</h3>
+                    <div class="table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Route</th>
+                                    <th>Prijs</th>
+                                    <th>Actie</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Vandaag</td>
+                                    <td>Paramaribo → Zorg en Hoop</td>
+                                    <td>SRD 150</td>
+                                    <td><button type="button" class="btn-small">Opnieuw</button></td>
+                                </tr>
+                                <tr>
+                                    <td>18 Mei</td>
+                                    <td>Maretraite → Centrum</td>
+                                    <td>SRD 120</td>
+                                    <td><button type="button" class="btn-small">Opnieuw</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
-
-            <button
-                type="button"
-                id="calcBtn"
-            >
-                BEREKEN RITPRIJS
-            </button>
-
-            <button
-                type="submit"
-                id="payBtn"
-                class="pay-btn hidden"
-            >
-                NAAR BETALING
-            </button>
-
-        </form>
+        </main>
 
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
-    <script src="../js/klant.js"></script>
+    <script src="../../js/klant/dashboard.js"></script>
 
 </body>
 </html>

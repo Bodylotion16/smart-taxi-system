@@ -1,0 +1,438 @@
+/* ==========================================================================
+   VARIABLES & GLOBAL STYLES
+   ========================================================================== */
+:root {
+    --primary: #f1c40f;       /* Het felle taxi-geel */
+    --bg-dark: #0a0a0a;       /* Diep matzwart voor de hoofdachtergrond */
+    --bg-sidebar: #121212;    /* Iets lichter zwart voor panelen en sidebar */
+    --bg-input: #1c1c1c;      /* Inputvelden achtergrond */
+    --text-light: #ffffff;    /* Witte hoofdtekst */
+    --text-dim: #aaaaaa;      /* Gedimde grijze tekst */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-dark);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* ==========================================================================
+   SIDEBAR STYLING (LINKS)
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+    flex-shrink: 0;
+}
+
+.sidebar .logo-area {
+    padding: 10px 25px 35px 25px;
+}
+
+.sidebar .logo-area h2 {
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 15px;
+}
+
+.nav-item {
+    display: block;
+    padding: 14px 20px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: 0.15s ease;
+    font-size: 15px;
+}
+
+.nav-item:hover {
+    background: #1c1c1c;
+    color: var(--text-light);
+}
+
+.nav-item.active {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+}
+
+/* ==========================================================================
+   MAIN CONTENT STYLING (RECHTS)
+   ========================================================================== */
+.main-content {
+    flex: 1;
+    padding: 40px 50px;
+    overflow-y: auto;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h2 {
+    color: var(--primary);
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+#logoutBtn {
+    background: #ff4d4d;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+#logoutBtn:hover {
+    background: #ff3333;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* Grid Layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.content-panel {
+    background: var(--bg-sidebar);
+    padding: 30px;
+    border-radius: 16px; 
+}
+
+.content-panel h3 {
+    color: var(--primary);
+    margin-bottom: 22px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   FORMS & INPUTS (Snel een rit boeken)
+   ========================================================================== */
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Fix voor de weggedrukte inputs op jouw screenshot */
+.input-group input {
+    background: var(--bg-input) !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--primary) !important;
+}
+
+/* Grote gele actieknop */
+.btn-primary {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+}
+
+/* ==========================================================================
+   STATUS BOX
+   ========================================================================== */
+.status-box.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 120px;
+    color: var(--text-light);
+    font-size: 15px;
+}
+
+.link-yellow {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.link-yellow:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   TABEL STYLING (Recente ritten)
+   ========================================================================== */
+.recent-rides {
+    grid-column: span 2;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Zorgt dat de tabel op mobiel netjes blijft */
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.dashboard-table th {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #222;
+}
+
+.dashboard-table td {
+    padding: 16px 0;
+    border-bottom: 1px solid #1c1c1c;
+    font-size: 15px;
+    color: var(--text-light);
+}
+
+/* Kleine herboek-knop in de tabel */
+.btn-small {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700 !important;
+    transition: 0.2s;
+}
+
+.btn-small:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .recent-rides {
+        grid-column: span 1;
+    }
+}
+/* ==========================================================================
+   SUPPORT PAGE COMPONENT STYLES (Toegevoegd aan Main/Dashboard CSS)
+   ========================================================================== */
+
+/* Grid layout om het formulier en het ticketoverzicht netjes naast elkaar te zetten */
+.support-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Specifieke textarea hoogte en reset voor support vragen */
+.input-group textarea {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    box-sizing: border-box;
+    resize: none; /* Voorkomt dat gebruikers de box kapot slepen */
+}
+
+.input-group textarea:focus {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* Specifieke verzendknop voor het support-formulier */
+#submitTicketBtn {
+    background: #f1c40f !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+}
+
+#submitTicketBtn:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+}
+
+/* ==========================================================================
+   TICKETS OVERZICHT CONTAINER & KAARTJES
+   ========================================================================== */
+.tickets-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+/* Individuele support ticket kaarten */
+.ticket-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 15px;
+    transition: 0.2s ease;
+}
+
+.ticket-card:hover {
+    border-color: rgba(241, 196, 15, 0.2);
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.ticket-id {
+    font-size: 12px;
+    color: #888888;
+    font-weight: 700;
+}
+
+.ticket-card h4 {
+    color: #ffffff;
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.ticket-card p {
+    color: #aaaaaa;
+    font-size: 13px;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.ticket-date {
+    font-size: 11px;
+    color: #666666;
+}
+
+/* ==========================================================================
+   STATUS BADGES
+   ========================================================================== */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Open Status (Geel) */
+.status-open {
+    background: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+/* In Behandeling Status (Blauw) */
+.status-pending {
+    background: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+/* Opgelost Status (Groen) */
+.status-resolved {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}

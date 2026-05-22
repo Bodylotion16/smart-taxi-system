@@ -1,0 +1,186 @@
+/* ==========================================================================
+   BOOK RIDE SPECIFIC STYLES
+   ========================================================================== */
+
+.book-ride-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Glow panelen */
+.content-panel.panel-glow {
+    background: #121212;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.05);
+}
+
+.content-panel h3 {
+    color: #f1c40f;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.input-group label {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Inputs & Selectbox */
+.input-group input, 
+#payment_method {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input-group input:focus, 
+#payment_method:focus {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* ==========================================================================
+   DE KAART (DIT HERSTELT DE WEERGAVE)
+   ========================================================================== */
+.map-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Leaflet heeft een harde hoogte in pixels nodig om te renderen! */
+#map {
+    width: 100%;
+    height: 450px !important; /* Forceert de kaart om groot in beeld te komen */
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    z-index: 1;
+}
+
+/* Fix voor Leaflet Routing container layout */
+.leaflet-routing-container {
+    display: none !important;
+}
+
+/* ==========================================================================
+   PRIJS & SUGGESTIES
+   ========================================================================== */
+.price-tag {
+    background: #1a1a1a;
+    border: 1px solid rgba(241, 196, 15, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.price-row strong {
+    color: #f1c40f;
+}
+
+/* Knoppen styling */
+#calcBtn, .pay-btn, #clearMap {
+    background: #f1c40f !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+}
+
+#calcBtn:hover, .pay-btn:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+}
+
+/* Locaties wissen knop styling accent */
+#clearMap {
+    background: #222222 !important;
+    color: #ffffff !important;
+    padding: 10px 15px !important;
+    font-size: 12px !important;
+    width: auto !important;
+    align-self: flex-end;
+    border: 1px solid #333333 !important;
+}
+#clearMap:hover {
+    background: #333333 !important;
+    color: #f1c40f !important;
+}
+
+/* Autocomplete Suggesties */
+.suggestions-list {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.suggestions-list li {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+    font-size: 13px;
+    color: #dddddd;
+}
+
+.suggestions-list li:hover {
+    background: #222;
+    color: #f1c40f;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 1000px) {
+    .book-ride-layout {
+        grid-template-columns: 1fr;
+    }
+}

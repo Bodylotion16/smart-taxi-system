@@ -1,0 +1,259 @@
+/* ==========================================================================
+   SETTINGS PAGE SPECIFIC STYLES
+   ========================================================================== */
+
+.settings-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Panelen */
+.content-panel.panel-glow {
+    background: #121212;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.05);
+}
+
+.content-panel h3 {
+    color: #f1c40f;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Custom divider lijn binnen een paneel */
+.settings-divider {
+    border: 0;
+    height: 1px;
+    background: #2a2a2a;
+    margin: 30px 0;
+}
+
+/* Formulieren & Inputs */
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Inputs & Selectboxen */
+.input-group input, 
+#appLanguage,
+#appTheme {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.input-group input:focus, 
+#appLanguage:focus {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* Dropdown opties fix */
+#appLanguage option,
+#appTheme option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 10px;
+}
+
+/* Custom goudgeel pijltje voor selectboxen */
+#appLanguage,
+#appTheme {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23f1c40f'><path d='M1 3h10L6 9z'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position: calc(100% - 15px) center !important;
+    padding-right: 40px !important;
+}
+
+/* Uitgeschakelde velden look (Thema box) */
+#appTheme:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.helper-text {
+    color: #666666;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   CUSTOM SLIDERS / SWITCHES (NOTIFICATIES)
+   ========================================================================== */
+.toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.toggle-text h4 {
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 20pxpx;
+}
+
+.toggle-text p {
+    font-size: 13px;
+    color: #888888;
+}
+
+/* De switch container */
+.switch-container {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+/* Verberg standaard checkbox */
+.switch-container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* De feitelijke schuifbalk achtergrond */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #2a2a2a;
+    transition: .3s;
+    border-radius: 34px;
+    border: 1px solid #3a3a3a;
+}
+
+/* Het bewegende bolletje */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+/* Actieve status (Aan-stand) */
+input:checked + .slider {
+    background-color: rgba(241, 196, 15, 0.2);
+    border-color: #f1c40f;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+    background-color: #f1c40f;
+    box-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+}
+
+/* ==========================================================================
+   BUTTONS & DANGER ZONE
+   ========================================================================== */
+.btn-settings {
+    background: #f1c40f !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+}
+
+.btn-settings:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+}
+
+.right-settings-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Gevaarlijke zone styling onderaan rechts */
+.danger-zone {
+    margin-top: 40px;
+    border-top: 1px dashed #ff4d4d;
+    padding-top: 25px;
+}
+
+.danger-zone h3 {
+    color: #ff4d4d !important;
+    font-size: 18px;
+}
+
+.danger-zone p {
+    font-size: 13px;
+    color: #aaaaaa;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.btn-danger {
+    background: transparent;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.btn-danger:hover {
+    background: #ff4d4d;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+}
+
+/* Responsive lay-out */
+@media (max-width: 1000px) {
+    .settings-layout {
+        grid-template-columns: 1fr;
+    }
+}
