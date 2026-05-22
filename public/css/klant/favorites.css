@@ -1,0 +1,313 @@
+/* ==========================================================================
+   VARIABLES & GLOBAL STYLES (Driver Portal Match)
+   ========================================================================== */
+:root {
+    --primary: #f1c40f;          /* Taxi-geel */
+    --primary-glow: rgba(241, 196, 15, 0.35); /* Zachte gele gloed-kleur */
+    --bg-dark: #0a0a0a;          /* Gitzwarte achtergrond */
+    --bg-sidebar: #121212;       /* Iets lichter zwart voor panelen */
+    --bg-input: #1a1a1a;         /* Inputvelden donkergrijs/zwart */
+    --text-light: #ffffff;       /* Wit */
+    --text-dim: #aaaaaa;         /* Gedimd grijs */
+    --danger: #ff4d4d;           /* Rood voor verwijderen/logout */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark) !important;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-dark);
+}
+
+/* ==========================================================================
+   SIDEBAR STYLING
+   ========================================================================== */
+.sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+    flex-shrink: 0;
+    border-right: 1px solid #1a1a1a;
+}
+
+.sidebar .logo-area {
+    padding: 10px 25px 35px 25px;
+}
+
+.sidebar .logo-area h2 {
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 15px;
+}
+
+.nav-item {
+    display: block;
+    padding: 14px 20px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: 0.15s ease;
+    font-size: 15px;
+}
+
+.nav-item:hover {
+    background: #1c1c1c;
+    color: var(--text-light);
+}
+
+/* Actieve link met intense gele gloed (zoals op screenshot) */
+.nav-item.active {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    font-weight: 800;
+    box-shadow: 0 0 20px var(--primary-glow), 0 0 5px rgba(241, 196, 15, 0.6);
+}
+
+/* ==========================================================================
+   MAIN CONTENT STYLING & PANELS WITH GLOW
+   ========================================================================== */
+.main-content {
+    flex: 1;
+    padding: 40px 50px;
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Grote gele kop 'Mijn favorieten' met text-glow */
+.page-title {
+    color: var(--primary);
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+}
+
+#logoutBtn {
+    background: var(--danger);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+#logoutBtn:hover {
+    background: #ff3333;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: var(--text-dim);
+    font-size: 15px;
+}
+
+/* Grid indeling */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 35px;
+}
+
+/* De panelen met de kenmerkende goud/gele gloed-rand uit de foto */
+.content-panel.panel-glow {
+    background: var(--bg-sidebar);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(241, 196, 15, 0.4); /* Dunne gele subtiele rand */
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.08), inset 0 0 15px rgba(241, 196, 15, 0.03);
+}
+
+.content-panel h3 {
+    color: var(--primary);
+    margin-bottom: 22px;
+    font-size: 22px;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(241, 196, 15, 0.25);
+}
+
+/* ==========================================================================
+   FORMS, INPUTS & BUTTONS WITH NEON GLOW
+   ========================================================================== */
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.input-group input {
+    background: var(--bg-input) !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+/* Input focus: krijgt een actieve gele gloed rand zoals 'Status beheer' */
+.input-group input:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* Grote gele knop 'Locatie opslaan' met intense gloed */
+.btn-primary {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.6);
+}
+
+/* ==========================================================================
+   TABEL & ACTION BUTTONS STYLING
+   ========================================================================== */
+.recent-rides {
+    grid-column: span 2;
+}
+
+.table-container {
+    width: 100%;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.dashboard-table th {
+    color: var(--primary); /* Gele koppen net als op de foto */
+    font-size: 14px;
+    font-weight: 700;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #222;
+}
+
+.dashboard-table td {
+    padding: 16px 0;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 15px;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.fav-name {
+    font-weight: 800; /* Extra dikke letters voor de locatienaam */
+}
+
+.action-cells {
+    display: flex;
+    gap: 10px;
+}
+
+/* Kleine gele Kies-knop met gloed */
+.btn-small {
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 8px 18px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700 !important;
+    box-shadow: 0 0 10px var(--primary-glow);
+    transition: 0.2s ease;
+}
+
+.btn-small:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+}
+
+/* Rode Verwijderknop met rode neon gloed */
+.btn-delete {
+    background: var(--danger) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 8px 18px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700 !important;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+    transition: 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #ff3333 !important;
+    box-shadow: 0 0 18px rgba(255, 77, 77, 0.6);
+}
+
+/* Responsive breekpunt */
+@media (max-width: 1000px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .recent-rides {
+        grid-column: span 1;
+    }
+}
