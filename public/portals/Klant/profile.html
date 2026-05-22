@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn Profiel | Customer Portal</title>
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item">Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">Ride History</a>
+                <a href="favorites.html" class="nav-item">Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
+                <a href="profile.html" class="nav-item active">Profile</a> <a href="settings.html" class="nav-item">Settings</a>
+                <a href="support.html" class="nav-item">Support</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h2 class="page-title">Mijn profiel</h2>
+                <button id="logoutBtn">Logout</button>
+            </div>
+
+            <p class="subtitle">Beheer je persoonlijke gegevens en accountinstellingen.</p>
+            
+            <div class="dashboard-grid">
+                
+                <div class="content-panel panel-glow">
+                    <h3>Persoonlijke gegevens</h3>
+                    <form class="quick-form" id="profileForm">
+                        <div class="input-group">
+                            <label>Volledige naam</label>
+                            <input type="text" id="profileName" value="Anisha" required>
+                        </div>
+                        <div class="input-group">
+                            <label>E-mailadres</label>
+                            <input type="email" id="profileEmail" value="anisha@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Telefoonnummer</label>
+                            <input type="text" id="profilePhone" value="+597 7777777" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Gegevens bijwerken</button>
+                    </form>
+                </div>
+
+            <div class="content-panel panel-glow">
+    <h3>Wachtwoord wijzigen</h3>
+    <form class="quick-form" id="passwordForm">
+        
+        <div class="input-group">
+            <label>Huidig wachtwoord</label>
+            <div class="password-wrapper">
+                <input type="password" id="currentPassword" placeholder="••••••••" required>
+                <span class="toggle-password">👁️</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Nieuw wachtwoord</label>
+            <div class="password-wrapper">
+                <input type="password" id="newPassword" placeholder="Voer nieuw wachtwoord in" required>
+                <span class="toggle-password">👁️</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Bevestig nieuw wachtwoord</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmPassword" placeholder="Herhaal nieuw wachtwoord" required>
+                <span class="toggle-password">👁️</span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Wachtwoord opslaan</button>
+    </form>
+</div>
+
+    <script src="../../js/klant/profile.js"></script>
+</body>
+</html>
