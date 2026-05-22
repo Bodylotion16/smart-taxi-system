@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Status beheer - Smart Taxi</title>
+    <link rel="stylesheet" href="../../css/driver/status-beheer.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html" class="active">Status beheer</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Status beheer</h1>
+            <p>Wijzig jouw beschikbaarheid als chauffeur.</p>
+        </div>
+
+        <div class="section">
+            <h2>Huidige status</h2>
+            <p>Je huidige werkstatus is:</p>
+            <span class="current-status-box" id="currentStatus">Beschikbaar</span>
+        </div>
+
+        <div class="section">
+            <h2>Kies nieuwe status</h2>
+
+            <div class="status-options">
+                <div class="status-card active-status" onclick="changeStatus('Beschikbaar', this)">
+                    <h3>Beschikbaar</h3>
+                    <p>Je bent online en kunt nieuwe ritverzoeken ontvangen.</p>
+                </div>
+
+                <div class="status-card" onclick="changeStatus('Bezet', this)">
+                    <h3>Bezet</h3>
+                    <p>Je bent bezig en kunt tijdelijk geen nieuwe ritten aannemen.</p>
+                </div>
+
+                <div class="status-card" onclick="changeStatus('Onderweg naar klant', this)">
+                    <h3>Onderweg</h3>
+                    <p>Je bent onderweg naar de ophaallocatie van de klant.</p>
+                </div>
+
+                <div class="status-card" onclick="changeStatus('Rit bezig', this)">
+                    <h3>Rit bezig</h3>
+                    <p>De klant zit in de taxi en de rit is gestart.</p>
+                </div>
+
+                <div class="status-card" onclick="changeStatus('Pauze', this)">
+                    <h3>Pauze</h3>
+                    <p>Je bent tijdelijk niet beschikbaar vanwege pauze.</p>
+                </div>
+
+                <div class="status-card" onclick="changeStatus('Offline', this)">
+                    <h3>Offline</h3>
+                    <p>Je bent niet beschikbaar voor ritverzoeken.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/status-beheer.js"></script>
+</body>
+</html>
