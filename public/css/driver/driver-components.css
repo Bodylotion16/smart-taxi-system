@@ -193,3 +193,11 @@ th:nth-child(6) {
         min-width: 900px;
     }
 }
+
+.stars {
+    color: var(--yellow);
+    font-size: 22px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    font-weight: 900;
+}

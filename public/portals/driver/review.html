@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/driver/driver-base.css">
+    <link rel="stylesheet" href="../../css/driver/driver-components.css">
+    <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+        <a href="reviews.html" class="active">Reviews</a>
+
+        <a href="../../auth/login.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Reviews</h1>
+            <p>Bekijk beoordelingen die klanten na hun rit hebben gegeven.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Gemiddelde score</h3>
+                <p class="value" id="averageRating">4.8</p>
+            </div>
+
+            <div class="card">
+                <h3>Aantal reviews</h3>
+                <p class="value" id="totalReviews">3</p>
+            </div>
+
+            <div class="card">
+                <h3>Laatste score</h3>
+                <p class="value stars" id="lastRating">★★★★★</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Laatste reviews</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Klant</th>
+                        <th>Score</th>
+                        <th>Review</th>
+                    </tr>
+                </thead>
+
+                <tbody id="reviewsTable">
+                    <tr>
+                        <td>20 mei 2026</td>
+                        <td>Anisha</td>
+                        <td><span class="stars">★★★★★</span></td>
+                        <td>Chauffeur was op tijd en vriendelijk.</td>
+                    </tr>
+
+                    <tr>
+                        <td>19 mei 2026</td>
+                        <td>Simran</td>
+                        <td><span class="stars">★★★★☆</span></td>
+                        <td>Goede rit, maar kleine vertraging.</td>
+                    </tr>
+
+                    <tr>
+                        <td>18 mei 2026</td>
+                        <td>Aman</td>
+                        <td><span class="stars">★★★★★</span></td>
+                        <td>Veilige en comfortabele rit.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/reviews.js"></script>
+</body>
+</html>
