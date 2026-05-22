@@ -1,10 +1,13 @@
+/* ==========================================================================
+   VARIABLES & GLOBAL STYLES
+   ========================================================================== */
 :root {
-    --primary: #f1c40f;
-    --bg-dark: #111111;       /* Iets donkerder voor de achtergrond */
-    --bg-sidebar: #1f1f1f;    /* De kleur van jouw screenshot sidebar */
-    --bg-input: #2c2c2c;
-    --text-light: #ffffff;
-    --text-dim: #cccccc;
+    --primary: #f1c40f;       /* Het felle taxi-geel */
+    --bg-dark: #0a0a0a;       /* Diep matzwart voor de hoofdachtergrond */
+    --bg-sidebar: #121212;    /* Iets lichter zwart voor panelen en sidebar */
+    --bg-input: #1c1c1c;      /* Inputvelden achtergrond */
+    --text-light: #ffffff;    /* Witte hoofdtekst */
+    --text-dim: #aaaaaa;      /* Gedimde grijze tekst */
 }
 
 * {
@@ -21,38 +24,39 @@ body {
     overflow: hidden;
 }
 
-/* Container verdeelt de pagina in Sidebar en Content */
 .dashboard-container {
     display: flex;
     width: 100%;
     height: 100vh;
 }
 
-/* --- SIDEBAR STYLING --- */
+/* ==========================================================================
+   SIDEBAR STYLING (LINKS)
+   ========================================================================== */
 .sidebar {
     width: 260px;
     background: var(--bg-sidebar);
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #2d2d2d;
-    padding: 20px 0;
+    padding: 25px 0;
+    flex-shrink: 0;
 }
 
 .sidebar .logo-area {
-    padding: 10px 25px 30px 25px;
+    padding: 10px 25px 35px 25px;
 }
 
 .sidebar .logo-area h2 {
     color: var(--primary);
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
-/* Navigatie links */
 .nav-menu {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
     padding: 0 15px;
 }
 
@@ -63,26 +67,27 @@ body {
     text-decoration: none;
     font-weight: 700;
     border-radius: 8px;
-    transition: 0.2s ease;
+    transition: 0.15s ease;
     font-size: 15px;
 }
 
-/* Hover effect voor de menu-items */
 .nav-item:hover {
-    background: #2d2d2d;
+    background: #1c1c1c;
     color: var(--text-light);
 }
 
-/* Actieve pagina (Gele knop zoals op je screenshot) */
 .nav-item.active {
-    background: var(--primary);
-    color: #1f1f1f;
+    background: var(--primary) !important;
+    color: #000000 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
 }
 
-/* --- MAIN CONTENT STYLING (Rechts) --- */
+/* ==========================================================================
+   MAIN CONTENT STYLING (RECHTS)
+   ========================================================================== */
 .main-content {
     flex: 1;
-    padding: 40px;
+    padding: 40px 50px;
     overflow-y: auto;
 }
 
@@ -93,8 +98,10 @@ body {
 }
 
 .topbar h2 {
-    color: var(--text-light);
-    font-size: 28px;
+    color: var(--primary);
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 #logoutBtn {
@@ -105,6 +112,7 @@ body {
     color: white;
     cursor: pointer;
     font-weight: 600;
+    font-size: 14px;
     transition: 0.2s;
 }
 
@@ -113,42 +121,36 @@ body {
 }
 
 .subtitle {
-    margin-top: 10px;
+    margin-top: 8px;
     color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 400;
 }
 
-.content-body {
-    margin-top: 40px;
-    background: var(--bg-sidebar);
-    padding: 30px;
-    border-radius: 12px;
-    border: 1px solid #2d2d2d;
-    min-height: 300px;
-}
-
-/* Nieuwe Dashboard Grid Layout */
+/* Grid Layout */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Twee gelijke kolommen boven */
+    grid-template-columns: 1fr 1fr;
     gap: 25px;
-    margin-top: 30px;
+    margin-top: 35px;
 }
 
-/* Elk paneel krijgt dezelfde strakke achtergrond */
 .content-panel {
     background: var(--bg-sidebar);
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #2d2d2d;
+    padding: 30px;
+    border-radius: 16px; 
 }
 
 .content-panel h3 {
     color: var(--primary);
-    margin-bottom: 20px;
-    font-size: 18px;
+    margin-bottom: 22px;
+    font-size: 22px;
+    font-weight: 700;
 }
 
-/* Formulier Styling */
+/* ==========================================================================
+   FORMS & INPUTS (Snel een rit boeken)
+   ========================================================================== */
 .quick-form {
     display: flex;
     flex-direction: column;
@@ -158,108 +160,131 @@ body {
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .input-group label {
-    font-size: 12px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
 }
 
+/* Fix voor de weggedrukte inputs op jouw screenshot */
 .input-group input {
-    background: var(--bg-input);
-    border: 1px solid #333;
-    padding: 12px;
-    border-radius: 8px;
-    color: white;
-    font-family: inherit;
-}
-
-.input-group input:focus {
-    border-color: var(--primary);
+    background: var(--bg-input) !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
     outline: none;
 }
 
+.input-group input:focus {
+    border-color: var(--primary) !important;
+}
+
+/* Grote gele actieknop */
 .btn-primary {
-    background: var(--primary);
-    color: #111;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 700;
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
     cursor: pointer;
     transition: 0.2s;
-    margin-top: 5px;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    background: #e6b800;
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
 }
 
-/* Status Box Empty */
+/* ==========================================================================
+   STATUS BOX
+   ========================================================================== */
 .status-box.empty {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    height: 150px;
-    color: var(--text-dim);
-    gap: 10px;
+    height: 120px;
+    color: var(--text-light);
+    font-size: 15px;
 }
 
 .link-yellow {
     color: var(--primary);
     text-decoration: none;
     font-weight: 700;
+    margin-top: 15px;
+    display: inline-block;
 }
 
-/* Recente Ritten (Brede kolom onderaan) */
+.link-yellow:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   TABEL STYLING (Recente ritten)
+   ========================================================================== */
 .recent-rides {
-    grid-column: span 2; /* Zorgt dat deze over de hele breedte rekt */
+    grid-column: span 2;
 }
 
-/* Tabel Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Zorgt dat de tabel op mobiel netjes blijft */
+}
+
 .dashboard-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    margin-top: 10px;
 }
 
 .dashboard-table th {
     color: var(--text-dim);
     font-size: 14px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #2d2d2d;
+    font-weight: 600;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #222;
 }
 
 .dashboard-table td {
-    padding: 15px 0;
-    border-bottom: 1px solid #2d2d2d;
+    padding: 16px 0;
+    border-bottom: 1px solid #1c1c1c;
     font-size: 15px;
+    color: var(--text-light);
 }
 
+/* Kleine herboek-knop in de tabel */
 .btn-small {
-    background: var(--bg-input);
-    color: white;
-    border: 1px solid #444;
-    padding: 6px 12px;
-    border-radius: 6px;
+    background: var(--primary) !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700 !important;
+    transition: 0.2s;
 }
 
 .btn-small:hover {
-    background: var(--primary);
-    color: #111;
-    border-color: var(--primary);
+    background: #e6b800 !important;
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.35);
 }
 
-/* Responsive maken voor kleinere schermen */
-@media (max-width: 900px) {
+/* Responsive */
+@media (max-width: 1000px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
