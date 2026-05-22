@@ -31,7 +31,7 @@ body {
 }
 
 /* ==========================================================================
-   SIDEBAR STYLING (LINKS)
+   SIDEBAR STYLING
    ========================================================================== */
 .sidebar {
     width: 260px;
@@ -83,7 +83,7 @@ body {
 }
 
 /* ==========================================================================
-   MAIN CONTENT STYLING (RECHTS)
+   MAIN CONTENT STYLING
    ========================================================================== */
 .main-content {
     flex: 1;
@@ -149,7 +149,7 @@ body {
 }
 
 /* ==========================================================================
-   FORMS & INPUTS (Snel een rit boeken)
+   FORMS & INPUTS
    ========================================================================== */
 .quick-form {
     display: flex;
@@ -169,7 +169,6 @@ body {
     font-weight: 600;
 }
 
-/* Fix voor de weggedrukte inputs op jouw screenshot */
 .input-group input {
     background: var(--bg-input) !important;
     border: 1px solid #2a2a2a !important;
@@ -186,7 +185,6 @@ body {
     border-color: var(--primary) !important;
 }
 
-/* Grote gele actieknop */
 .btn-primary {
     background: var(--primary) !important;
     color: #000000 !important;
@@ -232,7 +230,7 @@ body {
 }
 
 /* ==========================================================================
-   TABEL STYLING (Recente ritten)
+   TABEL STYLING
    ========================================================================== */
 .recent-rides {
     grid-column: span 2;
@@ -240,7 +238,7 @@ body {
 
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Zorgt dat de tabel op mobiel netjes blijft */
+    overflow-x: auto;
 }
 
 .dashboard-table {
@@ -265,7 +263,6 @@ body {
     color: var(--text-light);
 }
 
-/* Kleine herboek-knop in de tabel */
 .btn-small {
     background: var(--primary) !important;
     color: #000000 !important;
@@ -283,20 +280,9 @@ body {
     box-shadow: 0 0 12px rgba(241, 196, 15, 0.35);
 }
 
-/* Responsive */
-@media (max-width: 1000px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .recent-rides {
-        grid-column: span 1;
-    }
-}
 /* ==========================================================================
-   SUPPORT PAGE COMPONENT STYLES (Toegevoegd aan Main/Dashboard CSS)
+   SUPPORT PAGE STYLES
    ========================================================================== */
-
-/* Grid layout om het formulier en het ticketoverzicht netjes naast elkaar te zetten */
 .support-layout {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -304,7 +290,6 @@ body {
     margin-top: 20px;
 }
 
-/* Specifieke textarea hoogte en reset voor support vragen */
 .input-group textarea {
     background: #1a1a1a !important;
     border: 1px solid #2a2a2a !important;
@@ -316,7 +301,7 @@ body {
     width: 100% !important;
     outline: none;
     box-sizing: border-box;
-    resize: none; /* Voorkomt dat gebruikers de box kapot slepen */
+    resize: none;
 }
 
 .input-group textarea:focus {
@@ -324,7 +309,6 @@ body {
     box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
 }
 
-/* Specifieke verzendknop voor het support-formulier */
 #submitTicketBtn {
     background: #f1c40f !important;
     color: #000000 !important;
@@ -344,9 +328,6 @@ body {
     box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
 }
 
-/* ==========================================================================
-   TICKETS OVERZICHT CONTAINER & KAARTJES
-   ========================================================================== */
 .tickets-panel {
     display: flex;
     flex-direction: column;
@@ -360,7 +341,6 @@ body {
     overflow-y: auto;
 }
 
-/* Individuele support ticket kaarten */
 .ticket-card {
     background: #1a1a1a;
     border: 1px solid #2a2a2a;
@@ -405,9 +385,6 @@ body {
     color: #666666;
 }
 
-/* ==========================================================================
-   STATUS BADGES
-   ========================================================================== */
 .status-badge {
     padding: 4px 10px;
     border-radius: 20px;
@@ -416,23 +393,30 @@ body {
     text-transform: uppercase;
 }
 
-/* Open Status (Geel) */
 .status-open {
     background: rgba(241, 196, 15, 0.15);
     color: #f1c40f;
     border: 1px solid rgba(241, 196, 15, 0.3);
 }
 
-/* In Behandeling Status (Blauw) */
 .status-pending {
     background: rgba(52, 152, 219, 0.15);
     color: #3498db;
     border: 1px solid rgba(52, 152, 219, 0.3);
 }
 
-/* Opgelost Status (Groen) */
 .status-resolved {
     background: rgba(46, 204, 113, 0.15);
     color: #2ecc71;
     border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .dashboard-grid, .support-layout {
+        grid-template-columns: 1fr;
+    }
+    .recent-rides {
+        grid-column: span 1;
+    }
 }
