@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ritgeschiedenis - Smart Taxi</title>
+    <link rel="stylesheet" href="../../css/driver/ritgeschiedenis.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html" class="active">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Ritgeschiedenis</h1>
+            <p>Bekijk alle ritten die je eerder hebt gereden.</p>
+        </div>
+
+        <div class="section">
+            <h2>Afgeronde ritten</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Klant</th>
+                        <th>Route</th>
+                        <th>Prijs</th>
+                        <th>Status</th>
+                        <th>Actie</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>20 mei 2026</td>
+                        <td>Anisha</td>
+                        <td>Paramaribo Centrum → Zorg en Hoop</td>
+                        <td>SRD 150</td>
+                        <td><span class="status">Afgerond</span></td>
+                        <td>
+                            <button onclick="viewRideDetails('Anisha')">Details</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>19 mei 2026</td>
+                        <td>Simran</td>
+                        <td>Latour → Lelydorp</td>
+                        <td>SRD 220</td>
+                        <td><span class="status">Afgerond</span></td>
+                        <td>
+                            <button onclick="viewRideDetails('Simran')">Details</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>18 mei 2026</td>
+                        <td>Aman</td>
+                        <td>Flora → Centrum</td>
+                        <td>SRD 120</td>
+                        <td><span class="status">Afgerond</span></td>
+                        <td>
+                            <button onclick="viewRideDetails('Aman')">Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Samenvatting</h2>
+            <p><strong>Totaal afgeronde ritten:</strong> 3</p>
+            <p><strong>Totaal verdiend:</strong> SRD 490</p>
+            <p><strong>Gemiddelde ritprijs:</strong> SRD 163</p>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/ritgeschiedenis.js"></script>
+</body>
+</html>
