@@ -1,239 +1,186 @@
-:root {
-    --primary: #f1c40f;
-    --bg-dark: #1f1f1f;
-    --bg-input: #2c2c2c;
-    --text-light: #ffffff;
-    --text-dim: #cccccc;
+/* ==========================================================================
+   BOOK RIDE SPECIFIC STYLES
+   ========================================================================== */
+
+.book-ride-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+    margin-top: 20px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Glow panelen */
+.content-panel.panel-glow {
+    background: #121212;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.05);
 }
 
-body {
-    background: var(--bg-dark);
-
-    font-family: 'Inter', sans-serif;
-
-    display: flex;
-
-    justify-content: center;
-
-    padding: 40px 20px;
-}
-
-/* Container */
-
-.booking-container {
-    background: var(--bg-dark);
-
-    color: var(--text-light);
-
-    width: 100%;
-    max-width: 500px;
-
-    border-radius: 12px;
-
-    padding: 20px;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
-
-.booking-container h1 {
-    text-align: center;
-
-    font-weight: 800;
-
-    margin-bottom: 5px;
-
-    color: var(--primary);
-}
-
-.subtitle {
-    text-align: center;
-
-    font-size: 14px;
-
+.content-panel h3 {
+    color: #f1c40f;
     margin-bottom: 20px;
-
-    color: var(--text-dim);
+    font-size: 20px;
+    font-weight: 700;
 }
 
-/* Map */
-
-#map {
-    height: 300px;
-
-    width: 100%;
-
-    border-radius: 12px;
-
-    margin-bottom: 15px;
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
-
-/* Form */
 
 .input-group {
-    margin-bottom: 15px;
-
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     position: relative;
 }
 
 .input-group label {
-    display: block;
-
-    font-size: 12px;
-
+    font-size: 13px;
+    color: #ffffff;
     font-weight: 700;
-
-    color: var(--primary);
-
-    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-.input-group input,
-.input-group select {
+/* Inputs & Selectbox */
+.input-group input, 
+#payment_method {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input-group input:focus, 
+#payment_method:focus {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* ==========================================================================
+   DE KAART (DIT HERSTELT DE WEERGAVE)
+   ========================================================================== */
+.map-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Leaflet heeft een harde hoogte in pixels nodig om te renderen! */
+#map {
     width: 100%;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    border: 1px solid #444;
-
-    background: var(--bg-input);
-
-    color: white;
-}
-
-.input-group select {
-    appearance: none;
-
-    -webkit-appearance: none;
-}
-
-/* Suggestions */
-
-.suggestions-list {
-    position: absolute;
-
-    z-index: 1000;
-
-    background: var(--bg-input);
-
-    color: white;
-
-    width: 100%;
-
-    border: 1px solid #444;
-
-    max-height: 180px;
-
-    overflow-y: auto;
-
-    border-radius: 0 0 8px 8px;
-
-    list-style: none;
-
-    padding: 0;
-
-    margin-top: -2px;
-}
-
-.suggestions-list li {
-    padding: 10px;
-
-    cursor: pointer;
-}
-
-.suggestions-list li:hover {
-    background: #444;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Price */
-
-.price-tag {
-    display: none;
-
-    background: rgba(241,196,15,0.1);
-
-    border: 1px solid var(--primary);
-
+    height: 450px !important; /* Forceert de kaart om groot in beeld te komen */
     border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    z-index: 1;
+}
 
-    padding: 12px;
+/* Fix voor Leaflet Routing container layout */
+.leaflet-routing-container {
+    display: none !important;
+}
 
-    margin-top: 15px;
+/* ==========================================================================
+   PRIJS & SUGGESTIES
+   ========================================================================== */
+.price-tag {
+    background: #1a1a1a;
+    border: 1px solid rgba(241, 196, 15, 0.2);
+    border-radius: 8px;
+    padding: 15px;
 }
 
 .price-row {
     display: flex;
-
     justify-content: space-between;
+    font-size: 14px;
+    color: #ffffff;
 }
 
-/* Buttons */
+.price-row strong {
+    color: #f1c40f;
+}
 
+/* Knoppen styling */
+#calcBtn, .pay-btn, #clearMap {
+    background: #f1c40f !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+}
+
+#calcBtn:hover, .pay-btn:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+}
+
+/* Locaties wissen knop styling accent */
 #clearMap {
-    width: 100%;
-
-    background: #ff4d4d;
-
-    border: none;
-
-    color: white;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    margin-bottom: 15px;
-
-    font-weight: 700;
+    background: #222222 !important;
+    color: #ffffff !important;
+    padding: 10px 15px !important;
+    font-size: 12px !important;
+    width: auto !important;
+    align-self: flex-end;
+    border: 1px solid #333333 !important;
+}
+#clearMap:hover {
+    background: #333333 !important;
+    color: #f1c40f !important;
 }
 
-#calcBtn {
-    width: 100%;
-
-    background: var(--primary);
-
-    border: none;
-
-    color: #1f1f1f;
-
-    padding: 12px;
-
+/* Autocomplete Suggesties */
+.suggestions-list {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     border-radius: 8px;
-
-    cursor: pointer;
-
-    font-weight: 700;
-
-    margin-top: 10px;
+    max-height: 180px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-.pay-btn {
-    width: 100%;
-
-    border: none;
-
+.suggestions-list li {
     padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+    font-size: 13px;
+    color: #dddddd;
+}
 
-    border-radius: 8px;
+.suggestions-list li:hover {
+    background: #222;
+    color: #f1c40f;
+}
 
-    font-weight: 700;
+.hidden {
+    display: none !important;
+}
 
-    margin-top: 10px;
-
-    background: #2ecc71;
-
-    color: white;
+@media (max-width: 1000px) {
+    .book-ride-layout {
+        grid-template-columns: 1fr;
+    }
 }

@@ -2,160 +2,101 @@
 <html lang="nl">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Rit Boeken | Smart Taxi</title>
-
-   <link rel="stylesheet" href="../../css/klant/book-ride.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
-    >
-
+    
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/book-ride.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
 </head>
 
 <body>
 
-    <div class="booking-container">
+    <div class="dashboard-container">
 
-        <h1>NIEUWE RIT</h1>
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Customer Portal</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="book-ride.html" class="nav-item active">Book a Ride</a>
+                <a href="ride-history.html" class="nav-item">Ride History</a>
+                <a href="favorites.html" class="nav-item">Favorites</a>
+                <a href="../sub-pages/payments.html" class="nav-item">Payments</a>
+                <a href="profile.html" class="nav-item">Profile</a>
+                <a href="settings.html" class="nav-item">Settings</a>
+                <a href="support.html" class="nav-item">Support</a>
+            </nav>
+        </aside>
 
-        <p class="subtitle">
-            Typ je straatnaam om locaties te kiezen.
-        </p>
-
-        <div id="map"></div>
-
-        <button id="clearMap">
-            LOCATIES WISSEN
-        </button>
-
-        <form id="bookingForm">
-
-            <div class="input-group">
-
-                <label>
-                    📍 OPHAAL LOCATIE
-                </label>
-
-                <input
-                    type="text"
-                    id="pickup_location"
-                    placeholder="Typ je ophaallocatie of wacht op GPS..."
-                    autocomplete="off"
-                >
-
-                <ul
-                    id="pickup_suggestions"
-                    class="suggestions-list hidden"
-                ></ul>
-
+        <main class="main-content">
+            <div class="topbar">
+                <h2 class="page-title">Nieuwe rit</h2>
+                <button id="logoutBtn">Logout</button>
             </div>
 
-            <div class="input-group">
+            <p class="subtitle">Typ je straatnaam om locaties te kiezen of selecteer direct op de kaart.</p>
+            
+            <div class="book-ride-layout">
+                
+                <div class="content-panel panel-glow">
+                    <h3>Rit details</h3>
+                    <form id="bookingForm" class="quick-form">
 
-                <label>
-                    🏁 BESTEMMING
-                </label>
+                        <div class="input-group">
+                            <label>Ophaal locatie</label>
+                            <input type="text" id="pickup_location" placeholder="Typ je ophaallocatie of wacht op GPS..." autocomplete="off">
+                            <ul id="pickup_suggestions" class="suggestions-list hidden"></ul>
+                        </div>
 
-                <input
-                    type="text"
-                    id="destination"
-                    placeholder="Typ je bestemming..."
-                    autocomplete="off"
-                >
+                        <div class="input-group">
+                            <label>Bestemming</label>
+                            <input type="text" id="destination" placeholder="Typ je bestemming..." autocomplete="off">
+                            <ul id="destination_suggestions" class="suggestions-list hidden"></ul>
+                        </div>
 
-                <ul
-                    id="destination_suggestions"
-                    class="suggestions-list hidden"
-                ></ul>
+                        <div class="input-group">
+                            <label>Betaalmethode</label>
+                            <select id="payment_method">
+                                <option value="cash">Contant (Cash)</option>
+                                <option value="card">Bankpas (Card)</option>
+                                <option value="online">Mope / Online</option>
+                            </select>
+                        </div>
 
-            </div>
+                        <div id="priceBox" class="price-tag" style="display: none;">
+                            <div class="price-row">
+                                <span>Afstand: <strong id="distText">0</strong> km</span>
+                                <span>Totaal: <strong id="fareText">SRD 0.00</strong></span>
+                            </div>
+                        </div>
 
-            <div class="input-group">
+                        <button type="button" id="calcBtn">BEREKEN RITPRIJS</button>
+                        <button type="submit" id="payBtn" class="pay-btn hidden">NAAR BETALING</button>
 
-                <label>
-                    BETAALMETHODE
-                </label>
+                    </form>
+                </div>
 
-                <select id="payment_method">
-
-                    <option value="cash">
-                        Contant (Cash)
-                    </option>
-
-                    <option value="card">
-                        Bankpas (Card)
-                    </option>
-
-                    <option value="online">
-                        Mope / Online
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div id="priceBox" class="price-tag">
-
-                <div class="price-row">
-
-                    <span>
-                        Afstand:
-                        <strong id="distText">
-                            0
-                        </strong>
-                        km
-                    </span>
-
-                    <span>
-                        Totaal:
-                        <strong id="fareText">
-                            SRD 0.00
-                        </strong>
-                    </span>
-
+                <div class="content-panel panel-glow map-panel">
+                    <h3>Kaartoverzicht</h3>
+                    <button id="clearMap">LOCATIES WISSEN</button>
+                    <div id="map"></div>
                 </div>
 
             </div>
-
-            <button
-                type="button"
-                id="calcBtn"
-            >
-                BEREKEN RITPRIJS
-            </button>
-
-            <button
-                type="submit"
-                id="payBtn"
-                class="pay-btn hidden"
-            >
-                NAAR BETALING
-            </button>
-
-        </form>
+        </main>
 
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
+    
     <script src="../../js/klant/book-ride.js"></script>
 </body>
+
 </html>
