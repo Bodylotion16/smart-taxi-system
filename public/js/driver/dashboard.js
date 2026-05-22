@@ -112,3 +112,4 @@ function completeRide() {
 }
 
 document.addEventListener("DOMContentLoaded", loadDashboard);
+
