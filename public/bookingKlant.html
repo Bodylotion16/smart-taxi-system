@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rit Boeken | Smart Taxi</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
+<style>
+body { background: #1f1f1f; font-family: 'Inter', sans-serif; display:flex; justify-content:center; padding:40px 20px; }
+.login-container { background:#1f1f1f; color:#fff; max-width:500px; width:100%; border-radius:12px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.4);}
+.login-container h1 { text-align:center; font-weight:800; margin-bottom:5px; color:#f1c40f;}
+.login-container .subtitle { text-align:center; font-size:14px; margin-bottom:20px; color:#ccc;}
+.input-group { margin-bottom:15px; position:relative; }
+.input-group label { display:block; font-size:12px; font-weight:700; color:#f1c40f; margin-bottom:5px;}
+.input-group input, .input-group select { width:100%; padding:12px; border-radius:8px; border:1px solid #444; background:#2c2c2c; color:#fff; box-sizing:border-box;}
+.input-group select { appearance:none; -webkit-appearance:none; }
+.suggestions-list { position:absolute; z-index:1000; background:#2c2c2c; color:#fff; width:100%; border:1px solid #444; max-height:180px; overflow-y:auto; border-radius:0 0 8px 8px; list-style:none; padding:0; margin-top:-2px;}
+.suggestions-list li { padding:10px; cursor:pointer;}
+.suggestions-list li:hover { background:#444; }
+#map { height:300px; width:100%; border-radius:12px; margin-bottom:15px; }
+#clearMap { width:100%; background:#ff4d4d; border:none; color:white; padding:12px; border-radius:8px; cursor:pointer; margin-bottom:15px; font-weight:700;}
+#calcBtn { width:100%; background:#f1c40f; border:none; color:#1f1f1f; padding:12px; border-radius:8px; cursor:pointer; font-weight:700; margin-top:10px;}
+#payBtn { width:100%; border:none; padding:12px; border-radius:8px; font-weight:700; margin-top:10px; }
+.price-tag { display:none; background: rgba(241,196,15,0.1); border:1px solid #f1c40f; border-radius:12px; padding:12px; margin-top:15px;}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+<h1>NIEUWE RIT</h1>
+<p class="subtitle">Typ je straatnaam om locaties te kiezen.</p>
+
+<div id="map"></div>
+<button id="clearMap">LOCATIES WISSEN</button>
+
+<form id="bookingForm">
+    <div class="input-group">
+        <label>📍 OPHAAL LOCATIE</label>
+        <input type="text" id="pickup_location" placeholder="Typ je ophaallocatie of wacht op GPS..." autocomplete="off">
+        <ul id="pickup_suggestions" class="suggestions-list" style="display: none;"></ul>
+    </div>
+
+    <div class="input-group">
+        <label>🏁 BESTEMMING</label>
+        <input type="text" id="destination" placeholder="Typ je bestemming..." autocomplete="off">
+        <ul id="destination_suggestions" class="suggestions-list" style="display: none;"></ul>
+    </div>
+
+    <div class="input-group">
+        <label>BETAALMETHODE</label>
+        <select id="payment_method">
+            <option value="cash">Contant (Cash)</option>
+            <option value="card">Bankpas (Card)</option>
+            <option value="online">Mope / Online</option>
+        </select>
+    </div>
+
+    <div id="priceBox" class="price-tag">
+        <div style="display:flex; justify-content:space-between;">
+            <span>Afstand: <strong id="distText">0</strong> km</span>
+            <span>Totaal: <strong id="fareText">SRD 0.00</strong></span>
+        </div>
+    </div>
+
+    <button type="button" id="calcBtn">BEREKEN RITPRIJS</button>
+    <button type="submit" id="payBtn" style="display:none; background:#2ecc71; color:white;">NAAR BETALING</button>
+</form>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
