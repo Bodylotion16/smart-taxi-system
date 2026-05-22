@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Kaart - Smart Taxi</title>
+
+    <!-- Jouw algemene driver CSS -->
+    <link rel="stylesheet" href="../../css/driver.css">
+
+    <!-- Leaflet CSS -->
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin=""
+    >
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html" class="active">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Kaart</h1>
+            <p>Bekijk de chauffeur, klant en bestemming op de kaart.</p>
+        </div>
+
+        <div class="section">
+            <h2>Route overzicht</h2>
+            <div id="map"></div>
+        </div>
+
+        <div class="section">
+            <h2>Locatiegegevens</h2>
+            <p><strong>Chauffeur:</strong> Paramaribo Centrum</p>
+            <p><strong>Ophaallocatie klant:</strong> Latour</p>
+            <p><strong>Bestemming:</strong> Lelydorp</p>
+        </div>
+
+        <div class="section">
+            <h2>Acties</h2>
+            <button onclick="focusDriver()">Toon chauffeur</button>
+            <button onclick="focusPickup()">Toon klant</button>
+            <button onclick="focusDestination()">Toon bestemming</button>
+            <button onclick="showFullRoute()">Toon volledige route</button>
+        </div>
+    </main>
+</div>
+
+<!-- Leaflet JS -->
+<script 
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin="">
+</script>
+
+<!-- Jouw kaart JS -->
+<script src="../../js/driver/kaart.js"></script>
+
+</body>
+</html>
