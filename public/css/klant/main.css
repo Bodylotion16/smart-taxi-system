@@ -1,239 +1,192 @@
-:root {
-    --primary: #f1c40f;
-    --bg-dark: #1f1f1f;
-    --bg-input: #2c2c2c;
-    --text-light: #ffffff;
-    --text-dim: #cccccc;
+/* ==========================================================================
+   SUPPORT PAGE SPECIFIC STYLES
+   ========================================================================== */
+
+/* Grid layout om het formulier en het ticketoverzicht netjes naast elkaar te zetten */
+.support-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    margin-top: 20px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Panelen met de kenmerkende goud/gele glow-rand */
+.content-panel.panel-glow {
+    background: #121212;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.05);
 }
 
-body {
-    background: var(--bg-dark);
-
-    font-family: 'Inter', sans-serif;
-
-    display: flex;
-
-    justify-content: center;
-
-    padding: 40px 20px;
-}
-
-/* Container */
-
-.booking-container {
-    background: var(--bg-dark);
-
-    color: var(--text-light);
-
-    width: 100%;
-    max-width: 500px;
-
-    border-radius: 12px;
-
-    padding: 20px;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
-
-.booking-container h1 {
-    text-align: center;
-
-    font-weight: 800;
-
-    margin-bottom: 5px;
-
-    color: var(--primary);
-}
-
-.subtitle {
-    text-align: center;
-
-    font-size: 14px;
-
+.content-panel h3 {
+    color: #f1c40f;
     margin-bottom: 20px;
-
-    color: var(--text-dim);
+    font-size: 20px;
+    font-weight: 700;
 }
 
-/* Map */
-
-#map {
-    height: 300px;
-
-    width: 100%;
-
-    border-radius: 12px;
-
-    margin-bottom: 15px;
+/* Formulieren & Invoer styling */
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
-
-/* Form */
 
 .input-group {
-    margin-bottom: 15px;
-
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .input-group label {
-    display: block;
-
-    font-size: 12px;
-
+    font-size: 13px;
+    color: #ffffff;
     font-weight: 700;
-
-    color: var(--primary);
-
-    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-.input-group input,
-.input-group select {
-    width: 100%;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    border: 1px solid #444;
-
-    background: var(--bg-input);
-
-    color: white;
-}
-
-.input-group select {
-    appearance: none;
-
+/* Gecorrigeerde inputs, selectboxen en textareas */
+.input-group input, 
+#ticketCategory,
+.input-group textarea {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    padding: 14px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    width: 100% !important;
+    outline: none;
+    box-sizing: border-box;
+    
+    /* Verwijdert de standaard witte browser-styling van de selectbox */
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
-/* Suggestions */
-
-.suggestions-list {
-    position: absolute;
-
-    z-index: 1000;
-
-    background: var(--bg-input);
-
-    color: white;
-
-    width: 100%;
-
-    border: 1px solid #444;
-
-    max-height: 180px;
-
-    overflow-y: auto;
-
-    border-radius: 0 0 8px 8px;
-
-    list-style: none;
-
-    padding: 0;
-
-    margin-top: -2px;
+/* Zorgt ervoor dat de tekstinvoerbox niet groter gesleept kan worden */
+.input-group textarea {
+    resize: none;
 }
 
-.suggestions-list li {
+/* Focus glow-effecten */
+.input-group input:focus, 
+#ticketCategory:focus,
+.input-group textarea:focus {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* Zorgt dat de dropdown opties een donkere achtergrond hebben als je ze openklikt */
+#ticketCategory option {
+    background-color: #1a1a1a;
+    color: #ffffff;
     padding: 10px;
+}
 
+/* Custom strak goudgeel pijltje aan de rechterkant van het categorie-veld */
+#ticketCategory {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23f1c40f'><path d='M1 3h10L6 9z'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position: calc(100% - 15px) center !important;
+    padding-right: 40px !important;
+}
+
+/* Verzendknop */
+#submitTicketBtn {
+    background: #f1c40f !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
     cursor: pointer;
+    width: 100%;
+    transition: 0.2s ease;
+    text-transform: uppercase;
 }
 
-.suggestions-list li:hover {
-    background: #444;
+#submitTicketBtn:hover {
+    background: #e6b800 !important;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
 }
 
-.hidden {
-    display: none;
-}
-
-/* Price */
-
-.price-tag {
-    display: none;
-
-    background: rgba(241,196,15,0.1);
-
-    border: 1px solid var(--primary);
-
-    border-radius: 12px;
-
-    padding: 12px;
-
-    margin-top: 15px;
-}
-
-.price-row {
+/* ==========================================================================
+   TICKETS OVERZICHT CONTAINER & KAARTJES (RECHTS)
+   ========================================================================== */
+.tickets-panel {
     display: flex;
+    flex-direction: column;
+}
 
+.tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+/* Individuele support ticket kaarten */
+.ticket-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 15px;
+    transition: 0.2s ease;
+}
+
+.ticket-card:hover {
+    border-color: rgba(241, 196, 15, 0.2);
+}
+
+.ticket-header {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-/* Buttons */
-
-#clearMap {
-    width: 100%;
-
-    background: #ff4d4d;
-
-    border: none;
-
-    color: white;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    margin-bottom: 15px;
-
+.ticket-id {
+    font-size: 12px;
+    color: #888888;
     font-weight: 700;
 }
 
-#calcBtn {
-    width: 100%;
-
-    background: var(--primary);
-
-    border: none;
-
-    color: #1f1f1f;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
+.ticket-card h4 {
+    color: #ffffff;
+    margin: 0 0 6px 0;
+    font-size: 15px;
     font-weight: 700;
-
-    margin-top: 10px;
 }
 
-.pay-btn {
-    width: 100%;
-
-    border: none;
-
-    padding: 12px;
-
-    border-radius: 8px;
-
-    font-weight: 700;
-
-    margin-top: 10px;
-
-    background: #2ecc71;
-
-    color: white;
+.ticket-card p {
+    color: #aaaaaa;
+    font-size: 13px;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
 }
+
+.ticket-date {
+    font-size: 11px;
+    color: #666666;
+}
+
+/* ==========================================================================
+   STATUS BADGES
+   ========================================================================== */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Open Status (Geel) */
+.status-open {
+    background: rgba(241, 196, 15,
