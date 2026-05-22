@@ -1,0 +1,63 @@
+/* css/klant/review.css */
+
+.review-layout {
+    max-width: 650px;
+    margin-top: 20px;
+}
+
+.panel-desc {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+/* Aanpassingen voor het selectiemenu */
+.quick-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.quick-form select:focus {
+    border-color: #f39c12; /* Matcht met de Smart Taxi gele/oranje steunkleur */
+}
+
+/* Aanpassingen voor het grote tekstvak */
+.quick-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    resize: none; /* Voorkomt het kapottrekken van de lay-out */
+    transition: border-color 0.2s ease;
+}
+
+.quick-form textarea:focus {
+    border-color: #f39c12;
+}
+
+/* Extra ademruimte tussen groepen */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.9rem;
+}
