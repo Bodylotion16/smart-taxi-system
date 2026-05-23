@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Chauffeurs beheren - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/admin/admin-base.css">
+    <link rel="stylesheet" href="../../css/admin/admin-components.css">
+    <link rel="stylesheet" href="../../css/admin/admin-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Admin Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="gebruikers.html">Gebruikers</a>
+        <a href="chauffeurs.html" class="active">Chauffeurs</a>
+        <a href="ritten.html">Ritten</a>
+        <a href="klachten.html">Klachten</a>
+        <a href="instellingen.html">Instellingen</a>
+        <a href="../../auth/login.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Chauffeursbeheer</h1>
+            <p>Beheer chauffeurs, voertuiggegevens en accountstatussen.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Totaal chauffeurs</h3>
+                <p class="value" id="totalDrivers">4</p>
+            </div>
+
+            <div class="card">
+                <h3>Actief</h3>
+                <p class="value" id="activeDrivers">3</p>
+            </div>
+
+            <div class="card">
+                <h3>Geblokkeerd</h3>
+                <p class="value" id="blockedDrivers">1</p>
+            </div>
+
+            <div class="card">
+                <h3>Online</h3>
+                <p class="value">2</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-top">
+                <div>
+                    <h2>Chauffeurslijst</h2>
+                    <p>Controleer chauffeurs, voertuigen en beschikbaarheid.</p>
+                </div>
+
+                <div class="filter-bar">
+                    <input type="text" id="searchDriver" placeholder="Zoek chauffeur of kenteken">
+                    <select id="driverStatusFilter">
+                        <option value="all">Alle statussen</option>
+                        <option value="active">Actief</option>
+                        <option value="blocked">Geblokkeerd</option>
+                    </select>
+                    <button onclick="filterDrivers()">Filter</button>
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Chauffeur</th>
+                        <th>Contact</th>
+                        <th>Voertuig</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+
+                <tbody id="driverTable">
+                    <tr data-name="rohit patandin" data-plate="tx-2456" data-status="active">
+                        <td>
+                            <strong>Rohit Patandin</strong><br>
+                            <span class="muted-text">Driver ID: DR-001</span>
+                        </td>
+                        <td>
+                            rohit@example.com<br>
+                            <span class="muted-text">+597 8888888</span>
+                        </td>
+                        <td>
+                            Toyota Prius<br>
+                            <span class="muted-text">Kenteken: TX-2456</span>
+                        </td>
+                        <td><span class="status active">Actief</span></td>
+                        <td>
+                            <button class="btn-small btn-warning" onclick="toggleDriverStatus(this)">Blokkeren</button>
+                            <button class="btn-small btn-danger" onclick="deleteDriver(this, 'Rohit Patandin')">Verwijderen</button>
+                        </td>
+                    </tr>
+
+                    <tr data-name="aman mohan" data-plate="tx-7788" data-status="active">
+                        <td>
+                            <strong>Aman Mohan</strong><br>
+                            <span class="muted-text">Driver ID: DR-002</span>
+                        </td>
+                        <td>
+                            aman.driver@example.com<br>
+                            <span class="muted-text">+597 7777777</span>
+                        </td>
+                        <td>
+                            Nissan Note<br>
+                            <span class="muted-text">Kenteken: TX-7788</span>
+                        </td>
+                        <td><span class="status active">Actief</span></td>
+                        <td>
+                            <button class="btn-small btn-warning" onclick="toggleDriverStatus(this)">Blokkeren</button>
+                            <button class="btn-small btn-danger" onclick="deleteDriver(this, 'Aman Mohan')">Verwijderen</button>
+                        </td>
+                    </tr>
+
+                    <tr data-name="vyaas kalloe" data-plate="tx-9090" data-status="active">
+                        <td>
+                            <strong>Vyaas Kalloe</strong><br>
+                            <span class="muted-text">Driver ID: DR-003</span>
+                        </td>
+                        <td>
+                            vyaas@example.com<br>
+                            <span class="muted-text">+597 6666666</span>
+                        </td>
+                        <td>
+                            Toyota Axio<br>
+                            <span class="muted-text">Kenteken: TX-9090</span>
+                        </td>
+                        <td><span class="status active">Actief</span></td>
+                        <td>
+                            <button class="btn-small btn-warning" onclick="toggleDriverStatus(this)">Blokkeren</button>
+                            <button class="btn-small btn-danger" onclick="deleteDriver(this, 'Vyaas Kalloe')">Verwijderen</button>
+                        </td>
+                    </tr>
+
+                    <tr data-name="jayden groenveld" data-plate="tx-3344" data-status="blocked">
+                        <td>
+                            <strong>Jayden Groenveld</strong><br>
+                            <span class="muted-text">Driver ID: DR-004</span>
+                        </td>
+                        <td>
+                            jayden@example.com<br>
+                            <span class="muted-text">+597 5555555</span>
+                        </td>
+                        <td>
+                            Honda Fit<br>
+                            <span class="muted-text">Kenteken: TX-3344</span>
+                        </td>
+                        <td><span class="status blocked">Geblokkeerd</span></td>
+                        <td>
+                            <button class="btn-small btn-success" onclick="toggleDriverStatus(this)">Deblokkeren</button>
+                            <button class="btn-small btn-danger" onclick="deleteDriver(this, 'Jayden Groenveld')">Verwijderen</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/admin/chauffeurs.js"></script>
+</body>
+</html>
