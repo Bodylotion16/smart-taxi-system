@@ -3,96 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Chauffeur Registratie - Smart Taxi</title>
-
     <link rel="stylesheet" href="../css/registration-driver.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    <div class="login-container registration-container">
-
+    <div class="registration-container">
         <h1>Chauffeur Worden</h1>
-
-        <p class="subtitle">
-            Meld je aan en begin met ritten rijden.
-        </p>
+        <p class="subtitle">Meld je aan en begin met ritten rijden.</p>
 
         <form id="driverRegForm">
-
             <div class="name-row">
-
-                <input
-                    type="text"
-                    id="first_name"
-                    placeholder="Voornaam"
-                    required
-                >
-
-                <input
-                    type="text"
-                    id="last_name"
-                    placeholder="Achternaam"
-                    required
-                >
-
+                <input type="text" id="voornaam" placeholder="Voornaam" required>
+                <input type="text" id="achternaam" placeholder="Achternaam" required>
             </div>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="E-mailadres"
-                required
-            >
+            <input type="email" id="email" placeholder="E-mailadres" required>
+            <input type="tel" id="telefoon" placeholder="Telefoonnummer" required>
+            <input type="text" id="kenteken" placeholder="Kenteken (bijv. PA 12-34)" required>
+            <input type="text" id="auto_model" placeholder="Auto Model (bijv. Toyota Vitz)" required>
+            <input type="password" id="wachtwoord" placeholder="Wachtwoord" required>
 
-            <input
-                type="tel"
-                id="phone_number"
-                placeholder="Telefoonnummer"
-                required
-            >
-
-            <input
-                type="text"
-                id="license_plate"
-                placeholder="Kenteken (bijv. PA 12-34)"
-                required
-            >
-
-            <input
-                type="text"
-                id="car_model"
-                placeholder="Auto Model (bijv. Toyota Vitz)"
-                required
-            >
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Wachtwoord"
-                required
-            >
-
-            <button type="submit">
-                Account Aanmaken
-            </button>
+            <button type="submit">Account Aanmaken</button>
 
             <p class="footer-text">
-                Al een account?
-
-                <a href="login.html" class="reg-link">
-                    Log hier in
-                </a>
+                Al een account? <a href="login.html" class="reg-link">Log hier in</a>
             </p>
-
         </form>
-
     </div>
 
     <script src="../js/registration-driver.js"></script>
-
 </body>
 </html>
