@@ -21,6 +21,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
+            // FIX 1: Sla de live voornaam uit de database direct op in de browser!
+            // Hierdoor weet dashboard.js straks exact wie er achter het stuur zit (Vyaas of Anisha)
+            localStorage.setItem('userName', result.voornaam);
+
             alert(`Welkom terug, ${result.voornaam}!`);
 
             // GECORRIGEERDE REDIRECTS OP BASIS VAN JOUW MAPPENSTRUCTUUR:
@@ -29,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 window.location.href = '../portals/Klant/dashboard.html';
 
             } else if (result.role === 'taxi') {
-                // Verander dit eventueel ook naar jouw exacte driver bestand als dat anders heet (bijv. driver/dashboard.html)
+                // Gaat naar: portals/driver/dashboard.html
                 window.location.href = '../portals/driver/dashboard.html'; 
 
             } else {

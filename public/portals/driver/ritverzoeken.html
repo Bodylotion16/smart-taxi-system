@@ -32,39 +32,17 @@
             <p>Bekijk nieuwe ritten en kies of je ze accepteert of weigert.</p>
         </div>
 
-        <div class="section">
-            <h2>Nieuw ritverzoek</h2>
-
-            <p><strong>Klant:</strong> Simran</p>
-            <p><strong>Ophaallocatie:</strong> Latour</p>
-            <p><strong>Bestemming:</strong> Lelydorp</p>
-            <p><strong>Prijsindicatie:</strong> SRD 220</p>
-            <p><strong>Status:</strong> <span class="status" id="status-simran">Nieuw</span></p>
-
-            <button onclick="acceptRide('status-simran')">Accepteren</button>
-            <button onclick="declineRide('status-simran')">Weigeren</button>
-        </div>
-
-        <div class="section">
-            <h2>Nieuw ritverzoek</h2>
-
-            <p><strong>Klant:</strong> Aman</p>
-            <p><strong>Ophaallocatie:</strong> Flora</p>
-            <p><strong>Bestemming:</strong> Centrum</p>
-            <p><strong>Prijsindicatie:</strong> SRD 120</p>
-            <p><strong>Status:</strong> <span class="status" id="status-aman">Nieuw</span></p>
-
-            <button onclick="acceptRide('status-aman')">Accepteren</button>
-            <button onclick="declineRide('status-aman')">Weigeren</button>
+        <div id="ritverzoekenContainer">
+            <p style="color: #888;">Nieuwe ritverzoeken laden uit database...</p>
         </div>
 
         <div class="section">
             <h2>Uitleg</h2>
-            <p>Wanneer een chauffeur een rit accepteert, wordt deze rit later gekoppeld aan de actieve rit-pagina.</p>
+            <p>Wanneer een chauffeur een rit accepteert, wordt deze rit direct gekoppeld aan de actieve rit-pagina.</p>
         </div>
     </main>
 </div>
 
-<script src="../../js/driver/ritverzoeken.js"></script>
+<script src="/js/driver/ritverzoeken.js"></script>
 </body>
 </html>
