@@ -279,3 +279,151 @@
         align-items: flex-start;
     }
 }
+
+/* =========================
+   Admin Ritten Page
+   ========================= */
+
+.ride-status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.ride-status-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(145deg, #1f1f1f, #151515);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 40px var(--shadow);
+    padding: 20px;
+}
+
+.ride-status-card h3 {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ride-status-card p {
+    color: var(--white);
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.status-dot {
+    width: 14px;
+    height: 52px;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.dot-yellow {
+    background-color: var(--yellow);
+}
+
+.dot-blue {
+    background-color: var(--blue);
+}
+
+.dot-green {
+    background-color: var(--green);
+}
+
+.dot-red {
+    background-color: var(--red);
+}
+
+.rides-layout {
+    display: grid;
+    grid-template-columns: 2fr 0.9fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 14px 18px;
+}
+
+.ride-details-panel {
+    background: linear-gradient(145deg, #1f1f1f, #151515);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 40px var(--shadow);
+    padding: 24px;
+    position: sticky;
+    top: 24px;
+}
+
+.ride-details-panel h2 {
+    color: var(--yellow);
+    margin-bottom: 8px;
+}
+
+.ride-detail-box {
+    margin-top: 22px;
+    display: grid;
+    gap: 14px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+
+.detail-row span {
+    color: var(--muted);
+}
+
+.detail-row strong {
+    color: var(--white);
+    text-align: right;
+}
+
+.ride-status-control {
+    margin-top: 28px;
+}
+
+.ride-status-control h3 {
+    color: var(--yellow);
+    margin-bottom: 12px;
+}
+
+.ride-status-control select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: #111111;
+    color: var(--white);
+    outline: none;
+}
+
+@media (max-width: 1100px) {
+    .ride-status-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rides-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ride-details-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 900px) {
+    .ride-status-grid {
+        grid-template-columns: 1fr;
+    }
+}
