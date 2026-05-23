@@ -1,0 +1,127 @@
+/* =========================
+   ADMIN BASE CSS
+   Basis layout, kleuren, sidebar, body
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #050505;
+    --card: #1c1c1c;
+
+    --yellow: #facc15;
+    --yellow-dark: #eab308;
+
+    --white: #ffffff;
+    --text-light: #d4d4d4;
+    --muted: #a3a3a3;
+
+    --border: #333333;
+    --shadow: rgba(0, 0, 0, 0.55);
+
+    --green: #4ade80;
+    --red: #f87171;
+    --blue: #60a5fa;
+
+    --radius-sm: 10px;
+    --radius-md: 18px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a 0%, var(--black) 65%);
+    color: var(--white);
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 270px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #151515, #0a0a0a);
+    border-right: 1px solid var(--border);
+    padding: 28px 20px;
+    box-shadow: 12px 0 35px var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2 {
+    color: var(--yellow);
+    font-size: 28px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 13px 15px;
+    margin-bottom: 10px;
+    border-radius: var(--radius-sm);
+    transition: 0.25s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: var(--yellow);
+    color: #000000;
+    transform: translateX(4px);
+}
+
+.main {
+    flex: 1;
+    padding: 38px;
+}
+
+.header {
+    margin-bottom: 28px;
+}
+
+.header h1,
+.main h1 {
+    color: var(--yellow);
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.header p,
+.main p {
+    color: var(--muted);
+    font-size: 17px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar h2 {
+        text-align: left;
+    }
+
+    .main {
+        padding: 22px;
+    }
+}

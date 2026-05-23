@@ -45,3 +45,16 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         alert('Er is een fout opgetreden bij het inloggen.');
     }
 });
+
+if (role === 'klant') {
+    window.location.href = '../portals/Klant/dashboard.html';
+
+} else if (role === 'taxi' || role === 'driver' || role === 'chauffeur') {
+    window.location.href = '../portals/driver/dashboard.html';
+
+} else if (role === 'admin') {
+    window.location.href = '../portals/admin/dashboard.html';
+
+} else {
+    alert('Systeemfout: onbekende gebruikersrol.');
+}
