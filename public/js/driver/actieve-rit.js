@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 // BESTAND: public/js/driver/actieve-rit.js
-=======
-function changeRideStatus(newStatus, button) {
-    const statusElement = document.getElementById("rideStatus");
->>>>>>> 3111f6a123ed2b85921586b5bbf0a10ac87c589a
 
 let actieveBookingId = null;
 
-<<<<<<< HEAD
+// Functie om teksten veilig op het scherm te zetten
 function setRitText(id, value) {
     const element = document.getElementById(id);
     if (element) element.textContent = value;
@@ -27,7 +22,7 @@ async function laadActieveRitLive() {
             return;
         }
 
-        // Zoekt naar ritten met status 'accepted' of lopende statussen
+        // Zoekt naar ritten met status 'accepted' of lopende statussen van de rit-volger
         const actieveRit = data.liveRitten.find(rit => 
             rit.status === 'accepted' || 
             rit.status === 'Onderweg naar klant' || 
@@ -36,26 +31,28 @@ async function laadActieveRitLive() {
         );
 
         if (actieveRit) {
+            // Sla de Primary Key (booking_id_PK) op voor de updates
             actieveBookingId = actieveRit.booking_id_PK || actieveRit.booking_id; 
 
-            // Naam-fallback generator gekoppeld aan ID
+            // Dynamische naam-fallback generator gekoppeld aan ID (zodat hij matcht met ritverzoeken)
             const berekendeNaam = actieveBookingId % 2 === 0 ? "Aman" : "Simran";
 
-            // Vul de ritgegevens in
+            // Vul de ritgegevens live in op het scherm
             setRitText("customerName", actieveRit.customer_name || berekendeNaam);
             setRitText("customerPhone", actieveRit.customer_phone || "+597 7777777");
             setRitText("pickupLocation", actieveRit.pickup_location);
             setRitText("destination", actieveRit.destination);
             setRitText("price", `SRD ${actieveRit.fare}`);
             
-            // Toon de status netjes
+            // Toon de status netjes (vertaal 'accepted' visueel naar Geaccepteerd)
             const weergaveStatus = actieveRit.status === 'accepted' ? 'Geaccepteerd' : actieveRit.status;
             setRitText("rideStatus", weergaveStatus);
 
-            // Vul de routegegevens netjes in zonder kaarten te dupliceren
+            // Vul de routegegevens netjes in binnen de bestaande HTML spans
             setRitText("routeVan", actieveRit.pickup_location);
             setRitText("routeNaar", actieveRit.destination);
 
+            console.log(`✅ Actieve rit #${actieveBookingId} succesvol ingeladen.`);
         } else {
             toonGeenActieveRit();
         }
@@ -65,6 +62,7 @@ async function laadActieveRitLive() {
     }
 }
 
+// Resethulp wanneer er geen actieve rit is goedgekeurd
 function toonGeenActieveRit() {
     setRitText("customerName", "Geen actieve rit");
     setRitText("customerPhone", "-");
@@ -105,7 +103,7 @@ async function changeRideStatus(newStatus) {
             
             alert("✅ Ritstatus succesvol bijgewerkt naar: " + newStatus);
             
-            // Als de rit is afgerond, verversen we de pagina zodat hij verdwijnt naar de geschiedenis
+            // Als de rit volledig is afgerond, herladen we de pagina om het scherm te legen
             if (newStatus === 'Afgerond') {
                 laadActieveRitLive();
             }
@@ -118,20 +116,5 @@ async function changeRideStatus(newStatus) {
     }
 }
 
+// Schiet de live-pomp direct aan als de pagina klaarstaat
 document.addEventListener("DOMContentLoaded", laadActieveRitLive);
-=======
-    const buttons = document.querySelectorAll(".driver-status-flow button");
-
-    buttons.forEach(function(btn) {
-        btn.classList.remove("selected-status");
-    });
-
-    button.classList.add("selected-status");
-
-    if (newStatus === "Rit afgerond") {
-        statusElement.classList.add("completed");
-    } else {
-        statusElement.classList.remove("completed");
-    }
-}
->>>>>>> 3111f6a123ed2b85921586b5bbf0a10ac87c589a
