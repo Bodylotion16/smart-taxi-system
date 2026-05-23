@@ -24,65 +24,155 @@
     </aside>
 
     <main class="main">
-        <div class="header">
-            <h1>Admin Dashboard</h1>
-            <p>Beheer klanten, chauffeurs, ritten en meldingen.</p>
+        <div class="header admin-header">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Realtime overzicht van gebruikers, chauffeurs, ritten en meldingen.</p>
+            </div>
+
+            <div class="admin-badge">
+                Systeem actief
+            </div>
         </div>
 
         <div class="cards">
-            <div class="card">
-                <h3>Totaal gebruikers</h3>
+            <div class="card kpi-card">
+                <span class="kpi-label">Gebruikers</span>
                 <p class="value">128</p>
+                <small>+12 deze maand</small>
             </div>
 
-            <div class="card">
-                <h3>Actieve chauffeurs</h3>
+            <div class="card kpi-card">
+                <span class="kpi-label">Chauffeurs online</span>
                 <p class="value">24</p>
+                <small>6 chauffeurs momenteel bezet</small>
             </div>
 
-            <div class="card">
-                <h3>Ritten vandaag</h3>
+            <div class="card kpi-card">
+                <span class="kpi-label">Ritten vandaag</span>
                 <p class="value">37</p>
+                <small>31 afgerond, 6 actief</small>
             </div>
 
-            <div class="card">
-                <h3>Open klachten</h3>
-                <p class="value">4</p>
+            <div class="card kpi-card">
+                <span class="kpi-label">Open meldingen</span>
+                <p class="value warning-value">4</p>
+                <small>Aandacht vereist</small>
             </div>
         </div>
 
-        <div class="section">
-            <h2>Recente ritten</h2>
+        <div class="admin-layout">
+            <section class="section">
+                <div class="section-top">
+                    <div>
+                        <h2>Recente ritten</h2>
+                        <p>Laatste ritactiviteiten binnen het platform.</p>
+                    </div>
+                </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Klant</th>
-                        <th>Chauffeur</th>
-                        <th>Route</th>
-                        <th>Status</th>
-                        <th>Prijs</th>
-                    </tr>
-                </thead>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Rit ID</th>
+                            <th>Klant</th>
+                            <th>Chauffeur</th>
+                            <th>Route</th>
+                            <th>Status</th>
+                            <th>Prijs</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr>
-                        <td>Anisha</td>
-                        <td>Rohit</td>
-                        <td>Centrum → Zorg en Hoop</td>
-                        <td><span class="status active">Afgerond</span></td>
-                        <td>SRD 150</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>RT-1042</td>
+                            <td>Anisha</td>
+                            <td>Rohit</td>
+                            <td>Centrum → Zorg en Hoop</td>
+                            <td><span class="status active">Afgerond</span></td>
+                            <td>SRD 150</td>
+                        </tr>
 
-                    <tr>
-                        <td>Simran</td>
-                        <td>Aman</td>
-                        <td>Latour → Lelydorp</td>
-                        <td><span class="status pending">Onderweg</span></td>
-                        <td>SRD 220</td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr>
+                            <td>RT-1043</td>
+                            <td>Simran</td>
+                            <td>Aman</td>
+                            <td>Latour → Lelydorp</td>
+                            <td><span class="status pending">Onderweg</span></td>
+                            <td>SRD 220</td>
+                        </tr>
+
+                        <tr>
+                            <td>RT-1044</td>
+                            <td>Jayden</td>
+                            <td>Vyaas</td>
+                            <td>Flora → Centrum</td>
+                            <td><span class="status pending">Gepland</span></td>
+                            <td>SRD 120</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <aside class="section admin-side-panel">
+                <h2>Beheeracties</h2>
+                <p>Snelle toegang tot belangrijke adminmodules.</p>
+
+                <div class="admin-actions">
+                    <a href="gebruikers.html">Gebruikers beheren</a>
+                    <a href="chauffeurs.html">Chauffeurs beheren</a>
+                    <a href="ritten.html">Ritten controleren</a>
+                    <a href="klachten.html">Meldingen bekijken</a>
+                </div>
+            </aside>
+        </div>
+
+        <div class="admin-layout">
+            <section class="section">
+                <h2>Platformstatus</h2>
+
+                <div class="status-list">
+                    <div class="status-row">
+                        <span>Login systeem</span>
+                        <strong class="status-text-good">Operationeel</strong>
+                    </div>
+
+                    <div class="status-row">
+                        <span>Ritverwerking</span>
+                        <strong class="status-text-good">Operationeel</strong>
+                    </div>
+
+                    <div class="status-row">
+                        <span>Open klachten</span>
+                        <strong class="status-text-warning">4 open</strong>
+                    </div>
+
+                    <div class="status-row">
+                        <span>Geblokkeerde accounts</span>
+                        <strong class="status-text-danger">3 accounts</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Recente meldingen</h2>
+
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <strong>Nieuwe klacht ontvangen</strong>
+                        <p>Klant heeft vertraging gemeld bij rit RT-1043.</p>
+                    </div>
+
+                    <div class="activity-item">
+                        <strong>Nieuwe chauffeur geregistreerd</strong>
+                        <p>Account wacht op controle door admin.</p>
+                    </div>
+
+                    <div class="activity-item">
+                        <strong>Rit afgerond</strong>
+                        <p>RT-1042 is succesvol afgerond.</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 </div>
