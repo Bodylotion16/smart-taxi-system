@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/admin/admin-base.css">
+    <link rel="stylesheet" href="../../css/admin/admin-components.css">
+    <link rel="stylesheet" href="../../css/admin/admin-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Admin Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="gebruikers.html">Gebruikers</a>
+        <a href="chauffeurs.html">Chauffeurs</a>
+        <a href="ritten.html">Ritten</a>
+        <a href="feedback.html" class="active">Feedback</a>
+        <a href="instellingen.html">Instellingen</a>
+        <a href="../../auth/login.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header admin-header">
+            <div>
+                <h1>Feedback</h1>
+                <p>Bekijk beoordelingen en opmerkingen van klanten na afgeronde ritten.</p>
+            </div>
+
+            <div class="admin-badge">
+                Klantbeoordelingen
+            </div>
+        </div>
+
+        <div class="feedback-overview">
+            <div class="feedback-stat">
+                <h3>Gemiddelde score</h3>
+                <p class="stars">★★★★☆</p>
+            </div>
+
+            <div class="feedback-stat">
+                <h3>Totaal feedback</h3>
+                <p>4</p>
+            </div>
+
+            <div class="feedback-stat">
+                <h3>Laatste score</h3>
+                <p class="stars">★★★★★</p>
+            </div>
+        </div>
+
+        <div class="feedback-layout">
+            <section class="section">
+                <div class="section-top">
+                    <div>
+                        <h2>Feedbacklijst</h2>
+                        <p>Selecteer feedback om de volledige beoordeling te bekijken.</p>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" id="searchFeedback" placeholder="Zoek klant of chauffeur">
+                        <button onclick="filterFeedback()">Zoeken</button>
+                    </div>
+                </div>
+
+                <div class="feedback-list" id="feedbackList">
+                    <div class="feedback-card" data-customer="simran" data-driver="rohit" onclick="showFeedback('FB-001')">
+                        <div>
+                            <h3>Simran → Rohit</h3>
+                            <p>Rit: RT-1043 • 20 mei 2026</p>
+                        </div>
+                        <span class="stars">★★★★★</span>
+                    </div>
+
+                    <div class="feedback-card" data-customer="anisha" data-driver="aman" onclick="showFeedback('FB-002')">
+                        <div>
+                            <h3>Anisha → Aman</h3>
+                            <p>Rit: RT-1041 • 19 mei 2026</p>
+                        </div>
+                        <span class="stars">★★★★☆</span>
+                    </div>
+
+                    <div class="feedback-card" data-customer="aman" data-driver="vyaas" onclick="showFeedback('FB-003')">
+                        <div>
+                            <h3>Aman → Vyaas</h3>
+                            <p>Rit: RT-1042 • 18 mei 2026</p>
+                        </div>
+                        <span class="stars">★★★☆☆</span>
+                    </div>
+
+                    <div class="feedback-card" data-customer="jayden" data-driver="rohit" onclick="showFeedback('FB-004')">
+                        <div>
+                            <h3>Jayden → Rohit</h3>
+                            <p>Rit: RT-1039 • 17 mei 2026</p>
+                        </div>
+                        <span class="stars">★★★★★</span>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="feedback-detail-panel">
+                <h2>Feedbackdetails</h2>
+                <p class="muted-text">Klik op feedback om details te bekijken.</p>
+
+                <div class="detail-row">
+                    <span>Feedback ID</span>
+                    <strong id="feedbackId">-</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Klant</span>
+                    <strong id="feedbackCustomer">-</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Chauffeur</span>
+                    <strong id="feedbackDriver">-</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Rit</span>
+                    <strong id="feedbackRide">-</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Score</span>
+                    <strong class="stars" id="feedbackRating">-</strong>
+                </div>
+
+                <div class="feedback-message">
+                    <span>Feedback</span>
+                    <p id="feedbackMessage">Selecteer eerst een feedbackbericht.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/admin/feedback.js"></script>
+</body>
+</html>
