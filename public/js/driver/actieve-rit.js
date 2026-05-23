@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 // BESTAND: public/js/driver/actieve-rit.js
+=======
+function changeRideStatus(newStatus, button) {
+    const statusElement = document.getElementById("rideStatus");
+>>>>>>> 3111f6a123ed2b85921586b5bbf0a10ac87c589a
 
 let actieveBookingId = null;
 
+<<<<<<< HEAD
 function setRitText(id, value) {
     const element = document.getElementById(id);
     if (element) element.textContent = value;
@@ -113,3 +119,19 @@ async function changeRideStatus(newStatus) {
 }
 
 document.addEventListener("DOMContentLoaded", laadActieveRitLive);
+=======
+    const buttons = document.querySelectorAll(".driver-status-flow button");
+
+    buttons.forEach(function(btn) {
+        btn.classList.remove("selected-status");
+    });
+
+    button.classList.add("selected-status");
+
+    if (newStatus === "Rit afgerond") {
+        statusElement.classList.add("completed");
+    } else {
+        statusElement.classList.remove("completed");
+    }
+}
+>>>>>>> 3111f6a123ed2b85921586b5bbf0a10ac87c589a

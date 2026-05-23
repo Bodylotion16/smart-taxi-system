@@ -167,3 +167,19 @@
         text-align: left;
     }
 }
+
+/* Actieve rit status flow */
+.driver-status-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.driver-status-flow button {
+    margin-top: 10px;
+}
+
+.driver-status-flow button.selected-status {
+    background-color: var(--green);
+    color: #000000;
+}
