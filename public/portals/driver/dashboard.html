@@ -22,8 +22,8 @@
             <a href="reviews.html">Reviews</a>
 
             <a href="../../auth/login.html" class="logout-link" onclick="return confirm('Weet je zeker dat je wilt uitloggen?')">
-    Uitloggen
-</a>
+                Uitloggen
+            </a>
         </aside>
 
         <main class="main">
@@ -35,32 +35,33 @@
             <div class="cards">
                 <div class="card">
                     <h3>Huidige status</h3>
-                    <p class="value" id="driverStatus">Beschikbaar</p>
+                    <p class="value" id="driverStatus">Laden...</p>
                 </div>
 
                 <div class="card">
                     <h3>Ritten vandaag</h3>
-                    <p class="value" id="todayRides">5</p>
+                    <p class="value" id="todayRides">0</p>
                 </div>
 
                 <div class="card">
                     <h3>Nieuwe verzoeken</h3>
-                    <p class="value" id="newRequests">2</p>
+                    <p class="value" id="newRequests">0</p>
                 </div>
             </div>
 
-            <div class="section">
+            <div class="section" id="activeRideSection">
                 <h2>Actieve rit</h2>
-                <p><strong>Klant:</strong> Anisha</p>
-                <p><strong>Ophaallocatie:</strong> Paramaribo Centrum</p>
-                <p><strong>Bestemming:</strong> Zorg en Hoop</p>
-                <a href="actieve-rit.html"><button>Bekijk actieve rit</button></a>
+                <p><strong>Klant:</strong> <span id="activeCustomer">Geen actieve rit</span></p>
+                <p><strong>Ophaallocatie:</strong> <span id="activePickup">-</span></p>
+                <p><strong>Bestemming:</strong> <span id="activeDestination">-</span></p>
+                <p><strong>Tarief:</strong> <span id="activeFare">-</span></p>
+                <a href="actieve-rit.html" id="activeRideLink" style="display: none;"><button>Bekijk actieve rit</button></a>
             </div>
 
             <div class="section">
                 <h2>Snelle acties</h2>
                 <a href="ritverzoeken.html"><button>Bekijk ritverzoeken</button></a>
-                <a href="#"><button>Status wijzigen</button></a>
+                <a href="#" id="btnWijzigStatus"><button>Status wijzigen</button></a>
             </div>
         </main>
     </div>

@@ -1,61 +1,73 @@
+// BESTAND: public/js/registration-driver.js
+
 document.getElementById('driverRegForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Voorkom herladen van de pagina
 
-    e.preventDefault();
-
-    const formData = {
-
-        voornaam: document.getElementById('first_name').value,
-
-        achternaam: document.getElementById('last_name').value,
-
+    // Verzamel de gegevens uit de opgeschoonde HTML-ID's
+    const chauffeurData = {
+        voornaam: document.getElementById('voornaam').value,
+        achternaam: document.getElementById('achternaam').value,
         email: document.getElementById('email').value,
-
-        telefoon: document.getElementById('phone_number').value,
-
-        kenteken: document.getElementById('license_plate').value,
-
-        auto_model: document.getElementById('car_model').value,
-
-        wachtwoord: document.getElementById('password').value,
-
-        rol: 'taxi'
-
+        telefoon: document.getElementById('telefoon').value,
+        wachtwoord: document.getElementById('wachtwoord').value,
+        rol: 'taxi', 
+        kenteken: document.getElementById('kenteken').value,
+        auto_model: document.getElementById('auto_model').value
     };
 
     try {
-
         const response = await fetch('/api/register', {
-
             method: 'POST',
-
-            headers: {
-                'Content-Type': 'application/json'
-            },
-
-            body: JSON.stringify(formData)
-
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(chauffeurData)
         });
 
         const result = await response.json();
 
         if (result.success) {
-
-            alert('Account aangemaakt! Je kunt nu inloggen als chauffeur.');
-
-            window.location.href = 'login.html';
-
+            alert("🚖 Chauffeur succesvol geregistreerd!");
+            window.location.href = 'login.html'; // Stuur door naar login
         } else {
-
-            alert('Fout bij aanmaken chauffeur: ' + result.message);
-
+            alert("❌ Registratie mislukt: " + result.message);
         }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert('Er ging iets mis bij het registreren.');
-
+    } catch (err) {
+        console.error("Fetch fout:", err);
+        alert("Kan geen verbinding maken met de server.");
     }
+});
+// BESTAND: public/js/registration-driver.js
 
+document.getElementById('driverRegForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const chauffeurData = {
+        voornaam: document.getElementById('voornaam').value,
+        achternaam: document.getElementById('achternaam').value,
+        email: document.getElementById('email').value,
+        telefoon: document.getElementById('telefoon').value,
+        wachtwoord: document.getElementById('wachtwoord').value,
+        rol: 'taxi', 
+        kenteken: document.getElementById('kenteken').value,
+        auto_model: document.getElementById('auto_model').value
+    };
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(chauffeurData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("🚖 Chauffeur succesvol geregistreerd via de nieuwe schone structuur!");
+            window.location.href = 'login.html';
+        } else {
+            alert("❌ Registratie mislukt: " + result.message);
+        }
+    } catch (err) {
+        console.error("Fetch fout:", err);
+        alert("Kan geen verbinding maken met de server.");
+    }
 });

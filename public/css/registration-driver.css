@@ -1,183 +1,107 @@
-:root {
-    --primary: #f1c40f;
-    --primary-hover: #d4ac0d;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --text-light: #ffffff;
-    --text-dim: #a0a0a0;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* BESTAND: public/css/registration-driver.css */
 
 body {
+    background-color: #0b0b0b;
     font-family: 'Inter', sans-serif;
-
-    background: radial-gradient(circle at top right, #1a1a1a, #000000);
-
-    color: var(--text-light);
-
-    min-height: 100vh;
-
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    padding: 40px 20px;
+    min-height: 100vh;
+    color: #ffffff;
 }
 
 .registration-container {
-    background: var(--card-bg);
-
-    backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(255, 255, 255, 0.1);
-
+    background: #121212;
     padding: 40px;
-
-    border-radius: 24px;
-
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1a1a1a;
     width: 100%;
-    max-width: 500px;
-
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-
-    animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+    max-width: 450px;
+    box-sizing: border-box;
 }
 
 h1 {
     font-size: 2rem;
-
-    margin-bottom: 10px;
-
-    color: var(--primary);
-
+    font-weight: 800;
     text-transform: uppercase;
-
-    letter-spacing: 2px;
+    color: #f1c40f; /* De goudgele Smart Taxi huiskleur */
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
 }
 
 .subtitle {
-    color: var(--text-dim);
-
+    color: #888;
+    font-size: 0.95rem;
     margin-bottom: 30px;
-
-    font-size: 0.9rem;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .name-row {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
 input {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    padding: 14px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
     width: 100%;
-
-    background: rgba(255, 255, 255, 0.08);
-
-    border: 1px solid rgba(255, 255, 255, 0.1);
-
-    padding: 14px;
-
-    margin: 10px 0;
-
-    border-radius: 12px;
-
-    color: white;
-
-    font-size: 1rem;
-
-    transition: 0.3s;
-
-    outline: none;
-}
-
-input::placeholder {
-    color: var(--text-dim);
 }
 
 input:focus {
-    border-color: var(--primary);
-
-    background: rgba(255, 255, 255, 0.12);
-
-    box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+    outline: none;
+    border-color: #f1c40f;
+    background: #252525;
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.1);
 }
 
-button {
-    width: 100%;
-
-    background: var(--primary);
-
+button[type="submit"] {
+    background: #f1c40f;
     color: #000;
-
     border: none;
-
-    padding: 15px;
-
-    margin-top: 20px;
-
-    border-radius: 12px;
-
-    font-size: 1.1rem;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
     text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-button:hover {
-    background: var(--primary-hover);
+button[type="submit"]:hover {
+    background: #e67e22; /* Warme oranje/geel bij hover */
+}
 
-    transform: translateY(-2px);
-
-    box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
+button[type="submit"]:active {
+    transform: scale(0.98);
 }
 
 .footer-text {
-    margin-top: 25px;
-
-    color: var(--text-dim);
-
-    font-size: 0.85rem;
-
     text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .reg-link {
-    color: var(--primary);
-
+    color: #f1c40f;
     text-decoration: none;
-
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .reg-link:hover {
