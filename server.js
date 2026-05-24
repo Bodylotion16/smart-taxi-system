@@ -229,7 +229,19 @@ app.post('/api/driver/update-ride-status', (req, res) => {
         res.json({ success: true });
     });
 });
-
+// ==========================================
+// API: CHAUFFEUR REVIEWS OPHALEN
+// ==========================================
+app.get('/api/driver/reviews', (req, res) => {
+    // Gesimuleerde live data op basis van jouw array
+    const mockReviews = [
+        { date: "20 mei 2026", customer: "Anisha", rating: 5, comment: "Chauffeur was op tijd en vriendelijk." },
+        { date: "19 mei 2026", customer: "Simran", rating: 4, comment: "Goede rit, maar kleine vertraging." },
+        { date: "18 mei 2026", customer: "Aman", rating: 5, comment: "Veilige en comfortabele rit." }
+    ];
+    
+    res.json({ success: true, reviews: mockReviews });
+});
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
