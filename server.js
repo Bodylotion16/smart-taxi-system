@@ -315,7 +315,99 @@ app.get('/api/admin/dashboard', (req, res) => {
         });
     });
 });
+// ==========================================================================
+// API: HAAL SPECIFIEK PROFIEL OP (Inclusief join met customers voor het adres)
+// ==========================================================================
+app.get('/api/profile/:id', (req, res) => {
+    const userId = req.params.id;
 
+    const query = `
+        SELECT u.user_id_PK, u.first_name, u.last_name, u.email, u.phone_number, c.address 
+        FROM users u 
+        LEFT JOIN customers c ON u.user_id_PK = c.user_id_FK 
+        WHERE u.user_id_PK = ?
+    `;
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error("❌ Fout bij ophalen profielgegevens:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Gebruiker niet gevonden." });
+        }
+        res.json({ success: true, user: results[0] });
+    });
+});
+
+// ==========================================================================
+// API: UPDATE PROFIELGEGEVENS IN ZOWEL USERS ALS CUSTOMERS TABEL
+// ==========================================================================
+app.post('/api/profile/update', (req, res) => {
+    const { userId, first_name, last_name, email, phone_number, address } = req.body;
+
+    const sqlUpdateUser = `
+        UPDATE users 
+        SET first_name = ?, last_name = ?, email = ?, phone_number = ? 
+        WHERE user_id_PK = ?
+    `;
+
+    db.query(sqlUpdateUser, [first_name, last_name, email, phone_number, userId], (err) => {
+        if (err) {
+            console.error("❌ Fout bij updaten users tabel:", err.message);
+            return res.json({ success: false, message: "Fout bij updaten basisgegevens." });
+        }
+
+        // Update direct ook het adres in de customers tabel
+        const sqlUpdateCustomer = `UPDATE customers SET address = ? WHERE user_id_FK = ?`;
+        db.query(sqlUpdateCustomer, [address, userId], (err2) => {
+            if (err2) {
+                console.error("❌ Fout bij updaten customers adres:", err2.message);
+                return res.json({ success: false, message: "Fout bij updaten adresgegevens." });
+            }
+
+            console.log(`✅ Profiel van User #${userId} succesvol live bijgewerkt in MySQL!`);
+            res.json({ success: true });
+        });
+    });
+});
+// ==========================================================================
+// API: HAAL PROFIEL OP + BEREKEN LIVE RIT-STATISTIEKEN UIT DE DATABASE
+// ==========================================================================
+app.get('/api/profile/:id', (req, res) => {
+    const userId = req.params.id;
+
+    // Deze query haalt de user op, koppelt het adres EN telt live het aantal bookings!
+    const query = `
+        SELECT 
+            u.user_id_PK, 
+            u.first_name, 
+            u.last_name, 
+            u.email, 
+            u.phone_number, 
+            c.address,
+            COUNT(b.booking_id_PK) AS totaal_ritten,
+            DATE_FORMAT(MAX(b.booking_time), '%d-%m-%Y') AS laatste_rit
+        FROM users u 
+        LEFT JOIN customers c ON u.user_id_PK = c.user_id_FK 
+        LEFT JOIN bookings b ON c.customer_id_PK = b.customer_id_FK
+        WHERE u.user_id_PK = ?
+        GROUP BY u.user_id_PK, c.address;
+    `;
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error("❌ Fout bij ophalen profielstatistieken:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Gebruiker niet gevonden." });
+        }
+        
+        // Stuur de data terug naar de frontend
+        res.json({ success: true, user: results[0] });
+    });
+});
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
