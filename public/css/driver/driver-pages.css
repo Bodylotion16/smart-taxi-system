@@ -1,16 +1,17 @@
 /* =========================
    DRIVER PAGES CSS
-   Status beheer, chauffeur gegevens, kaart
+   Status beheer, chauffeur gegevens, kaart, actieve rit
    ========================= */
 
-/* Gedeelde page cards */
 .status-card,
 .profile-card,
 .location-card {
-    background: linear-gradient(145deg, #1f1f1f, #151515);
-    border: 1px solid var(--border);
+    background: rgba(15, 15, 15, 0.58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--radius-md);
-    box-shadow: 0 18px 40px var(--shadow);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
 /* Status beheer */
@@ -68,7 +69,7 @@
     justify-content: space-between;
     gap: 20px;
     padding: 12px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .profile-row:last-child {
@@ -91,7 +92,7 @@
     height: 140px;
     border: 2px solid var(--yellow);
     border-radius: 50%;
-    background: linear-gradient(145deg, #2b2b2b, #111111);
+    background: rgba(0, 0, 0, 0.45);
     color: var(--yellow);
     display: flex;
     align-items: center;
@@ -109,9 +110,9 @@
 #map {
     width: 100%;
     height: 500px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--radius-md);
-    box-shadow: 0 18px 40px var(--shadow);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
     overflow: hidden;
     z-index: 1;
 }
@@ -141,6 +142,41 @@
     padding: 20px;
 }
 
+/* Actieve rit status flow */
+.driver-status-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.driver-status-flow button {
+    margin-top: 10px;
+}
+
+.driver-status-flow button.selected-status {
+    background-color: var(--green);
+    color: #000000;
+}
+
+/* Samenvatting / statistieken */
+.section span[id^="stat"] {
+    color: var(--white);
+    font-weight: 900;
+}
+
+#statTotaalVerdiend,
+#statGemiddeldePrijs {
+    color: var(--yellow);
+}
+
+/* Inline flex fixes */
+.section div[style*="display: flex"] {
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    margin-top: 15px;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
     .status-options,
@@ -166,228 +202,4 @@
     .profile-value {
         text-align: left;
     }
-}
-
-/* Actieve rit status flow */
-.driver-status-flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.driver-status-flow button {
-    margin-top: 10px;
-}
-
-.driver-status-flow button.selected-status {
-    background-color: var(--green);
-    color: #000000;
-}
-/* ==========================================================================
-   BESTAND: public/css/driver/driver-pages.css
-   PAGINA SPECIFIEKE STYLING (Actieve rit & Ritverzoeken)
-   ========================================================================== */
-
-/* Hoofdkaarten / Secties op de pagina */
-.section {
-    background: #121212;
-    padding: 25px 30px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #1a1a1a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.section h2 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #f1c40f; /* Smart Taxi Goudgeel */
-    margin-top: 0;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-}
-
-.section p {
-    margin: 12px 0;
-    font-size: 1rem;
-    color: #ddd;
-    line-height: 1.5;
-}
-
-.section strong {
-    color: #888;
-    font-weight: 600;
-    display: inline-block;
-    width: 140px; /* Zorgt dat alle labels netjes links uitlijnen */
-}
-
-/* Status Label (Bijv. Geaccepteerd, Onderweg, etc.) */
-.status {
-    background: rgba(241, 194, 15, 0.15);
-    color: #f1c40f;
-    border: 1px solid #f1c40f;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: inline-block;
-}
-
-/* Knoppen Container en Styling */
-.section button {
-    background: #f1c40f;
-    color: #000;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.section button:hover {
-    background: #e67e22; /* Warme oranje/geel bij hover */
-}
-
-.section button:active {
-    transform: scale(0.97);
-}
-
-/* Specifieke styling voor de route links/kaarten */
-.section a {
-    text-decoration: none;
-    display: inline-block;
-}
-
-/* Responsieve flexbox voor de statusknoppen rij */
-.section div[style*="display: flex"] {
-    display: flex !important;
-    gap: 12px !important;
-    flex-wrap: wrap !important;
-    margin-top: 15px;
-}
-/* ==========================================================================
-   BESTAND: public/css/driver/driver-pages.css
-   PAGINA SPECIFIEKE STYLING (Uitbreiding voor Ritgeschiedenis)
-   ========================================================================== */
-
-/* Algemene sectie / Card container */
-.section {
-    background: #121212;
-    padding: 25px 30px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #1a1a1a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.section h2 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #f1c40f; /* Smart Taxi Goudgeel */
-    margin-top: 0;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-}
-
-/* ==========================================================================
-   TABEL STYLING (Voor de rittenhistorie)
-   ========================================================================== */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    text-align: left;
-}
-
-th {
-    color: #888;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 12px 16px;
-    border-bottom: 2px solid #1a1a1a;
-}
-
-td {
-    color: #ddd;
-    font-size: 0.95rem;
-    padding: 16px;
-    border-bottom: 1px solid #1a1a1a;
-    vertical-align: middle;
-}
-
-/* Subtiel oplichten van een rij als je eroverheen hovert */
-tbody tr:hover {
-    background: rgba(255, 255, 255, 0.02);
-}
-
-/* Groene 'Afgerond' Status Badge */
-.status {
-    background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
-    border: 1px solid #2ecc71;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    display: inline-block;
-    text-transform: capitalize;
-}
-
-/* Details Actieknop binnen de tabel */
-table button {
-    background: #f1c40f;
-    color: #000;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-}
-
-table button:hover {
-    background: #e67e22; /* Sfeervol oranje/geel bij hover */
-}
-
-table button:active {
-    transform: scale(0.96);
-}
-
-/* ==========================================================================
-   SAMENVATTING STYLING
-   ========================================================================== */
-.section p {
-    margin: 14px 0;
-    font-size: 1rem;
-    color: #ddd;
-    line-height: 1.5;
-}
-
-.section strong {
-    color: #888;
-    font-weight: 600;
-    display: inline-block;
-    width: 220px; /* Zorgt dat de samenvattingslabels perfect uitlijnen */
-}
-
-/* Markeer de live berekende getallen subtiel */
-.section span[id^="stat"] {
-    color: #fff;
-    font-weight: 700;
-}
-
-/* Specifiek voor geldbedragen in de samenvatting */
-#statTotaalVerdiend, #statGemiddeldePrijs {
-    color: #f1c40f; /* Maakt de verdiensten mooi goudgeel */
 }

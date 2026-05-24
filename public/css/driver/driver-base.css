@@ -32,40 +32,32 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    
-    background-image: 
-        radial-gradient(
-            circle at 50% 90%, 
-            rgba(30, 30, 30, 0.35) 0%, 
-            rgba(5, 5, 5, 0.94) 50%, 
-            var(--black) 100%
-        ), 
-        url('../../img/portal-background.png');
-        
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.58)),
+        url("../../img/driver-bg.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    
-    background-blend-mode: multiply;
-    
     color: var(--white);
     min-height: 100vh;
 }
 
-
 .container {
     display: flex;
     min-height: 100vh;
+    background: transparent;
 }
 
 .sidebar {
     width: 270px;
     min-height: 100vh;
-    background: linear-gradient(180deg, #151515, #0a0a0a);
-    border-right: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
     padding: 28px 20px;
-    box-shadow: 12px 0 35px var(--shadow);
+    box-shadow: 12px 0 35px rgba(0, 0, 0, 0.65);
     display: flex;
     flex-direction: column;
 }
@@ -101,6 +93,7 @@ body {
 .main {
     flex: 1;
     padding: 38px;
+    background: transparent;
 }
 
 .header {
@@ -130,7 +123,7 @@ body {
         width: 100%;
         min-height: auto;
         border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .sidebar h2 {
