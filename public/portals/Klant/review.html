@@ -1,84 +1,90 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rit Beoordelen | Smart Taxi</title>
-    
+    <title>Review geven | Smart Taxi</title>
+
     <link rel="stylesheet" href="../../css/klant/dashboard.css">
     <link rel="stylesheet" href="../../css/klant/review.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="dashboard-container">
 
         <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Klantportaal</h2>
+            </div>
 
-    <div class="logo-area">
-        <h2>Klantportaal</h2>
-    </div>
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="ride-history.html" class="nav-item">Mijn ritten</a>
+                <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
+                <a href="review.html" class="nav-item active">Review</a>
+                <a href="profile.html" class="nav-item">Mijn profiel</a>
+                <a href="settings.html" class="nav-item">Instellingen</a>
+                <a href="support.html" class="nav-item">Support</a>
 
-    <nav class="nav-menu">
-        <a href="dashboard.html" class="nav-item">Dashboard</a>
-        <a href="ride-history.html" class="nav-item">Mijn ritten</a>
-        <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
-        <a href="review.html" class="nav-item active">Review</a>
-        <a href="profile.html" class="nav-item">Mijn profiel</a>
-        <a href="settings.html" class="nav-item">Instellingen</a>
-         <a href="support.html" class="nav-item">Support</a>
-    </nav>
+                <a href="../../auth/login.html" class="nav-item logout-link">Uitloggen</a>
+            </nav>
         </aside>
 
         <main class="main-content">
             <div class="topbar">
-                <h2>Chauffeur Beoordelen</h2>
-                <button id="logoutBtn">Logout</button>
+                <h2 class="page-title">Review geven</h2>
             </div>
-            <p class="subtitle">Laat ons weten hoe je rit is verlopen.</p>
+
+            <p class="subtitle">Geef een beoordeling voor je afgeronde rit.</p>
 
             <div class="review-layout">
-                <div class="content-panel">
-                    <h3>Jouw Feedback</h3>
-                    <p class="panel-desc">Selecteer de chauffeur en geef je eerlijke mening om onze service te verbeteren.</p>
-                    
+                <div class="content-panel panel-glow">
+                    <h3>Beoordeling</h3>
+                    <p class="panel-desc">Selecteer de chauffeur en geef je ervaring met deze rit.</p>
+
                     <form id="customerReviewForm" class="quick-form">
-                        
+
                         <div class="input-group">
-                            <label for="driverSelect">Kies de chauffeur</label>
+                            <label for="driverSelect">Chauffeur</label>
                             <select id="driverSelect" required>
-                                <option value="">Wie was je chauffeur?</option>
+                                <option value="">Selecteer chauffeur</option>
                                 <option value="driver_rohit">Rohit Patandin</option>
                                 <option value="driver_anish">Anish Ramcharan</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <label for="rating">Aantal sterren</label>
+                            <label for="rating">Sterren</label>
                             <div class="rating-select-wrapper">
                                 <select id="rating" required>
-                                    <option value="">Geef een beoordeling...</option>
-                                    <option value="5">⭐⭐⭐⭐⭐ (Uitstekend)</option>
-                                    <option value="4">⭐⭐⭐⭐ (Goed)</option>
-                                    <option value="3">⭐⭐⭐ (Gemiddeld)</option>
-                                    <option value="2">⭐⭐ (Matig)</option>
-                                    <option value="1">⭐ (Slecht)</option>
+                                    <option value="">Geef een beoordeling</option>
+                                    <option value="5">★★★★★ Uitstekend</option>
+                                    <option value="4">★★★★☆ Goed</option>
+                                    <option value="3">★★★☆☆ Gemiddeld</option>
+                                    <option value="2">★★☆☆☆ Matig</option>
+                                    <option value="1">★☆☆☆☆ Slecht</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="input-group">
-                            <label for="reviewText">Beschrijf je ervaring</label>
-                            <textarea id="reviewText" rows="5" placeholder="Wat vond je van de route, de netheid van de auto en de service van de chauffeur?" required></textarea>
+                            <label for="reviewText">Opmerking</label>
+                            <textarea id="reviewText" rows="5" placeholder="Beschrijf kort je ervaring met de rit en chauffeur." required></textarea>
                         </div>
 
-                        <button type="submit" class="btn-primary">Review Verzenden</button>
+                        <button type="submit" class="btn-primary">Review verzenden</button>
                     </form>
                 </div>
             </div>
         </main>
+
     </div>
 
     <script src="../../js/klant/review.js"></script>
 </body>
+
 </html>

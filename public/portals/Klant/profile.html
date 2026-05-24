@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Profiel | Smart Taxi</title>
+    <title>Mijn profiel | Smart Taxi</title>
 
     <link rel="stylesheet" href="../../css/klant/dashboard.css">
     <link rel="stylesheet" href="../../css/klant/profile.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="dashboard-container">
 
         <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Klantportaal</h2>
+            </div>
 
-    <div class="logo-area">
-        <h2>Klantportaal</h2>
-    </div>
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="ride-history.html" class="nav-item">Mijn ritten</a>
+                <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
+                <a href="review.html" class="nav-item">Review</a>
+                <a href="profile.html" class="nav-item active">Mijn profiel</a>
+                <a href="settings.html" class="nav-item">Instellingen</a>
+                <a href="support.html" class="nav-item">Support</a>
 
-    <nav class="nav-menu">
-        <a href="dashboard.html" class="nav-item">Dashboard</a>
-        <a href="ride-history.html" class="nav-item">Mijn ritten</a>
-        <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
-        <a href="review.html" class="nav-item">Review</a>
-        <a href="profile.html" class="nav-item active">Mijn profiel</a>
-        <a href="settings.html" class="nav-item">Instellingen</a>
-         <a href="support.html" class="nav-item">Support</a>
-    </nav>
-
+                <a href="../../auth/login.html" class="nav-item logout-link">Uitloggen</a>
+            </nav>
         </aside>
 
         <main class="main-content">
             <div class="topbar">
                 <h2 class="page-title">Mijn profiel</h2>
-                <button id="logoutBtn">Uitloggen</button>
             </div>
 
             <p class="subtitle">Bekijk en beheer je persoonlijke klantgegevens.</p>
@@ -111,9 +112,7 @@
                 <div class="content-panel panel-glow">
                     <h3>Accountbeveiliging</h3>
 
-                    <p>
-                        Je wachtwoord en beveiligingsvoorkeuren beheer je via de instellingenpagina.
-                    </p>
+                    <p>Je wachtwoord en beveiligingsvoorkeuren beheer je via de instellingenpagina.</p>
 
                     <a href="settings.html" class="link-yellow">
                         Ga naar instellingen →
@@ -133,11 +132,6 @@
                             <span>Notificaties</span>
                             <strong>E-mail actief</strong>
                         </div>
-
-                        <div class="profile-info-row">
-                            <span>Taal</span>
-                            <strong>Nederlands</strong>
-                        </div>
                     </div>
                 </div>
 
@@ -147,4 +141,5 @@
 
     <script src="../../js/klant/profile.js"></script>
 </body>
+
 </html>
