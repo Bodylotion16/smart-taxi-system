@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +7,8 @@
 
     <link rel="stylesheet" href="../../css/klant/dashboard.css">
     <link rel="stylesheet" href="../../css/klant/support.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
     <div class="dashboard-container">
@@ -24,13 +21,13 @@
             <nav class="nav-menu">
                 <a href="dashboard.html" class="nav-item">Dashboard</a>
                 <a href="ride-history.html" class="nav-item">Mijn ritten</a>
-                <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
+                <a href="payment.html" class="nav-item">Betalingen</a>
                 <a href="review.html" class="nav-item">Review</a>
                 <a href="profile.html" class="nav-item">Mijn profiel</a>
                 <a href="settings.html" class="nav-item">Instellingen</a>
                 <a href="support.html" class="nav-item active">Support</a>
 
-                <a href="../../auth/login.html" class="nav-item logout-link">Uitloggen</a>
+                <a href="../../auth/login.html" class="nav-item logout-link" id="logoutBtn">Uitloggen</a>
             </nav>
         </aside>
 
@@ -41,72 +38,47 @@
 
             <p class="subtitle">Heb je een probleem met een rit, betaling of je account? Stuur ons een bericht.</p>
 
-            <div class="support-layout">
+            <div class="dashboard-grid">
 
                 <div class="content-panel panel-glow">
                     <h3>Bericht sturen</h3>
-
+                    
                     <form id="supportForm" class="quick-form">
-
                         <div class="input-group">
-                            <label>Onderwerp</label>
-                            <input type="text" id="ticketSubject" placeholder="Bijv. probleem met betaling of verloren voorwerp" required>
+                            <label for="supportSubject">Onderwerp</label>
+                            <input type="text" id="supportSubject" placeholder="Bijv. probleem met betaling of verloren voorwerp" required>
                         </div>
 
                         <div class="input-group">
-                            <label>Categorie</label>
-                            <select id="ticketCategory">
-                                <option value="rit">Probleem met een rit</option>
-                                <option value="betaling">Betalingen en facturen</option>
-                                <option value="account">Account en privacy</option>
-                                <option value="klacht">Klacht of compliment</option>
+                            <label for="supportCategory">Categorie</label>
+                            <select id="supportCategory" required>
+                                <option value="Rit">Probleem met een rit</option>
+                                <option value="Betaling">Probleem met een betaling</option>
+                                <option value="Account">Account of App voorkeuren</option>
+                                <option value="Overig">Overige vraag</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <label>Beschrijving</label>
-                            <textarea id="ticketMessage" rows="5" placeholder="Beschrijf je vraag of probleem zo duidelijk mogelijk." required></textarea>
+                            <label for="supportMessage">Beschrijving</label>
+                            <textarea id="supportMessage" rows="5" placeholder="Beschrijf je vraag of probleem zo duidelijk mogelijk." required></textarea>
                         </div>
 
-                        <button type="submit" id="submitTicketBtn">Bericht versturen</button>
-
+                        <button type="submit" class="btn-primary">Bericht versturen</button>
                     </form>
                 </div>
 
-                <div class="content-panel panel-glow tickets-panel">
+                <div class="content-panel panel-glow">
                     <h3>Mijn meldingen</h3>
-
-                    <div class="tickets-list" id="ticketsList">
-                        <div class="ticket-card">
-                            <div class="ticket-header">
-                                <span class="ticket-id">#TK-8492</span>
-                                <span class="status-badge status-open">Open</span>
-                            </div>
-
-                            <h4>Ritprijs klopt niet</h4>
-                            <p>Mijn rit gaf eerst SRD 120 aan, maar uiteindelijk werd SRD 150 berekend.</p>
-                            <span class="ticket-date">Vandaag, 14:22</span>
+                    <div id="ticketsContainer" class="tickets-list">
+                        <p class="loading-text">Meldingen worden live opgehaald...</p>
                         </div>
-
-                        <div class="ticket-card">
-                            <div class="ticket-header">
-                                <span class="ticket-id">#TK-7104</span>
-                                <span class="status-badge status-pending">In behandeling</span>
-                            </div>
-
-                            <h4>Telefoon vergeten in taxi</h4>
-                            <p>Ik denk dat mijn telefoon is achtergebleven op de achterbank van de taxi.</p>
-                            <span class="ticket-date">18 mei, 09:15</span>
-                        </div>
-                    </div>
                 </div>
 
             </div>
         </main>
-
     </div>
 
-    <script src="../../js/klant/support.js"></script>
+    <script src="../../js/Klant/support.js"></script>
 </body>
-
 </html>
