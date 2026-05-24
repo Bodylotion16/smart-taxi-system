@@ -408,6 +408,65 @@ app.get('/api/profile/:id', (req, res) => {
         res.json({ success: true, user: results[0] });
     });
 });
+// ==========================================================================
+// API: WACHTWOORD VEILIG WIJZIGEN (Met verificatie van huidige wachtwoord)
+// ==========================================================================
+app.post('/api/settings/change-password', (req, res) => {
+    const { userId, currentPassword, newPassword } = req.body;
+
+    // Eerst controleren of het huidige wachtwoord matcht
+    const sqlCheck = "SELECT password FROM users WHERE user_id_PK = ?";
+    db.query(sqlCheck, [userId], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(500).json({ success: false, message: "Gebruiker niet gevonden." });
+        }
+
+        if (results[0].password !== currentPassword) {
+            return res.json({ success: false, message: "Het huidige wachtwoord is onjuist." });
+        }
+
+        // Als het klopt, voeren we de update uit
+        const sqlUpdate = "UPDATE users SET password = ? WHERE user_id_PK = ?";
+        db.query(sqlUpdate, [newPassword, userId], (errUpdate) => {
+            if (errUpdate) {
+                return res.json({ success: false, message: "Updaten mislukt." });
+            }
+            console.log(`🔒 Wachtwoord succesvol gewijzigd voor User #${userId}`);
+            res.json({ success: true });
+        });
+    });
+});
+
+// ==========================================================================
+// API: NOTIFICATIEVOORKEUREN OPSLAAN (Tijdelijke console feedback/database update)
+// ==========================================================================
+app.post('/api/settings/notifications', (req, res) => {
+    const { userId, emailNotif, smsNotif } = req.body;
+    
+    // Logt de statuswijziging live op de server terminal
+    console.log(`🔔 Notificatie update voor User #${userId} -> Email: ${emailNotif}, SMS: ${smsNotif}`);
+    res.json({ success: true });
+});
+
+// ==========================================================================
+// API: ACCOUNT DEACTIVEREN (Zet de rol of een statuskolom om)
+// ==========================================================================
+app.post('/api/settings/deactivate', (req, res) => {
+    const { userId } = req.body;
+
+    // We veranderen de rol naar 'inactief' zodat ze niet meer in het portaal kunnen
+    const query = "UPDATE users SET role = 'inactief' WHERE user_id_PK = ?";
+
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error("❌ Fout bij deactiveren van account:", err.message);
+            return res.json({ success: false, message: "Databasefout." });
+        }
+        console.log(`🚨 User #${userId} heeft zojuist zijn account gedeactiveerd.`);
+        res.json({ success: true });
+    });
+});
+
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
