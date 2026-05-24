@@ -184,3 +184,40 @@
         grid-template-columns: 1fr;
     }
 }
+.input-group {
+    position: relative; /* Cruciaal voor absolute positionering van de lijst */
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #121212;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin: 5px 0 0 0;
+    padding: 0;
+    list-style: none;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.suggestions-list li {
+    padding: 10px 15px;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.suggestions-list li:hover {
+    background: #f1c40f;
+    color: #000;
+}
+
+.hidden {
+    display: none !important;
+}

@@ -1,296 +1,253 @@
+// BESTAND: public/js/klant/book-ride.js
+
 let map;
-let pickupLatLng = null;
-let destinationLatLng = null;
 let routingControl = null;
-let berekendeFare = 0;
-let berekendeAfstand = 0;
+let pickupMarker = null;
+let destinationMarker = null;
 
-/* =========================
-   MAP INITIALISATIE
-========================= */
-map = L.map('map').setView([5.8520, -55.2038], 13);
+let calculatedDistance = 0;
+let calculatedFare = 0;
 
-L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
+// Instellingen voor ritprijs (SRD)
+const STARTTARIEF = 40.00;
+const PER_KM_TARIEF = 25.00;
+
+// ==========================================
+// 1. KAART INITIALISEREN (Gecentreerd op Paramaribo)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🗺️ Kaart initialiseren op Paramaribo...");
+    
+    // Coördinaten van Paramaribo Centrum
+    map = L.map('map').setView([5.8232, -55.1679], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
-    }
-).addTo(map);
+    }).addTo(map);
 
-/* =========================
-   INTEGRATIE: NAVIGATIE & LOGOUT
-========================= */
-document.getElementById("logoutBtn").addEventListener("click", () => {
-    window.location.href = "../login.html";
-});
-
-/* =========================
-   INTEGRATIE: RIT HERBOEKEN (SESSIONSTORAGE)
-========================= */
-window.addEventListener("DOMContentLoaded", async () => {
-    const vanLocatie = sessionStorage.getItem("rebookVan");
-    const naarLocatie = sessionStorage.getItem("rebookNaar");
-
-    if (vanLocatie && naarLocatie) {
-        document.getElementById('pickup_location').value = vanLocatie;
-        document.getElementById('destination').value = naarLocatie;
-
-        // Gegevens direct wissen uit het geheugen voor herladen
-        sessionStorage.removeItem("rebookVan");
-        sessionStorage.removeItem("rebookNaar");
-
-        // Start het omzetten van tekst naar kaartcoördinaten (Geocoding)
-        try {
-            const coordVan = await geocodeAddress(vanLocatie);
-            if (coordVan) pickupLatLng = coordVan;
-
-            const coordNaar = await geocodeAddress(naarLocatie);
-            if (coordNaar) destinationLatLng = coordNaar;
-
-            if (pickupLatLng && destinationLatLng) {
-                updateRoute();
-                map.fitBounds(L.latLngBounds(pickupLatLng, destinationLatLng), { padding: [50, 50] });
-            }
-        } catch (error) {
-            console.error("Herboeken mislukt tijdens geocoding:", error);
+    // Koppel event listeners
+    setupAutocomplete('pickup_location', 'pickup_suggestions', 'pickup');
+    setupAutocomplete('destination', 'destination_suggestions', 'destination');
+    
+    document.getElementById("calcBtn").addEventListener("click", berekenRitPrijs);
+    document.getElementById("bookingForm").addEventListener("submit", slaRitOpInDatabase);
+    document.getElementById("clearMap").addEventListener("click", wisKaartEnVelden);
+    
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        if(confirm("Weet je zeker dat je wilt uitloggen?")) {
+            window.location.href = "../../auth/login.html";
         }
-    } else {
-        // Alleen GPS ophalen als de gebruiker GEEN rit herboekt
-        initGPS();
-    }
+    });
 });
 
-// Helperfunctie om een tekstlocatie om te zetten naar coördinaten via Nominatim
-async function geocodeAddress(address) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&countrycodes=SR&limit=1&q=${encodeURIComponent(address)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data && data.length > 0) {
-        return L.latLng(parseFloat(data[0].lat), parseFloat(data[0].lon));
-    }
-    return null;
-}
-
-/* =========================
-   GPS LOCATIE
-========================= */
-function initGPS() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            pickupLatLng = L.latLng(lat, lon);
-            map.setView(pickupLatLng, 15);
-
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                .then(res => res.json())
-                .then(data => {
-                    const kortAdres = data.address.road || data.display_name.split(',')[0];
-                    document.getElementById('pickup_location').value = kortAdres;
-                    updateRoute();
-                });
-        });
-    }
-}
-
-/* =========================
-   AUTOCOMPLETE
-========================= */
-function setupAutocomplete(inputId, listId, isPickup) {
+// ==========================================
+// 2. AUTOCOMPLETE & GEOCODING (OSM Nominatim)
+// ==========================================
+function setupAutocomplete(inputId, suggestionsId, type) {
     const input = document.getElementById(inputId);
-    const list = document.getElementById(listId);
+    const suggestionsList = document.getElementById(suggestionsId);
+    let timeout = null;
 
-    input.addEventListener('input', function () {
-        const q = input.value;
+    input.addEventListener("input", () => {
+        clearTimeout(timeout);
+        const query = input.value.trim();
 
-        if (q.length < 3) {
-            list.innerHTML = '';
-            list.classList.add('hidden');
+        if (query.length < 3) {
+            suggestionsList.classList.add("hidden");
             return;
         }
 
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=SR&q=${encodeURIComponent(q)}`)
-            .then(res => res.json())
-            .then(data => {
-                list.innerHTML = '';
+        // Voorkom teveel API requests achter elkaar (debounce)
+        timeout = setTimeout(async () => {
+            try {
+                // We zoeken specifiek binnen Suriname voor accurate resultaten
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}+Suriname&limit=5`;
+                const response = await fetch(url, {
+                    headers: { 'Accept-Language': 'nl' }
+                });
+                const data = await response.json();
 
-                if (data.length > 0) {
-                    list.classList.remove('hidden');
-
-                    data.forEach(item => {
-                        const li = document.createElement('li');
-                        const cleanName = item.display_name.split(',').slice(0, 3).join(',');
-                        li.textContent = cleanName;
-
-                        li.addEventListener('click', () => {
-                            input.value = cleanName;
-                            list.innerHTML = '';
-                            list.classList.add('hidden');
-
-                            const latLng = L.latLng(
-                                parseFloat(item.lat),
-                                parseFloat(item.lon)
-                            );
-
-                            if (isPickup) {
-                                pickupLatLng = latLng;
-                            } else {
-                                destinationLatLng = latLng;
-                            }
-
-                            map.setView(latLng, 14);
-                            updateRoute();
-                        });
-
-                        list.appendChild(li);
-                    });
-                } else {
-                    list.classList.add('hidden');
+                suggestionsList.innerHTML = "";
+                if (data.length === 0) {
+                    suggestionsList.classList.add("hidden");
+                    return;
                 }
-            });
+
+                suggestionsList.classList.remove("hidden");
+                data.forEach(item => {
+                    const li = document.createElement("li");
+                    // Sla coördinaten op in de data-attributen
+                    li.dataset.lat = item.lat;
+                    li.dataset.lon = item.lon;
+                    li.textContent = item.display_name.replace(", Suriname", "");
+                    
+                    li.addEventListener("click", () => {
+                        input.value = li.textContent;
+                        suggestionsList.classList.add("hidden");
+                        
+                        // Plaats marker op de kaart
+                        updateMarker(parseFloat(item.lat), parseFloat(item.lon), type, li.textContent);
+                    });
+                    suggestionsList.appendChild(li);
+                });
+            } catch (err) {
+                console.error("Geocoding fout:", err);
+            }
+        }, 500);
     });
 
-    document.addEventListener('click', (e) => {
+    // Sluit suggestielijst als je buiten het veld klikt
+    document.addEventListener("click", (e) => {
         if (e.target !== input) {
-            list.innerHTML = '';
-            list.classList.add('hidden');
+            suggestionsList.classList.add("hidden");
         }
     });
 }
 
-/* =========================
-   ACTIVEER AUTOCOMPLETE
-========================= */
-setupAutocomplete('pickup_location', 'pickup_suggestions', true);
-setupAutocomplete('destination', 'destination_suggestions', false);
-
-/* =========================
-   ROUTE UPDATE
-========================= */
-function updateRoute() {
-    if (routingControl) {
-        map.removeControl(routingControl);
+// Marker bijwerken of aanmaken
+function updateMarker(lat, lon, type, label) {
+    if (type === 'pickup') {
+        if (pickupMarker) map.removeLayer(pickupMarker);
+        pickupMarker = L.marker([lat, lon], { draggable: false }).addTo(map).bindPopup(`<b>Ophaalpunt:</b><br>${label}`).openPopup();
+    } else {
+        if (destinationMarker) map.removeLayer(destinationMarker);
+        destinationMarker = L.marker([lat, lon], { draggable: false }).addTo(map).bindPopup(`<b>Bestemming:</b><br>${label}`).openPopup();
     }
-
-    if (pickupLatLng && destinationLatLng) {
-        routingControl = L.Routing.control({
-            waypoints: [
-                pickupLatLng,
-                destinationLatLng
-            ],
-            lineOptions: {
-                styles: [{
-                    color: '#f1c40f', // Aangepast naar jouw goudgele themakleur!
-                    opacity: 0.8,
-                    weight: 6
-                }]
-            },
-            show: false,
-            createMarker: function (i, wp) {
-                return L.marker(wp.latLng);
-            },
-            router: L.Routing.osrmv1({
-                serviceUrl: 'https://router.project-osrm.org/route/v1'
-            })
-        }).addTo(map);
-
-        routingControl.on('routesfound', function (e) {
-            const routes = e.routes;
-            berekendeAfstand = (routes[0].summary.totalDistance / 1000).toFixed(1);
-        });
+    
+    // Zoom naar de marker
+    map.setView([lat, lon], 14);
+    
+    // Als beide markers er zijn, teken alvast de route preview
+    if (pickupMarker && destinationMarker) {
+        tekenRoute(pickupMarker.getLatLng(), destinationMarker.getLatLng());
     }
 }
 
-/* =========================
-   LOCATIES RESETTEN
-========================= */
-document.getElementById('clearMap').addEventListener('click', () => {
-    pickupLatLng = null;
-    destinationLatLng = null;
-
-    document.getElementById('pickup_location').value = '';
-    document.getElementById('destination').value = '';
-    document.getElementById('priceBox').style.display = 'none';
-    document.getElementById('payBtn').classList.add('hidden');
-    document.getElementById('calcBtn').style.display = 'block';
-
-    berekendeAfstand = 0;
-    berekendeFare = 0;
-
+// ==========================================
+// 3. ROUTE TEKENEN EN AFSTAND BEREKENEN
+// ==========================================
+function tekenRoute(startLatLng, endLatLng) {
     if (routingControl) {
         map.removeControl(routingControl);
     }
 
-    map.setView([5.8520, -55.2038], 13);
-});
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(startLatLng.lat, startLatLng.lng),
+            L.latLng(endLatLng.lat, endLatLng.lng)
+        ],
+        lineOptions: {
+            styles: [{ color: '#f1c40f', opacity: 0.8, weight: 6 }] // Smart Taxi goudgeel
+        },
+        createMarker: () => null, // Verberg de extra standaard routing markers
+        addWaypoints: false,
+        draggableWaypoints: false,
+        show: false // Verberg het textuele routebeschrijvingspaneel
+    }).addTo(map);
 
-/* =========================
-   RITPRIJS BEREKENEN
-========================= */
-document.getElementById('calcBtn').addEventListener('click', () => {
-    const origin = document.getElementById('pickup_location').value;
-    const destination = document.getElementById('destination').value;
+    // Luister naar het moment dat de route berekend is
+    routingControl.on('routesfound', (e) => {
+        const routes = e.routes;
+        const summary = routes[0].summary;
+        
+        // summary.totalDistance is in meters -> omrekenen naar km
+        calculatedDistance = (summary.totalDistance / 1000).toFixed(2);
+        console.log(`📏 Route gevonden! Afstand: ${calculatedDistance} km`);
+    });
+}
 
-    if (!origin || !destination) {
-        alert('Kies eerst een ophaallocatie en een bestemming via de suggesties.');
+// ==========================================
+// 4. RITPRIJS BEREKENEN
+// ==========================================
+function berekenRitPrijs() {
+    const pickupVal = document.getElementById("pickup_location").value.trim();
+    const destVal = document.getElementById("destination").value.trim();
+
+    if (!pickupVal || !destVal || !pickupMarker || !destinationMarker) {
+        alert("⚠️ Selecteer eerst een geldige ophaallocatie en bestemming uit de lijst.");
         return;
     }
 
-    if (berekendeAfstand == 0) {
-        alert('De route wordt nog berekend of er is geen geldige route gevonden.');
+    // Wacht tot de route-machine de afstand heeft teruggegeven
+    if (calculatedDistance == 0) {
+        alert("🔄 De route wordt nog berekend. Wacht een moment en klik nogmaals.");
         return;
     }
 
-    const TARIEF_PER_KM = 30;
-    berekendeFare = (berekendeAfstand * TARIEF_PER_KM).toFixed(2);
+    // Ritprijs formule: Starttarief + (Aantal KM * Prijs per KM)
+    calculatedFare = parseFloat(STARTTARIEF) + (parseFloat(calculatedDistance) * parseFloat(PER_KM_TARIEF));
+    
+    // Rond af op hele SRD's voor een nette weergave
+    calculatedFare = Math.round(calculatedFare);
 
-    document.getElementById('distText').innerText = berekendeAfstand;
-    document.getElementById('fareText').innerText = 'SRD ' + berekendeFare;
+    // Update de HTML elementen in de priceBox
+    document.getElementById("distText").textContent = calculatedDistance;
+    document.getElementById("fareText").textContent = `SRD ${calculatedFare}.00`;
+    
+    // Toon de prijsbox en wissel van actieknop
+    document.getElementById("priceBox").style.display = "block";
+    document.getElementById("calcBtn").style.display = "none";
+    document.getElementById("payBtn").classList.remove("hidden");
+}
+if (data.success) {
+    // We sturen de berekende ID, prijs en methode mee als veilige URL-parameters
+    const gekozenMethode = document.getElementById("payment_method").value;
+    window.location.href = `payments.html?booking_id=${data.bookingId}&amount=${calculatedFare}&method=${gekozenMethode}`;
+}
+// ==========================================
+// 5. BOEKING OPSLAAN IN MYSQL DATABASE
+// ==========================================
+async function slaRitOpInDatabase(e) {
+    e.preventDefault(); // Voorkom standaard pagina herlaad
 
-    document.getElementById('priceBox').style.display = 'block';
-    document.getElementById('calcBtn').style.display = 'none';
-    document.getElementById('payBtn').classList.remove('hidden');
-});
-
-/* =========================
-   BOEKING VERSTUREN
-========================= */
-document.getElementById('bookingForm').addEventListener('submit', async e => {
-    e.preventDefault();
-
-    const method = document.getElementById('payment_method').value;
-
-    const bookingData = {
-        pickup_location: document.getElementById('pickup_location').value,
-        destination: document.getElementById('destination').value,
-        distance_km: berekendeAfstand,
-        fare: berekendeFare,
-        payment_method: method
-    };
+    const pickup_location = document.getElementById("pickup_location").value;
+    const destination = document.getElementById("destination").value;
 
     try {
+        console.log("🚀 Rit verzenden naar backend...");
         const response = await fetch('/api/book', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bookingData)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                pickup_location: pickup_location,
+                destination: destination,
+                fare: calculatedFare,
+                distance_km: calculatedDistance
+            })
         });
 
-        const result = await response.json();
+        const data = await response.json();
 
-        if (result.success) {
-            const idParam = encodeURIComponent(result.bookingId);
-            const amountParam = encodeURIComponent(berekendeFare);
-            const methodParam = encodeURIComponent(method);
-
-            window.location.href = `../sub-pages/payments.html?booking_id=${idParam}&amount=${amountParam}&method=${methodParam}`;
+        if (data.success) {
+            alert(`🎉 Rit succesvol aangevraagd (Boeking ID: #${data.bookingId})!\nChauffeurs kunnen je rit nu accepteren.`);
+            
+            // Stuur de klant direct door naar het dashboard overzicht
+            window.location.href = "dashboard.html";
         } else {
-            alert('Systeemfout: ' + result.message);
+            alert("❌ Reservering mislukt: " + data.message);
         }
     } catch (err) {
-        console.error(err);
-        alert('Kan geen verbinding maken met de server.');
+        console.error("Netwerkfout bij boeken:", err);
+        alert("Kon geen verbinding maken met de server.");
     }
-});
+}
+
+// Reset-functie voor de knop 'Locaties wissen'
+function wisKaartEnVelden() {
+    document.getElementById("bookingForm").reset();
+    document.getElementById("priceBox").style.display = "none";
+    document.getElementById("payBtn").classList.add("hidden");
+    document.getElementById("calcBtn").style.display = "block";
+    
+    if (pickupMarker) map.removeLayer(pickupMarker);
+    if (destinationMarker) map.removeLayer(destinationMarker);
+    if (routingControl) map.removeControl(routingControl);
+    
+    pickupMarker = null;
+    destinationMarker = null;
+    routingControl = null;
+    calculatedDistance = 0;
+    calculatedFare = 0;
+    
+    map.setView([5.8232, -55.1679], 13);
+}
