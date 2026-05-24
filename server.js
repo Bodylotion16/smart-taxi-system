@@ -509,6 +509,45 @@ app.post('/api/support/submit', (req, res) => {
     });
 });
 // ==========================================
+// LIVE DATA ROUTE VOOR HET ADMIN DASHBOARD
+// ==========================================
+app.get('/api/admin/dashboard', (req, res) => {
+    // Query 1: Haal alle klanten op
+    const qKlanten = "SELECT user_id_PK FROM users WHERE role = 'klant'";
+    // Query 2: Haal alle chauffeurs op
+    const qChauffeurs = "SELECT user_id_PK FROM users WHERE role = 'taxi'";
+    // Query 3: Bereken totale omzet en aantal ritten (uitgaande van een 'payments' of 'bookings' tabel)
+    const qStats = "SELECT COUNT(*) as totaal_ritten, IFNULL(SUM(amount), 0) as totale_omzet FROM payments";
+    // Query 4: Haal de 5 meest recente ritten op om de tabel te vullen
+    const qRitten = "SELECT booking_id_PK, pickup_location, destination, status, fare FROM bookings ORDER BY booking_id_PK DESC LIMIT 5";
+
+    db.query(qKlanten, (err, klantenRes) => {
+        if (err) return res.json({ success: false, message: err.message });
+
+        db.query(qChauffeurs, (err, chauffeursRes) => {
+            if (err) return res.json({ success: false, message: err.message });
+
+            db.query(qStats, (err, statsRes) => {
+                // Als je tabel 'payments' nog niet bestaat, vangen we dat hier netjes op met nep-data zodat de server niet crasht
+                const stats = statsRes ? statsRes[0] : { totaal_ritten: 0, totale_omzet: 0 };
+
+                db.query(qRitten, (err, rittenRes) => {
+                    const liveRitten = rittenRes || [];
+
+                    // Stuur alle echte data in één keer naar de frontend!
+                    res.json({
+                        success: true,
+                        klanten: klantenRes,
+                        chauffeurs: chauffeursRes,
+                        stats: stats,
+                        liveRitten: liveRitten
+                    });
+                });
+            });
+        });
+    });
+});
+// ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
 const PORT = 3000;
