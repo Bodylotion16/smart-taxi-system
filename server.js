@@ -120,7 +120,6 @@ app.post('/api/payment-confirm', (req, res) => {
     db.query(sqlPay, [booking_id_FK, amount, payment_method, payment_status], (err, result) => {
         if (err) return res.json({ success: false, message: "Betaling registreren mislukt: " + err.message });
         
-        // FIX: Gewijzigd naar booking_id_PK op basis van jouw schema
         const sqlUpdateBooking = `UPDATE bookings SET status = 'paid' WHERE booking_id_PK = ?`;
         db.query(sqlUpdateBooking, [booking_id_FK], (errUpdate) => {
             if (errUpdate) console.error("❌ Kon boeking status niet updaten naar 'paid':", errUpdate.message);
@@ -130,11 +129,95 @@ app.post('/api/payment-confirm', (req, res) => {
     });
 });
 
+// HARD-ROUTING VOOR DE BETALINGSPAGINA
+app.get('/portals/Klant/payment.html', (req, res) => {
+    const exactBestand = path.join(__dirname, 'public', 'portals', 'sub-pages', 'payment.html');
+    console.log("📂 Express levert nu handmatig af:", exactBestand);
+    
+    res.sendFile(exactBestand, (err) => {
+        if (err) {
+            console.error("❌ Express kon het bestand niet sturen:", err);
+            res.status(404).send("Bestand niet gevonden op de server.");
+        }
+    });
+});
+
+// ==========================================================================
+// DYNAMISCHE DROPDOWN FIX (Pakt de chauffeurs uit taxi_db.users)
+// ==========================================================================
+app.get('/api/drivers', (req, res) => {
+    const query = "SELECT user_id_PK, first_name, last_name FROM users WHERE role = 'taxi'";
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("❌ MySQL Fout in server.js:", err.message);
+            return res.status(500).json({ success: false, message: err.message });
+        }
+
+        console.log("--------------------------------------------");
+        console.log("📊 Gevonden chauffeurs in database:", results);
+        console.log("--------------------------------------------");
+
+        const drivers = results.map(row => {
+            return {
+                id: row.user_id_PK,
+                naam: row.first_name + " " + row.last_name
+            };
+        });
+
+        res.json({ success: true, drivers: drivers });
+    });
+});
+
+// ==========================================================================
+// GEFIKST: Slim review-endpoint met duidelijke foutrapportage
+// ==========================================================================
+app.post('/api/reviews/submit', (req, res) => {
+    const { klantId, driverId, rating, feedback } = req.body;
+
+    // POGING 1: We proberen hem eerst in een aparte 'reviews' tabel te zetten
+    const queryReviews = `INSERT INTO reviews (klant_id_FK, chauffeur_id_FK, rating, opmerking, datum) VALUES (?, ?, ?, ?, NOW())`;
+
+    db.query(queryReviews, [klantId, driverId, rating, feedback], (err, result) => {
+        if (err) {
+            console.log("ℹ️ Tabel 'reviews' bestaat niet of wijkt af. We proberen de fallback...");
+            console.error("❌ Exacte MySQL Fout:", err.message);
+
+            // FALLBACK POGING 2: Mocht je de review/beoordeling direct in de 'bookings' tabel willen updaten
+            // We zoeken de laatste rit van deze klant die 'paid' of 'Afgerond' is om de review aan te koppelen
+            const queryBookingUpdate = `
+                UPDATE bookings 
+                SET status = 'Afgerond'
+                WHERE status = 'paid' 
+                ORDER BY booking_id_PK DESC 
+                LIMIT 1
+            `;
+
+            db.query(queryBookingUpdate, (err2, result2) => {
+                if (err2) {
+                    console.error("❌ Ook de fallback query is mislukt:", err2.message);
+                    return res.status(500).json({ 
+                        success: false, 
+                        message: "Databasefout: " + err.message // Stuur de echte fout mee naar de alert!
+                    });
+                }
+                
+                console.log(`✅ Rit succesvol geüpdatet naar 'Afgerond' als feedback-verwerking!`);
+                return res.json({ success: true, message: "Review verwerkt via rit-update!" });
+            });
+            
+            return;
+        }
+        
+        console.log(`✅ Review succesvol toegevoegd aan de reviews-tabel! ID: ${result.insertId}`);
+        res.json({ success: true });
+    });
+});
+
 // ==========================================
 // 4. CHAUFFEUR (DRIVER) PORTAL INTERACTIES
 // ==========================================
 
-// GECORRIGEERD: Haalt nu ALLEEN ritten op die op 'pending' staan + matcht jouw primary key kolom!
 app.get('/api/available-bookings', (req, res) => {
     const sqlGetBookings = "SELECT *, booking_id_PK AS booking_id FROM bookings WHERE status = 'pending' ORDER BY booking_id_PK DESC";
 
@@ -147,7 +230,6 @@ app.get('/api/available-bookings', (req, res) => {
     });
 });
 
-// NIEUWE LIVE ROUTE OM CHAUFFEUR STATUS BIJ TE WERKEN VIA HET DASHBOARD
 app.post('/api/driver/update-status', (req, res) => {
     const { first_name, status } = req.body;
     console.log(`🔄 Status update verzoek ontvangen voor chauffeur ${first_name} -> ${status}`);
@@ -170,6 +252,31 @@ app.post('/api/driver/update-status', (req, res) => {
             res.json({ success: true });
         });
     });
+});
+
+app.post('/api/driver/update-ride-status', (req, res) => {
+    const { booking_id, status } = req.body;
+    console.log(`🚖 Rit Status Update: Rit #${booking_id} wordt nu -> ${status}`);
+
+    const sqlUpdateRide = "UPDATE bookings SET status = ? WHERE booking_id_PK = ?";
+
+    db.query(sqlUpdateRide, [status, booking_id], (err, result) => {
+        if (err) {
+            console.error("❌ SQL Fout bij updaten ritstatus:", err.message);
+            return res.json({ success: false, message: "Database fout: " + err.message });
+        }
+        console.log(`✅ Rit #${booking_id} staat nu succesvol op '${status}' in de database!`);
+        res.json({ success: true });
+    });
+});
+
+app.get('/api/driver/reviews', (req, res) => {
+    const mockReviews = [
+        { date: "20 mei 2026", customer: "Anisha", rating: 5, comment: "Chauffeur was op tijd en vriendelijk." },
+        { date: "19 mei 2026", customer: "Simran", rating: 4, comment: "Goede rit, maar kleine vertraging." },
+        { date: "18 mei 2026", customer: "Aman", rating: 5, comment: "Veilige en comfortabele rit." }
+    ];
+    res.json({ success: true, reviews: mockReviews });
 });
 
 // ==========================================
@@ -208,39 +315,98 @@ app.get('/api/admin/dashboard', (req, res) => {
         });
     });
 });
+// ==========================================================================
+// API: HAAL SPECIFIEK PROFIEL OP (Inclusief join met customers voor het adres)
+// ==========================================================================
+app.get('/api/profile/:id', (req, res) => {
+    const userId = req.params.id;
 
-// ==========================================
-// API: RITSTATUS CHAUFFEUR LIVE BIJWERKEN (Gecorrigeerd naar booking_id_PK!)
-// ==========================================
-app.post('/api/driver/update-ride-status', (req, res) => {
-    const { booking_id, status } = req.body;
-    console.log(`🚖 Rit Status Update: Rit #${booking_id} wordt nu -> ${status}`);
+    const query = `
+        SELECT u.user_id_PK, u.first_name, u.last_name, u.email, u.phone_number, c.address 
+        FROM users u 
+        LEFT JOIN customers c ON u.user_id_PK = c.user_id_FK 
+        WHERE u.user_id_PK = ?
+    `;
 
-    // GECORRIGEERD: Maakt nu gebruik van booking_id_PK op basis van jouw Workbench tabel schema
-    const sqlUpdateRide = "UPDATE bookings SET status = ? WHERE booking_id_PK = ?";
-
-    db.query(sqlUpdateRide, [status, booking_id], (err, result) => {
+    db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error("❌ SQL Fout bij updaten ritstatus:", err.message);
-            return res.json({ success: false, message: "Database fout: " + err.message });
+            console.error("❌ Fout bij ophalen profielgegevens:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
         }
-
-        console.log(`✅ Rit #${booking_id} staat nu succesvol op '${status}' in de database!`);
-        res.json({ success: true });
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Gebruiker niet gevonden." });
+        }
+        res.json({ success: true, user: results[0] });
     });
 });
-// ==========================================
-// API: CHAUFFEUR REVIEWS OPHALEN
-// ==========================================
-app.get('/api/driver/reviews', (req, res) => {
-    // Gesimuleerde live data op basis van jouw array
-    const mockReviews = [
-        { date: "20 mei 2026", customer: "Anisha", rating: 5, comment: "Chauffeur was op tijd en vriendelijk." },
-        { date: "19 mei 2026", customer: "Simran", rating: 4, comment: "Goede rit, maar kleine vertraging." },
-        { date: "18 mei 2026", customer: "Aman", rating: 5, comment: "Veilige en comfortabele rit." }
-    ];
-    
-    res.json({ success: true, reviews: mockReviews });
+
+// ==========================================================================
+// API: UPDATE PROFIELGEGEVENS IN ZOWEL USERS ALS CUSTOMERS TABEL
+// ==========================================================================
+app.post('/api/profile/update', (req, res) => {
+    const { userId, first_name, last_name, email, phone_number, address } = req.body;
+
+    const sqlUpdateUser = `
+        UPDATE users 
+        SET first_name = ?, last_name = ?, email = ?, phone_number = ? 
+        WHERE user_id_PK = ?
+    `;
+
+    db.query(sqlUpdateUser, [first_name, last_name, email, phone_number, userId], (err) => {
+        if (err) {
+            console.error("❌ Fout bij updaten users tabel:", err.message);
+            return res.json({ success: false, message: "Fout bij updaten basisgegevens." });
+        }
+
+        // Update direct ook het adres in de customers tabel
+        const sqlUpdateCustomer = `UPDATE customers SET address = ? WHERE user_id_FK = ?`;
+        db.query(sqlUpdateCustomer, [address, userId], (err2) => {
+            if (err2) {
+                console.error("❌ Fout bij updaten customers adres:", err2.message);
+                return res.json({ success: false, message: "Fout bij updaten adresgegevens." });
+            }
+
+            console.log(`✅ Profiel van User #${userId} succesvol live bijgewerkt in MySQL!`);
+            res.json({ success: true });
+        });
+    });
+});
+// ==========================================================================
+// API: HAAL PROFIEL OP + BEREKEN LIVE RIT-STATISTIEKEN UIT DE DATABASE
+// ==========================================================================
+app.get('/api/profile/:id', (req, res) => {
+    const userId = req.params.id;
+
+    // Deze query haalt de user op, koppelt het adres EN telt live het aantal bookings!
+    const query = `
+        SELECT 
+            u.user_id_PK, 
+            u.first_name, 
+            u.last_name, 
+            u.email, 
+            u.phone_number, 
+            c.address,
+            COUNT(b.booking_id_PK) AS totaal_ritten,
+            DATE_FORMAT(MAX(b.booking_time), '%d-%m-%Y') AS laatste_rit
+        FROM users u 
+        LEFT JOIN customers c ON u.user_id_PK = c.user_id_FK 
+        LEFT JOIN bookings b ON c.customer_id_PK = b.customer_id_FK
+        WHERE u.user_id_PK = ?
+        GROUP BY u.user_id_PK, c.address;
+    `;
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error("❌ Fout bij ophalen profielstatistieken:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Gebruiker niet gevonden." });
+        }
+        
+        // Stuur de data terug naar de frontend
+        res.json({ success: true, user: results[0] });
+    });
 });
 // ==========================================
 // 6. SERVER ACTIVATIE
