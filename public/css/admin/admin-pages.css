@@ -414,7 +414,6 @@
     }
 }
 
-
 @media (max-width: 1100px) {
     .ride-status-grid {
         grid-template-columns: repeat(2, 1fr);
