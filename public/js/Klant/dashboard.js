@@ -1,152 +1,247 @@
-s
-console.log("🚀 dashboard.js is succesvol geladen door de browser!");
+console.log("Klant dashboard geladen");
 
-window.addEventListener('DOMContentLoaded', () => {
-    console.log("📅 DOM is volledig ingeladen. We starten nu de functies...");
+let map = null;
+let pickupMarker = null;
+let destinationMarker = null;
+let routeLine = null;
 
-    const ingelogdeNaam = localStorage.getItem('userName') || "Rohit Patandin";
-    
-    const nameElement = document.getElementById('driverName');
-    if (nameElement) {
-        nameElement.innerText = ingelogdeNaam;
-        console.log("👤 Chauffeur naam geüpdatet naar:", ingelogdeNaam);
-    } else {
-        console.warn("⚠️ Element 'driverName' niet gevonden in HTML!");
-    }
-
-    // Koppel de statuswijziging-knop veilig
-    const statusKnop = document.getElementById('btnWijzigStatus');
-    if (statusKnop) {
-        statusKnop.addEventListener('click', (e) => {
-            e.preventDefault();
-            wijzigStatus(ingelogdeNaam);
-        });
-        console.log("🔗 Statuswijziging-knop succesvol gekoppeld.");
-    } else {
-        console.warn("⚠️ Element 'btnWijzigStatus' niet gevonden in HTML!");
-    }
-
-    // Start direct met laden en herhaal elke 3 seconden
-    laadLiveDashboardData(ingelogdeNaam);
-    setInterval(() => laadLiveDashboardData(ingelogdeNaam), 3000);
+document.addEventListener("DOMContentLoaded", function () {
+    initKlantNaam();
+    initLogout();
+    initMap();
+    initBookingForm();
 });
 
-async function laadLiveDashboardData(chauffeurNaam) {
-    try {
-        const response = await fetch('/api/admin/dashboard');
-        const data = await response.json();
+function initKlantNaam() {
+    const userName = localStorage.getItem("userName") || "Anisha";
+    const welcomeTitle = document.querySelector(".topbar h2");
 
-        if (!data.success) {
-            console.error("❌ Server gaf success:false terug:", data.message);
-            return;
-        }
-
-        // 1. ZOEK CHAUFFEUR
-        const huidigeChauffeur = data.chauffeurs.find(c => 
-            c.first_name.toLowerCase().includes(chauffeurNaam.toLowerCase())
-        );
-        
-        if (huidigeChauffeur) {
-            // Update status kaart
-            const statusElement = document.getElementById('driverStatus');
-            if (statusElement) {
-                statusElement.innerText = huidigeChauffeur.driver_status || "offline";
-                statusElement.style.color = huidigeChauffeur.driver_status === 'online' ? '#2ecc71' : '#e74c3c';
-            }
-
-            // 2. CHECK ACTIEVE RIT
-            const actieveRit = data.liveRitten.find(rit => 
-                rit.driver_id_FK === huidigeChauffeur.user_id && rit.status === 'accepted'
-            );
-
-            const klantVeld = document.getElementById('activeCustomer');
-            const ophaalVeld = document.getElementById('activePickup');
-            const bestemmingVeld = document.getElementById('activeDestination');
-            const tariefVeld = document.getElementById('activeFare');
-            const linkKnop = document.getElementById('activeRideLink');
-
-            if (actieveRit) {
-                if (klantVeld) klantVeld.innerText = "Live Passagier";
-                if (ophaalVeld) ophaalVeld.innerText = actieveRit.pickup_location;
-                if (bestemmingVeld) bestemmingVeld.innerText = actieveRit.destination;
-                if (tariefVeld) tariefVeld.innerText = "SRD " + actieveRit.fare;
-                if (linkKnop) linkKnop.style.display = "inline-block";
-            } else {
-                if (klantVeld) {
-                    klantVeld.innerText = "Geen actieve rit";
-                    if (ophaalVeld) ophaalVeld.innerText = "-";
-                    if (bestemmingVeld) bestemmingVeld.innerText = "-";
-                    if (tariefVeld) tariefVeld.innerText = "-";
-                    if (linkKnop) linkKnop.style.display = "none";
-                } else {
-                    // NOODGREEP: Als de specifieke span ID's er niet zijn, overschrijf de hele .section content
-                    const sections = document.querySelectorAll('.section');
-                    sections.forEach(sec => {
-                        if (sec.querySelector('h2') && sec.querySelector('h2').innerText.includes("Actieve rit")) {
-                            sec.innerHTML = `
-                                <h2>Actieve rit</h2>
-                                <p style="color: #888; font-style: italic;">Er is momenteel geen rit actief.</p>
-                            `;
-                        }
-                    });
-                }
-            }
-
-            // 3. RITTEN VANDAAG COUNTER
-            const rittenVandaag = data.liveRitten.filter(rit => 
-                rit.driver_id_FK === huidigeChauffeur.user_id && rit.status === 'completed'
-            );
-            if (document.getElementById('todayRides')) {
-                document.getElementById('todayRides').innerText = rittenVandaag.length;
-            }
-        } else {
-            console.warn(`⚠️ Chauffeur met naam '${chauffeurNaam}' staat niet in de users database!`);
-        }
-
-        // 4. NIEUWE VERZOEKEN COUNTER
-        const openRitten = data.liveRitten.filter(rit => rit.status === 'paid');
-        if (document.getElementById('newRequests')) {
-            document.getElementById('newRequests').innerText = openRitten.length;
-        }
-
-    } catch (err) {
-        console.error("❌ Fatale fetch/verbindingsfout in laadLiveDashboardData:", err);
+    if (welcomeTitle && welcomeTitle.textContent.includes("Welkom")) {
+        welcomeTitle.textContent = "Welkom, " + userName;
     }
 }
 
-// 5. LIVE DATABASE KOPPELING VOOR DE STATUS WIJZIGEN KNOP
-async function wijzigStatus(chauffeurNaam) {
-    const statusKaart = document.getElementById('driverStatus');
-    if (!statusKaart) return;
+function initLogout() {
+    const logoutLink = document.querySelector(".logout-link");
 
-    // Bepaal wat de nieuwe status moet worden op basis van het scherm
-    const huidigeStatus = statusKaart.innerText.toLowerCase();
-    const nieuweStatus = huidigeStatus === 'online' || huidigeStatus === 'beschikbaar' ? 'offline' : 'online';
+    if (!logoutLink) {
+        return;
+    }
 
-    try {
-        // We sturen de update live naar je server toe via een POST/PUT verzoek
-        const response = await fetch('/api/driver/update-status', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                first_name: chauffeurNaam, 
-                status: nieuweStatus 
-            })
-        });
+    logoutLink.addEventListener("click", function (event) {
+        const confirmed = confirm("Weet je zeker dat je wilt uitloggen?");
 
-        const uitslag = await response.json();
-
-        if (uitslag.success) {
-            alert(`Systeem: Status succesvol gewijzigd naar ${nieuweStatus.toUpperCase()}`);
-            statusKaart.innerText = nieuweStatus === 'online' ? 'online' : 'offline';
-            statusKaart.style.color = nieuweStatus === 'online' ? '#2ecc71' : '#e74c3c';
-        } else {
-            alert("❌ Kon status niet bijwerken in de database: " + uitslag.message);
+        if (!confirmed) {
+            event.preventDefault();
+            return;
         }
-    } catch (err) {
-        console.error("Fout bij status update:", err);
-        // Visuele fallback als je de backend route nog niet hebt herstart
-        statusKaart.innerText = nieuweStatus;
-        statusKaart.style.color = nieuweStatus === 'online' ? '#2ecc71' : '#e74c3c';
+
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userRole");
+    });
+}
+
+function initMap() {
+    const mapElement = document.getElementById("map");
+
+    if (!mapElement) {
+        return;
+    }
+
+    if (typeof L === "undefined") {
+        console.error("Leaflet is niet geladen. Controleer je Leaflet scripts in dashboard.html.");
+        return;
+    }
+
+    map = L.map("map").setView([5.8520, -55.2038], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap"
+    }).addTo(map);
+
+    L.marker([5.8520, -55.2038])
+        .addTo(map)
+        .bindPopup("Paramaribo")
+        .openPopup();
+
+    map.on("click", handleMapClick);
+
+    const clearMapButton = document.getElementById("clearMap");
+    if (clearMapButton) {
+        clearMapButton.addEventListener("click", clearMapLocations);
+    }
+
+    setTimeout(function () {
+        map.invalidateSize();
+    }, 300);
+}
+
+function handleMapClick(event) {
+    const pickupInput = document.getElementById("pickup_location");
+    const destinationInput = document.getElementById("destination");
+
+    if (!pickupInput || !destinationInput) {
+        return;
+    }
+
+    const lat = event.latlng.lat.toFixed(5);
+    const lng = event.latlng.lng.toFixed(5);
+    const locationText = lat + ", " + lng;
+
+    if (!pickupInput.value) {
+        pickupInput.value = locationText;
+
+        if (pickupMarker) {
+            map.removeLayer(pickupMarker);
+        }
+
+        pickupMarker = L.marker(event.latlng)
+            .addTo(map)
+            .bindPopup("Ophaallocatie")
+            .openPopup();
+
+        return;
+    }
+
+    if (!destinationInput.value) {
+        destinationInput.value = locationText;
+
+        if (destinationMarker) {
+            map.removeLayer(destinationMarker);
+        }
+
+        destinationMarker = L.marker(event.latlng)
+            .addTo(map)
+            .bindPopup("Bestemming")
+            .openPopup();
+
+        drawRoute();
+    }
+}
+
+function drawRoute() {
+    if (!pickupMarker || !destinationMarker) {
+        return;
+    }
+
+    if (routeLine) {
+        map.removeLayer(routeLine);
+    }
+
+    const pickupLatLng = pickupMarker.getLatLng();
+    const destinationLatLng = destinationMarker.getLatLng();
+
+    routeLine = L.polyline([pickupLatLng, destinationLatLng], {
+        weight: 4
+    }).addTo(map);
+
+    map.fitBounds(routeLine.getBounds(), {
+        padding: [40, 40]
+    });
+}
+
+function clearMapLocations() {
+    const pickupInput = document.getElementById("pickup_location");
+    const destinationInput = document.getElementById("destination");
+
+    if (pickupInput) {
+        pickupInput.value = "";
+    }
+
+    if (destinationInput) {
+        destinationInput.value = "";
+    }
+
+    if (pickupMarker) {
+        map.removeLayer(pickupMarker);
+        pickupMarker = null;
+    }
+
+    if (destinationMarker) {
+        map.removeLayer(destinationMarker);
+        destinationMarker = null;
+    }
+
+    if (routeLine) {
+        map.removeLayer(routeLine);
+        routeLine = null;
+    }
+
+    hidePriceBox();
+    map.setView([5.8520, -55.2038], 13);
+}
+
+function initBookingForm() {
+    const calcButton = document.getElementById("calcBtn");
+    const bookingForm = document.getElementById("bookingForm");
+
+    if (calcButton) {
+        calcButton.addEventListener("click", calculateFare);
+    }
+
+    if (bookingForm) {
+        bookingForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const pickup = document.getElementById("pickup_location").value.trim();
+            const destination = document.getElementById("destination").value.trim();
+
+            if (!pickup || !destination) {
+                alert("Vul eerst de ophaallocatie en bestemming in.");
+                return;
+            }
+
+            window.location.href = "../sub-pages/payment.html";
+        });
+    }
+}
+
+function calculateFare() {
+    const pickup = document.getElementById("pickup_location").value.trim();
+    const destination = document.getElementById("destination").value.trim();
+
+    if (!pickup || !destination) {
+        alert("Vul eerst de ophaallocatie en bestemming in.");
+        return;
+    }
+
+    const estimatedDistance = 8.5;
+    const baseFare = 50;
+    const pricePerKm = 15;
+    const totalFare = baseFare + estimatedDistance * pricePerKm;
+
+    const priceBox = document.getElementById("priceBox");
+    const distText = document.getElementById("distText");
+    const fareText = document.getElementById("fareText");
+    const payButton = document.getElementById("payBtn");
+
+    if (distText) {
+        distText.textContent = estimatedDistance.toFixed(1);
+    }
+
+    if (fareText) {
+        fareText.textContent = "SRD " + totalFare.toFixed(2);
+    }
+
+    if (priceBox) {
+        priceBox.style.display = "block";
+    }
+
+    if (payButton) {
+        payButton.classList.remove("hidden");
+    }
+}
+
+function hidePriceBox() {
+    const priceBox = document.getElementById("priceBox");
+    const payButton = document.getElementById("payBtn");
+
+    if (priceBox) {
+        priceBox.style.display = "none";
+    }
+
+    if (payButton) {
+        payButton.classList.add("hidden");
     }
 }
