@@ -1,30 +1,22 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Betaling | Smart Taxi</title>
 
-    <link rel="stylesheet" href="../../css/payment.css">
+    <link rel="stylesheet" href="../../css/klant/payment.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
     <div class="payment-container">
-
         <div class="payment-card">
-
             <h1>Betaling</h1>
-
-            <p class="subtitle">
-                Bevestig je betaling om de rit af te ronden.
-            </p>
+            <p class="subtitle">Bevestig je betaling om de rit af te ronden.</p>
 
             <div class="payment-box">
-
-                <span class="status-badge" id="paymentStatus">
+                <span class="status-badge waiting" id="paymentStatus">
                     Wachten op betaling
                 </span>
 
@@ -46,26 +38,22 @@
                     <span>Datum</span>
                     <strong id="dateDisplay">--/--/----</strong>
                 </div>
-
             </div>
 
             <button id="payButton" class="pay-btn" onclick="verwerkBetaling()">
                 Betaling bevestigen
             </button>
 
-            <p id="successMessage">
-                Betaling succesvol verwerkt.
+            <p id="successMessage" class="payment-success-msg" style="display: none;">
+                ✅ Betaling succesvol verwerkt.
             </p>
 
             <p class="footer-text">
-              Hulp nodig? <a href="../Klant/support.html">Ga naar Support</a>.
+                Hulp nodig? <a href="support.html">Ga naar Support</a>.
             </p>
-
         </div>
-
     </div>
 
     <script src="../../js/payment.js"></script>
 </body>
-
 </html>
