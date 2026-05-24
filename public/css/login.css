@@ -14,7 +14,13 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top right, #1a1a1a, #000000);
+    /* Combined your gradient and image directly on the body */
+    background: radial-gradient(circle at top right, rgba(26, 26, 26, 0.75), rgba(0, 0, 0, 0.9)), url('../img/login-background.png'), #000000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
     color: var(--text-light);
 
     min-height: 100vh;

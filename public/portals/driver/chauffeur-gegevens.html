@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/driver/driver-base.css">
     <link rel="stylesheet" href="../../css/driver/driver-components.css">
     <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+    <link rel="stylesheet" href="../../css/driver/chauffeur-gegevens.css">
 </head>
 <body>
 
@@ -33,18 +34,11 @@
         </div>
 
         <div class="section">
-            <div class="driver-photo-box">
-                RP
-            </div>
+            <div class="driver-photo-box" id="driverInitials">--</div>
 
-            <h2>Vyaas Kalloe</h2>
-            <p><strong>Status:</strong> <span class="status">Beschikbaar</span></p>
+            <h2 id="headerDriverName">Laden...</h2>
+            <p><strong>Status:</strong> <span class="status" id="driverStatusLabel">Laden...</span></p>
             <p><strong>Rol:</strong> Chauffeur</p>
-
-            <div class="profile-actions">
-                <button onclick="editProfile()">Profiel aanpassen</button>
-                <button onclick="changePassword()">Wachtwoord wijzigen</button>
-            </div>
         </div>
 
         <div class="profile-grid">
@@ -53,27 +47,27 @@
 
                 <div class="profile-row">
                     <span class="profile-label">Volledige naam</span>
-                    <span class="profile-value">Vyaas Kalloe</span>
+                    <span class="profile-value" id="profileFullName">-</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">E-mailadres</span>
-                    <span class="profile-value">vyaas@example.com</span>
+                    <span class="profile-value" id="profileEmail">-</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Telefoonnummer</span>
-                    <span class="profile-value">+597 8888888</span>
+                    <span class="profile-value" id="profilePhone">-</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Adres</span>
-                    <span class="profile-value">Paramaribo Centrum</span>
+                    <span class="profile-value" id="profileAddress">Niet opgegeven</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Rijbewijsnummer</span>
-                    <span class="profile-value">RB-2026-4589</span>
+                    <span class="profile-value" id="profileLicense">Beschikbaar via beheer</span>
                 </div>
             </div>
 
@@ -82,33 +76,33 @@
 
                 <div class="profile-row">
                     <span class="profile-label">Voertuig</span>
-                    <span class="profile-value">Toyota Prius</span>
+                    <span class="profile-value" id="vehicleModel">-</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Kenteken</span>
-                    <span class="profile-value">TX-2456</span>
+                    <span class="profile-value" id="vehiclePlate">-</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Kleur</span>
-                    <span class="profile-value">Wit</span>
+                    <span class="profile-value" id="vehicleColor">Standaard</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Aantal zitplaatsen</span>
-                    <span class="profile-value">4</span>
+                    <span class="profile-value" id="vehicleSeats">4</span>
                 </div>
 
                 <div class="profile-row">
                     <span class="profile-label">Voertuigstatus</span>
-                    <span class="profile-value">Actief</span>
+                    <span class="profile-value" id="vehicleStatus">Actief</span>
                 </div>
             </div>
         </div>
     </main>
 </div>
 
-<script src="../../js/driver/chauffeur-gegevens.js"></script>
+<script src="/js/driver/chauffeur-gegevens.js"></script>
 </body>
 </html>

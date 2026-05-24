@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
@@ -6,7 +7,8 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public')); // Serveert je frontend mappen (auth, portals, sub-pages, etc.)
+app.use(express.static('public')); 
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
 
 // ==========================================
 // 1. DATABASE VERBINDING
@@ -34,7 +36,6 @@ db.connect(err => {
 app.post('/api/register', (req, res) => {
     let { voornaam, achternaam, email, telefoon, wachtwoord, rol, adres, kenteken, auto_model } = req.body;
 
-    // Normaliseer rollen voor de ENUM in de database
     if (rol === 'driver' || rol === 'taxi') rol = 'taxi';
     if (rol === 'passenger' || rol === 'passagier' || rol === 'klant') rol = 'klant';
 
@@ -48,7 +49,6 @@ app.post('/api/register', (req, res) => {
 
         const userId = result.insertId;
 
-        // Als het een taxi/chauffeur is, vul de status tabel aan
         if (rol === 'taxi') {
             const sqlTaxi = `INSERT INTO taxi_status (user_id_FK, kenteken, auto_model, status) VALUES (?, ?, ?, 'offline')`;
             db.query(sqlTaxi, [userId, kenteken, auto_model], (err2) => {
@@ -57,7 +57,6 @@ app.post('/api/register', (req, res) => {
                 res.json({ success: true });
             });
         } 
-        // Als het een klant is, vul de customers tabel aan met het adres
         else if (rol === 'klant') {
             const sqlCust = `INSERT INTO customers (user_id_FK, address) VALUES (?, ?)`;
             db.query(sqlCust, [userId, adres], (err3) => {
@@ -101,7 +100,6 @@ app.post('/api/login', (req, res) => {
 // 3. KLANT PORTAL INTERACTIES
 // ==========================================
 
-// Rit Aanmaken / Boeken (Vanaf bookingKlant.html of book-ride.html)
 app.post('/api/book', (req, res) => {
     const { pickup_location, destination, fare, distance_km } = req.body;
     
@@ -114,7 +112,6 @@ app.post('/api/book', (req, res) => {
     });
 });
 
-// Betaling Bevestigen (Vanaf sub-pages/payment.html)
 app.post('/api/payment-confirm', (req, res) => {
     const { booking_id_FK, amount, payment_method, payment_status } = req.body;
 
@@ -123,8 +120,8 @@ app.post('/api/payment-confirm', (req, res) => {
     db.query(sqlPay, [booking_id_FK, amount, payment_method, payment_status], (err, result) => {
         if (err) return res.json({ success: false, message: "Betaling registreren mislukt: " + err.message });
         
-        // Update de status van de boeking naar 'paid' met de juiste kolomnaam 'booking_id'
-        const sqlUpdateBooking = `UPDATE bookings SET status = 'paid' WHERE booking_id = ?`;
+        // FIX: Gewijzigd naar booking_id_PK op basis van jouw schema
+        const sqlUpdateBooking = `UPDATE bookings SET status = 'paid' WHERE booking_id_PK = ?`;
         db.query(sqlUpdateBooking, [booking_id_FK], (errUpdate) => {
             if (errUpdate) console.error("❌ Kon boeking status niet updaten naar 'paid':", errUpdate.message);
             console.log(`💰 Betaling ontvangen voor Rit #${booking_id_FK}. Status geüpdatet naar PAID.`);
@@ -137,9 +134,9 @@ app.post('/api/payment-confirm', (req, res) => {
 // 4. CHAUFFEUR (DRIVER) PORTAL INTERACTIES
 // ==========================================
 
-// Beschikbare ritten ophalen voor rittenpoule (Vanaf portals/driver/dashboard.html)
+// GECORRIGEERD: Haalt nu ALLEEN ritten op die op 'pending' staan + matcht jouw primary key kolom!
 app.get('/api/available-bookings', (req, res) => {
-    const sqlGetBookings = `SELECT * FROM bookings WHERE status = 'paid' ORDER BY booking_id DESC`;
+    const sqlGetBookings = "SELECT *, booking_id_PK AS booking_id FROM bookings WHERE status = 'pending' ORDER BY booking_id_PK DESC";
 
     db.query(sqlGetBookings, (err, results) => {
         if (err) {
@@ -150,35 +147,55 @@ app.get('/api/available-bookings', (req, res) => {
     });
 });
 
+// NIEUWE LIVE ROUTE OM CHAUFFEUR STATUS BIJ TE WERKEN VIA HET DASHBOARD
+app.post('/api/driver/update-status', (req, res) => {
+    const { first_name, status } = req.body;
+    console.log(`🔄 Status update verzoek ontvangen voor chauffeur ${first_name} -> ${status}`);
+
+    const sqlFindUser = "SELECT user_id_PK FROM users WHERE first_name = ? AND role = 'taxi' LIMIT 1";
+    
+    db.query(sqlFindUser, [first_name], (err, results) => {
+        if (err || results.length === 0) {
+            return res.json({ success: false, message: "Chauffeur niet gevonden in database." });
+        }
+
+        const userId = results[0].user_id_PK;
+
+        const sqlUpdateStatus = "UPDATE taxi_status SET status = ? WHERE user_id_FK = ?";
+        db.query(sqlUpdateStatus, [status, userId], (err2) => {
+            if (err2) {
+                return res.json({ success: false, message: "Updaten van status mislukt: " + err2.message });
+            }
+            console.log(`✅ Status succesvol bijgewerkt naar '${status}' voor user_id #${userId}`);
+            res.json({ success: true });
+        });
+    });
+});
+
 // ==========================================
-// 5. ADMIN PORTAL INTERACTIES (GELINKT AAN portals/admin.html)
+// 5. ADMIN PORTAL INTERACTIES & LIVE DASHBOARD DATA KOPPELING
 // ==========================================
 app.get('/api/admin/dashboard', (req, res) => {
-    console.log("📟 Admin dashboard data wordt opgevraagd...");
+    console.log("📟 Dashboard live data wordt opgevraagd...");
 
     let stats = { totaal_ritten: 0, totale_omzet: 0 };
     let liveRitten = [];
     let chauffeurs = [];
     let klanten = [];
 
-    // Query A: Algemene omzet-statistieken
     db.query(`SELECT COUNT(*) as totaal_ritten, IFNULL(SUM(fare), 0) as totale_omzet FROM bookings WHERE status = 'paid'`, (err, resStats) => {
         if (!err && resStats.length > 0) stats = resStats[0];
 
-        // Query B: Alle ritten in het systeem
-        db.query(`SELECT * FROM bookings ORDER BY booking_id DESC`, (err2, resLive) => {
+        db.query(`SELECT * FROM bookings ORDER BY booking_id_PK DESC`, (err2, resLive) => {
             if (!err2) liveRitten = resLive;
 
-            // Query C: Alle geregistreerde chauffeurs met hun auto details
-            db.query(`SELECT u.*, t.kenteken, t.auto_model, t.status as driver_status FROM users u LEFT JOIN taxi_status t ON u.user_id = t.user_id_FK WHERE u.role = 'taxi'`, (err3, resChau) => {
+            db.query(`SELECT u.*, t.kenteken, t.auto_model, t.status as driver_status FROM users u LEFT JOIN taxi_status t ON u.user_id_PK = t.user_id_FK WHERE u.role = 'taxi'`, (err3, resChau) => {
                 if (!err3) chauffeurs = resChau;
 
-                // Query D: Alle geregistreerde klanten met hun opgeslagen adressen
-                db.query(`SELECT u.*, c.address FROM users u LEFT JOIN customers c ON u.user_id = c.user_id_FK WHERE u.role = 'klant'`, (err4, resKlan) => {
+                db.query(`SELECT u.*, c.address FROM users u LEFT JOIN customers c ON u.user_id_PK = c.user_id_FK WHERE u.role = 'klant'`, (err4, resKlan) => {
                     if (!err4) klanten = resKlan;
 
-                    // Stuur het gecombineerde pakket terug naar admin.html
-                    console.log("✅ Admin data succesvol verzonden naar browser!");
+                    console.log(`✅ Gegevens verzonden naar frontend. Aantal chauffeurs gevonden: ${chauffeurs.length}`);
                     res.json({
                         success: true,
                         stats: stats,
@@ -189,6 +206,27 @@ app.get('/api/admin/dashboard', (req, res) => {
                 });
             });
         });
+    });
+});
+
+// ==========================================
+// API: RITSTATUS CHAUFFEUR LIVE BIJWERKEN (Gecorrigeerd naar booking_id_PK!)
+// ==========================================
+app.post('/api/driver/update-ride-status', (req, res) => {
+    const { booking_id, status } = req.body;
+    console.log(`🚖 Rit Status Update: Rit #${booking_id} wordt nu -> ${status}`);
+
+    // GECORRIGEERD: Maakt nu gebruik van booking_id_PK op basis van jouw Workbench tabel schema
+    const sqlUpdateRide = "UPDATE bookings SET status = ? WHERE booking_id_PK = ?";
+
+    db.query(sqlUpdateRide, [status, booking_id], (err, result) => {
+        if (err) {
+            console.error("❌ SQL Fout bij updaten ritstatus:", err.message);
+            return res.json({ success: false, message: "Database fout: " + err.message });
+        }
+
+        console.log(`✅ Rit #${booking_id} staat nu succesvol op '${status}' in de database!`);
+        res.json({ success: true });
     });
 });
 
