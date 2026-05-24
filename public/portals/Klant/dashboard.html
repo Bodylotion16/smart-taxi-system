@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klantportaal | Smart Taxi</title>
 
     <link rel="stylesheet" href="../../css/klant/dashboard.css">
-
+    <link rel="stylesheet" href="../../css/klant/book-ride.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
 </head>
-
 <body>
 
     <div class="dashboard-container">
@@ -40,43 +38,37 @@
 
             <div class="topbar">
                 <div>
-                    <h2>Welkom, Anisha</h2>
+                    <h2 id="welcomeUser">Welkom</h2>
                     <p class="subtitle">Boek snel een rit en bekijk je actuele ritinformatie.</p>
                 </div>
             </div>
 
             <div class="dashboard-grid">
-
                 <div class="content-panel">
                     <h3>Actuele status</h3>
-
-                    <div class="status-box empty">
+                    <div id="liveStatusContainer" class="status-box empty">
                         <p>Je hebt momenteel geen actieve rit.</p>
                         <span class="link-yellow">Boek hieronder een nieuwe rit.</span>
                     </div>
                 </div>
 
-                <div class="content-panel">
+                <div class="content-panel" id="lastRideBox">
                     <h3>Laatste rit</h3>
-
-                    <p><strong>Van:</strong> Choi's Noord</p>
-                    <p><strong>Naar:</strong> Thuis</p>
-                    <p><strong>Prijs:</strong> SRD 150</p>
-                    <p><strong>Status:</strong> Afgerond</p>
+                    <p><strong>Van:</strong> <span id="lastVan">-</span></p>
+                    <p><strong>Naar:</strong> <span id="lastNaar">-</span></p>
+                    <p><strong>Prijs:</strong> <span id="lastPrijs">-</span></p>
+                    <p><strong>Status:</strong> <span id="lastStatus" class="status">-</span></p>
                 </div>
-
             </div>
 
             <div class="book-ride-layout">
-
                 <div class="content-panel panel-glow">
                     <h3>Rit boeken</h3>
 
                     <form id="bookingForm" class="quick-form">
-
                         <div class="input-group">
                             <label>Ophaallocatie</label>
-                            <input type="text" id="pickup_location" placeholder="Typ je ophaallocatie..." autocomplete="off">
+                            <input type="text" id="pickup_location" placeholder="GPS-locatie bepalen..." autocomplete="off">
                             <ul id="pickup_suggestions" class="suggestions-list hidden"></ul>
                         </div>
 
@@ -104,7 +96,6 @@
 
                         <button type="button" id="calcBtn">Bereken ritprijs</button>
                         <button type="submit" id="payBtn" class="pay-btn hidden">Rit aanvragen</button>
-
                     </form>
                 </div>
 
@@ -113,34 +104,26 @@
                         <h3>Kaartoverzicht</h3>
                         <button id="clearMap">Locaties wissen</button>
                     </div>
-
                     <div id="map"></div>
                 </div>
-
             </div>
 
             <div class="content-panel recent-rides">
                 <h3>Recente ritten</h3>
-
                 <div class="table-container">
                     <table class="dashboard-table">
                         <thead>
                             <tr>
-                                <th>Datum</th>
+                                <th>Rit ID</th>
                                 <th>Van</th>
                                 <th>Naar</th>
                                 <th>Prijs</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
-
-                        <tbody>
+                        <tbody id="recentRidesTbody">
                             <tr>
-                                <td>22-05-2026</td>
-                                <td>Choi's Noord</td>
-                                <td>Thuis</td>
-                                <td>SRD 150</td>
-                                <td>Afgerond</td>
+                                <td colspan="5" style="text-align: center; color: #888; padding: 20px;">Rittenhistorie inladen...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -148,14 +131,10 @@
             </div>
 
         </main>
-
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
-    <script src="../../js/klant/dashboard.js"></script>
-
+    <script src="../../js/Klant/dashboard.js"></script>
 </body>
-
 </html>
