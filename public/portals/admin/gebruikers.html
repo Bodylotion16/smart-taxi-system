@@ -31,22 +31,22 @@
         <div class="cards">
             <div class="card">
                 <h3>Totaal gebruikers</h3>
-                <p class="value">3</p>
+                <p class="value" id="totalCount">...</p>
             </div>
 
             <div class="card">
                 <h3>Actieve accounts</h3>
-                <p class="value" id="activeCount">2</p>
+                <p class="value" id="activeCount">...</p>
             </div>
 
             <div class="card">
                 <h3>Geblokkeerd</h3>
-                <p class="value" id="blockedCount">1</p>
+                <p class="value" id="blockedCount">...</p>
             </div>
 
             <div class="card">
                 <h3>Nieuwe gebruikers</h3>
-                <p class="value">1</p>
+                <p class="value" id="newCount">0</p>
             </div>
         </div>
 
@@ -80,67 +80,8 @@
                 </thead>
 
                 <tbody id="userTable">
-                    <tr data-name="anisha patandin" data-email="anisha@example.com" data-status="active">
-                        <td>
-                            <strong>Anisha Patandin</strong>
-                            <br>
-                            <span class="muted-text">Klant ID: KL-001</span>
-                        </td>
-                        <td>
-                            anisha@example.com
-                            <br>
-                            <span class="muted-text">+597 7777777</span>
-                        </td>
-                        <td>20 mei 2026</td>
-                        <td>
-                            <span class="status active">Actief</span>
-                        </td>
-                        <td>
-                            <button class="btn-small btn-warning" onclick="toggleUserStatus(this)">Blokkeren</button>
-                            <button class="btn-small btn-danger" onclick="deleteUser(this, 'Anisha Patandin')">Verwijderen</button>
-                        </td>
-                    </tr>
-
-                    <tr data-name="simran sewpal" data-email="simran@example.com" data-status="active">
-                        <td>
-                            <strong>Simran Sewpal</strong>
-                            <br>
-                            <span class="muted-text">Klant ID: KL-002</span>
-                        </td>
-                        <td>
-                            simran@example.com
-                            <br>
-                            <span class="muted-text">+597 8888888</span>
-                        </td>
-                        <td>19 mei 2026</td>
-                        <td>
-                            <span class="status active">Actief</span>
-                        </td>
-                        <td>
-                            <button class="btn-small btn-warning" onclick="toggleUserStatus(this)">Blokkeren</button>
-                            <button class="btn-small btn-danger" onclick="deleteUser(this, 'Simran Sewpal')">Verwijderen</button>
-                        </td>
-                    </tr>
-
-                    <tr data-name="aman mohan" data-email="aman@example.com" data-status="blocked">
-                        <td>
-                            <strong>Aman Mohan</strong>
-                            <br>
-                            <span class="muted-text">Klant ID: KL-003</span>
-                        </td>
-                        <td>
-                            aman@example.com
-                            <br>
-                            <span class="muted-text">+597 6666666</span>
-                        </td>
-                        <td>18 mei 2026</td>
-                        <td>
-                            <span class="status blocked">Geblokkeerd</span>
-                        </td>
-                        <td>
-                            <button class="btn-small btn-success" onclick="toggleUserStatus(this)">Deblokkeren</button>
-                            <button class="btn-small btn-danger" onclick="deleteUser(this, 'Aman Mohan')">Verwijderen</button>
-                        </td>
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #888;">Live data wordt geladen uit de database...</td>
                     </tr>
                 </tbody>
             </table>

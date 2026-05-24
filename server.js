@@ -547,6 +547,123 @@ app.get('/api/admin/dashboard', (req, res) => {
         });
     });
 });
+// ==========================================================================
+// ADMIN API: HAAL ALLE GEBRUIKERS OP MET ROL 'KLANT' OF 'GEBLOKKEERD'
+// ==========================================================================
+app.get('/api/admin/users', (req, res) => {
+    const query = "SELECT user_id_PK, first_name, last_name, email, phone_number, role FROM users WHERE role = 'klant' OR role = 'geblokkeerd' ORDER BY user_id_PK DESC";
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("❌ Fout bij ophalen admin gebruikerslijst:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
+        }
+        res.json({ success: true, users: results });
+    });
+});
+
+// ==========================================================================
+// ADMIN API: BLOKKEER OF DEBLOKKEER EEN SPECIFIEKE GEBRUIKER IN MYSQL
+// ==========================================================================
+app.post('/api/admin/users/toggle-status', (req, res) => {
+    const { userId, nieuweRol } = req.body;
+
+    const query = "UPDATE users SET role = ? WHERE user_id_PK = ?";
+    db.query(query, [nieuweRol, userId], (err, result) => {
+        if (err) {
+            console.error("❌ Fout bij muteren gebruikersrol:", err.message);
+            return res.json({ success: false, message: "Aanpassen mislukt." });
+        }
+        console.log(`🔒 Status van User #${userId} succesvol aangepast naar: ${nieuweRol}`);
+        res.json({ success: true });
+    });
+});
+
+// ==========================================================================
+// ADMIN API: VERWIJDER GEBRUIKER EN GEKOPPELDE KLANTGEGEVENS DEFINITIEF
+// ==========================================================================
+app.post('/api/admin/users/delete', (req, res) => {
+    const { userId } = req.body;
+
+    // We verwijderen eerst records uit de gekoppelde child-tabel 'customers' om FK constraints te voorkomen
+    const deleteCustomerQuery = "DELETE FROM customers WHERE user_id_FK = ?";
+    db.query(deleteCustomerQuery, [userId], (err) => {
+        if (err) console.warn("ℹ️ Geen gekoppeld customer record om te verwijderen of tabel ontbreekt.");
+
+        // Nu verwijderen we de hoofd-user
+        const deleteUserQuery = "DELETE FROM users WHERE user_id_PK = ? AND role != 'admin'";
+        db.query(deleteUserQuery, [userId], (err2, result) => {
+            if (err2) {
+                console.error("❌ Fout bij permanent wissen van user:", err2.message);
+                return res.json({ success: false, message: err2.message });
+            }
+            console.log(`🚨 User #${userId} is permanent gewist uit de database.`);
+            res.json({ success: true });
+        });
+    });
+});
+// ==========================================================================
+// ADMIN API: HAAL ALLE CHAUFFEURS OP + VOERTUIG DATA (LEFT JOIN)
+// ==========================================================================
+app.get('/api/admin/drivers', (req, res) => {
+    const query = `
+        SELECT u.user_id_PK, u.first_name, u.last_name, u.email, u.phone_number, u.role,
+               t.kenteken, t.auto_model, t.status AS driver_status
+        FROM users u
+        LEFT JOIN taxi_status t ON u.user_id_PK = t.user_id_FK
+        WHERE u.role = 'taxi' OR u.role = 'geblokkeerd'
+        ORDER BY u.user_id_PK DESC
+    `;
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("❌ Fout bij ophalen admin chauffeurslijst:", err.message);
+            return res.status(500).json({ success: false, message: "Databasefout." });
+        }
+        res.json({ success: true, drivers: results });
+    });
+});
+
+// ==========================================================================
+// ADMIN API: BLOKKEER OF DEBLOKKEER EEN CHAUFFEUR
+// ==========================================================================
+app.post('/api/admin/drivers/toggle-status', (req, res) => {
+    const { userId, nieuweRol } = req.body;
+
+    const query = "UPDATE users SET role = ? WHERE user_id_PK = ?";
+    db.query(query, [nieuweRol, userId], (err, result) => {
+        if (err) {
+            console.error("❌ Fout bij muteren chauffeursrol:", err.message);
+            return res.json({ success: false, message: "Aanpassen mislukt." });
+        }
+        console.log(`🔒 Status van Chauffeur #${userId} aangepast naar: ${nieuweRol}`);
+        res.json({ success: true });
+    });
+});
+
+// ==========================================================================
+// ADMIN API: VERWIJDER CHAUFFEUR PERMANENT EN SCHOON TAXI_STATUS OP
+// ==========================================================================
+app.post('/api/admin/drivers/delete', (req, res) => {
+    const { userId } = req.body;
+
+    // Verwijder eerst gekoppelde voertuigstatus om foreign key conflicten te voorkomen
+    const deleteTaxiStatusQuery = "DELETE FROM taxi_status WHERE user_id_FK = ?";
+    db.query(deleteTaxiStatusQuery, [userId], (err) => {
+        if (err) console.warn("ℹ️ Geen gekoppeld voertuigrecord gevonden.");
+
+        // Verwijder daarna de hoofd-user
+        const deleteUserQuery = "DELETE FROM users WHERE user_id_PK = ? AND role != 'admin'";
+        db.query(deleteUserQuery, [userId], (err2, result) => {
+            if (err2) {
+                console.error("❌ Fout bij permanent wissen van chauffeur:", err2.message);
+                return res.json({ success: false, message: err2.message });
+            }
+            console.log(`🚨 Chauffeur #${userId} is permanent gewist uit de database.`);
+            res.json({ success: true });
+        });
+    });
+});
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
