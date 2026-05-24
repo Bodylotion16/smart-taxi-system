@@ -192,7 +192,13 @@ function initBookingForm() {
                 return;
             }
 
-            window.location.href = "../sub-pages/payment.html";
+            window.location.href =
+    "../sub-pages/payment.html?booking_id=" +
+    encodeURIComponent(bookingId) +
+    "&amount=" +
+    encodeURIComponent(berekendeFare) +
+    "&method=" +
+    encodeURIComponent(paymentMethod);
         });
     }
 }
