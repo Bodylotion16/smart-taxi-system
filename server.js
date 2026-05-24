@@ -3,12 +3,19 @@ const path = require('path');
 const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
+port: process.env.DB_PORT || 3306
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public')); 
 app.use('/js', express.static(path.join(__dirname, 'public/js')));
+// Render kiest zelf een poort via 'process.env.PORT', als die er niet is vallen we terug op 3000
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Smart Taxi app draait live op poort ${PORT}`);
+});
 
 // ==========================================
 // 1. DATABASE VERBINDING
