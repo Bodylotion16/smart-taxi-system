@@ -13,10 +13,12 @@
 
 .card,
 .section {
-    background: linear-gradient(145deg, #1f1f1f, #151515);
-    border: 1px solid var(--border);
+    background: rgba(15, 15, 15, 0.58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: var(--radius-md);
-    box-shadow: 0 18px 40px var(--shadow);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
 
 .card {
@@ -166,18 +168,20 @@ th {
 }
 
 .admin-table td {
-    background-color: rgba(255, 255, 255, 0.02);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .admin-table td:first-child {
-    border-left: 1px solid var(--border);
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 14px 0 0 14px;
 }
 
 .admin-table td:last-child {
-    border-right: 1px solid var(--border);
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 0 14px 14px 0;
 }
 
@@ -188,6 +192,22 @@ th {
 .compact-table th,
 .compact-table td {
     padding: 14px 18px;
+}
+
+.compact-table td {
+    background-color: rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.compact-table td:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px 0 0 14px;
+}
+
+.compact-table td:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0 14px 14px 0;
 }
 
 /* Forms */
@@ -207,17 +227,19 @@ th {
 .form-group textarea {
     width: 100%;
     padding: 13px 14px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-sm);
-    background-color: #111111;
+    background-color: rgba(0, 0, 0, 0.45);
     color: var(--white);
     outline: none;
+    transition: 0.25s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.12);
 }
 
 /* Section top */
@@ -244,9 +266,9 @@ th {
     height: 52px;
     min-width: 230px;
     padding: 0 16px;
-    background-color: #111111;
+    background-color: rgba(0, 0, 0, 0.45);
     color: var(--white);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 14px;
     font-size: 15px;
     font-weight: 600;
@@ -277,8 +299,9 @@ th {
     display: flex;
     justify-content: space-between;
     gap: 18px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
     padding-bottom: 10px;
+    background-color: transparent;
 }
 
 .detail-row span {
@@ -322,18 +345,37 @@ th {
     color: #000000 !important;
 }
 
+/* Extra transparent admin elements */
+.panel,
+.activity-item,
+.admin-actions a,
+.settings-tab {
+    background-color: rgba(15, 15, 15, 0.45);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.admin-actions a:hover,
+.settings-tab:hover,
+.settings-tab.active-tab {
+    background-color: var(--yellow) !important;
+    color: #000000 !important;
+    border-color: var(--yellow) !important;
+}
+
 /* Scrollbar */
 .section::-webkit-scrollbar {
     height: 12px;
 }
 
 .section::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    background: rgba(0, 0, 0, 0.55);
     border-radius: 999px;
 }
 
 .section::-webkit-scrollbar-thumb {
-    background: #333333;
+    background: rgba(255, 255, 255, 0.20);
     border-radius: 999px;
 }
 
@@ -342,7 +384,7 @@ th {
 }
 
 .section {
-    scrollbar-color: #333333 #0a0a0a;
+    scrollbar-color: rgba(255, 255, 255, 0.20) rgba(0, 0, 0, 0.55);
     scrollbar-width: thin;
 }
 
