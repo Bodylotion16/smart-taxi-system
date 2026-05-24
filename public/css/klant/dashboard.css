@@ -11,7 +11,13 @@
 
 body {
     font-family: "Inter", Arial, sans-serif;
-    background: radial-gradient(circle at top, #1a1a1a 0%, #050505 65%);
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)),
+        url("../../img/dashboard-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: #ffffff;
     min-height: 100vh;
 }
@@ -118,10 +124,12 @@ body {
 }
 
 .content-panel {
-    background: linear-gradient(145deg, #1f1f1f, #151515);
-    border: 1px solid #333333;
+    background: rgba(15, 15, 15, 0.58);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 18px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     padding: 26px 30px;
 }
 
@@ -169,9 +177,9 @@ strong {
 .input-group textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid #333333;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 12px;
-    background-color: #111111;
+    background-color: rgba(0, 0, 0, 0.45);
     color: #ffffff;
     font-size: 15px;
     outline: none;
@@ -192,6 +200,26 @@ strong {
 .input-group textarea:focus {
     border-color: #facc15;
     box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.12);
+}
+
+.sidebar {
+    width: 270px;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 28px 20px;
+    box-shadow: 12px 0 35px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+}
+
+.status-box.empty {
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    padding: 18px;
 }
 
 /* Buttons */
