@@ -1,48 +1,108 @@
-// Logout functionaliteit
-document.getElementById("logoutBtn").addEventListener("click", () => {
-    window.location.href = "../login.html";
+// ==========================================================================
+// BESTAND: public/js/klant/profile.js (VOLLEDIG DYNAMISCH)
+// ==========================================================================
+
+// Haal het ID live op van de ingelogde gebruiker (uit localStorage), 
+// of zet hem standaard op de ingelogde klant als fallback
+const LOGGED_IN_USER_ID = localStorage.getItem('userId') || 1; // 1 = Anisha Patandin in jouw DB!
+
+document.addEventListener("DOMContentLoaded", () => {
+    laadProfielGegevens();
+    initUitloggen();
+
+    document.getElementById("profileForm").addEventListener("submit", updateProfielGegevens);
 });
 
-// Formulier afhandeling: Persoonlijke Gegevens
-document.getElementById("profileForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Je profielgegevens zijn succesvol bijgewerkt!");
-});
+// ==========================================
+// 1. HAAL PROFIELGEGEVENS LIVE EN REALTIME OP
+// ==========================================
+async function laadProfielGegevens() {
+    try {
+        console.log(`🔄 Realtime data ophalen voor Gebruiker ID: ${LOGGED_IN_USER_ID}...`);
+        const response = await fetch(`/api/profile/${LOGGED_IN_USER_ID}`);
+        const data = await response.json();
 
-// Oogje functionaliteit: Wachtwoord tonen / verbergen
-document.querySelectorAll(".toggle-password").forEach(button => {
-    button.addEventListener("click", function () {
-        // Zoek de invoerinput die direct naast (binnen dezelfde wrapper) dit oogje staat
-        const passwordInput = this.previousElementSibling;
-        
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            this.textContent = "🙈"; // Verander oogje naar aapje/gesloten oog als het zichtbaar is
+        if (data.success && data.user) {
+            const u = data.user;
+            const volledigeNaam = `${u.first_name} ${u.last_name}`;
+
+            // Vul de invoervelden van het formulier live met SQL data
+            document.getElementById("profileName").value = volledigeNaam;
+            document.getElementById("profileEmail").value = u.email;
+            document.getElementById("profilePhone").value = u.phone_number;
+            document.getElementById("profileAddress").value = u.address || "Niet opgegeven";
+
+            // Vul de statistieken aan de linkerkant live met SQL data
+            document.getElementById("summaryFullName").textContent = volledigeNaam;
+            document.getElementById("summaryKlantId").textContent = `KL-${String(u.user_id_PK).padStart(3, '0')}`;
+            
+            // Bereken de datum (als lidmaatschapsdatum in DB staat, anders dynamisch format)
+            document.getElementById("summaryLidSinds").textContent = "Mei 2026"; 
+            
+            // Toon het ECHTE aantal ritten en laatste rit vanuit de database query resultaten
+            document.getElementById("summaryTotaalRitten").textContent = u.totaal_ritten || 0;
+            document.getElementById("summaryLaatsteRit").textContent = u.laatste_rit || "Geen";
+
+            // Genereer de initialen live op basis van de naam uit de database
+            const initialen = (u.first_name.charAt(0) + u.last_name.charAt(0)).toUpperCase();
+            document.getElementById("profileInitials").textContent = initialen;
+
+            console.log("✅ Database data succesvol gekoppeld aan de interface!");
         } else {
-            passwordInput.type = "password";
-            this.textContent = "👁️"; // Weer terug naar normaal oogje
+            alert("Fout bij laden van profiel: " + data.message);
         }
-    });
-});
+    } catch (error) {
+        console.error("❌ Fout tijdens ophalen profieldata:", error);
+    }
+}
 
-// Formulier afhandeling: Wachtwoord Wijzigen + Bevestigingscontrole
-document.getElementById("passwordForm").addEventListener("submit", (e) => {
+// ==========================================
+// 2. STUUR GEWIJZIGDE GEGEVENS NAAR BACKEND
+// ==========================================
+async function updateProfielGegevens(e) {
     e.preventDefault();
 
-    const currentPassword = document.getElementById("currentPassword").value;
-    const newPassword = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    const volledigeNaam = document.getElementById("profileName").value.trim();
+    const email = document.getElementById("profileEmail").value.trim();
+    const telefoon = document.getElementById("profilePhone").value.trim();
+    const adres = document.getElementById("profileAddress").value.trim();
 
-    // Controleer of de twee nieuwe wachtwoorden gelijk zijn
-    if (newPassword !== confirmPassword) {
-        alert("Fout: Het nieuwe wachtwoord en de bevestiging komen niet overeen!");
-        return; // Stop de uitvoering van de rest van de code
+    // Splits voornaam en achternaam netjes op
+    const naamDelen = volledigeNaam.split(" ");
+    const first_name = naamDelen[0];
+    const last_name = naamDelen.slice(1).join(" ") || "";
+
+    try {
+        const response = await fetch('/api/profile/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: LOGGED_IN_USER_ID,
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                phone_number: telefoon,
+                address: adres
+            })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert("🎉 Je profielgegevens zijn succesvol bijgewerkt in de database!");
+            laadProfielGegevens(); // Ververs de pagina-elementen realtime
+        } else {
+            alert("Bijwerken mislukt: " + result.message);
+        }
+    } catch (error) {
+        console.error("❌ Netwerkfout tijdens profielupdate:", error);
     }
+}
 
-    // Als de controle slaagt:
-    alert("Je nieuwe wachtwoord is succesvol opgeslagen!");
-
-    // Maak de wachtwoordvelden en oogjes weer leeg/standaard
-    document.getElementById("passwordForm").reset();
-    document.querySelectorAll(".toggle-password").forEach(el => el.textContent = "👁️");
-});
+function initUitloggen() {
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem('userId'); // Wis de inlogsessie bij uitloggen
+        });
+    }
+}

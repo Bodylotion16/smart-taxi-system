@@ -33,7 +33,13 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: radial-gradient(circle at top, #1a1a1a 0%, var(--black) 65%);
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.58)),
+        url("../../img/admin-background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--white);
     min-height: 100vh;
 }

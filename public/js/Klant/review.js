@@ -1,51 +1,86 @@
-// js/klant/review.js
+// BESTAND: public/js/klant/review.js
 
-document.getElementById('customerReviewForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Zorg dat de pagina niet herlaadt
+document.addEventListener("DOMContentLoaded", () => {
+    laadBeschikbareChauffeurs();
+    initLogout();
 
-    // Haal de ingevulde waardes op uit het formulier
+    const reviewForm = document.getElementById('customerReviewForm');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', handelReviewInzending);
+    }
+});
+
+async function laadBeschikbareChauffeurs() {
+    const select = document.getElementById('driverSelect');
+    if (!select) return;
+    
+    try {
+        console.log("🔄 Fetch uitvoeren naar /api/drivers...");
+        const response = await fetch('/api/drivers');
+        const data = await response.json();
+        
+        console.log("📥 Data ontvangen van server:", data);
+
+        if (data.success && data.drivers && data.drivers.length > 0) {
+            select.innerHTML = '<option value="">Selecteer chauffeur</option>';
+            
+            data.drivers.forEach(chauffeur => {
+                const option = document.createElement('option');
+                option.value = chauffeur.id; // Dit wordt de user_id_PK
+                option.textContent = chauffeur.naam; // Dit wordt first_name + last_name
+                select.appendChild(option);
+            });
+            console.log(`✅ Dropdown gevuld met ${data.drivers.length} chauffeurs.`);
+        } else {
+            console.warn("⚠️ Server stuurde succes:true, maar de lijst met chauffeurs is leeg.");
+            select.innerHTML = '<option value="">Geen chauffeurs gevonden</option>';
+        }
+    } catch (error) {
+        console.error('❌ Kritieke fout in review.js frontend:', error);
+        select.innerHTML = '<option value="">Fout bij laden van data</option>';
+    }
+}
+
+async function handelReviewInzending(e) {
+    e.preventDefault();
     const driverId = document.getElementById('driverSelect').value;
     const rating = document.getElementById('rating').value;
-    const reviewText = document.getElementById('reviewText').value;
+    const reviewText = document.getElementById('reviewText').value.trim();
+
+    if (!driverId || !rating || !reviewText) {
+        alert("⚠️ Vul alle velden in.");
+        return;
+    }
 
     try {
-        // Verstuur de review via een POST request naar je backend
         const response = await fetch('/api/reviews/submit', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                driverId: driverId,
-                rating: parseInt(rating), // Zet de tekst '5' om naar een getal 5
-                feedback: reviewText,
-                date: new Date().toISOString() // Voegt direct de huidige datum en tijd toe
+                klantId: 3, // Tijdelijk hardcoded Simran uit jouw database screenshot!
+                driverId: parseInt(driverId),
+                rating: parseInt(rating),
+                feedback: reviewText
             })
         });
 
         const result = await response.json();
-
         if (result.success) {
-            alert('Bedankt! Je review is succesvol ingediend en gekoppeld aan de chauffeur.');
-            
-            // Maak het formulier leeg
-            document.getElementById('customerReviewForm').reset();
-            
-            // Stuur de klant optioneel direct terug naar het dashboard home
+            alert('🎉 Review succesvol verzonden!');
             window.location.href = 'dashboard.html';
         } else {
-            alert('Inzenden mislukt: ' + result.message);
+            alert('Fout: ' + result.message);
         }
-
     } catch (error) {
-        console.error('Error tijdens versturen review:', error);
-        alert('Er is een netwerkfout opgetreden. Controleer of de server draait.');
+        console.error('❌ Fout bij verzenden review:', error);
     }
-});
+}
 
-// Zorg dat de algemene uitlogknop ook werkt op deze pagina
-document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    if (confirm('Weet je zeker dat je wilt uitloggen?')) {
-        window.location.href = '../../auth/login.html';
+function initLogout() {
+    const logoutLink = document.querySelector(".logout-link");
+    if (logoutLink) {
+        logoutLink.addEventListener("click", (e) => {
+            if (!confirm("Weet je zeker dat je wilt uitloggen?")) e.preventDefault();
+        });
     }
-});
+}

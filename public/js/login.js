@@ -1,12 +1,12 @@
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Haal de ingevulde waarden op
+    // Haal de ingevulde waarden op uit de inputvelden
     const email = document.getElementById('email').value;
     const wachtwoord = document.getElementById('password').value;
 
     try {
-        // Verstuur login request naar je backend
+        // Verstuur login request naar je backend server
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -21,44 +21,36 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
-            // FIX 1: Sla de live voornaam uit de database direct op in de browser!
-            // Hierdoor weet dashboard.js straks exact wie er achter het stuur zit (Vyaas of Anisha)
+            // Sla de live gegevens uit de database direct op in de browser!
             localStorage.setItem('userName', result.voornaam);
+            localStorage.setItem('userId', result.userId); // Belangrijk voor profiel/settings/support!
+            localStorage.setItem('userRole', result.role);
 
             alert(`Welkom terug, ${result.voornaam}!`);
 
-            // GECORRIGEERDE REDIRECTS OP BASIS VAN JOUW MAPPENSTRUCTUUR:
-            if (result.role === 'klant') {
+            // DYNAMISCHE REDIRECTS OP BASIS VAN DE EXCLUSIEVE ROLLEN UIT DE DATABASE:
+            if (result.role === 'admin') {
+                // Gaat naar: portals/admin/dashboard.html
+                window.location.href = '../portals/admin/dashboard.html';
+
+            } else if (result.role === 'klant') {
                 // Gaat naar: portals/Klant/dashboard.html
                 window.location.href = '../portals/Klant/dashboard.html';
 
-            } else if (result.role === 'taxi') {
+            } else if (result.role === 'taxi' || result.role === 'driver' || result.role === 'chauffeur') {
                 // Gaat naar: portals/driver/dashboard.html
                 window.location.href = '../portals/driver/dashboard.html'; 
 
             } else {
-                alert('Systeemfout: onbekende gebruikersrol.');
+                alert('⚠️ Systeemfout: Je account heeft een onbekende of inactieve rol.');
             }
 
         } else {
-            alert('Inloggen mislukt: ' + result.message);
+            alert('❌ Inloggen mislukt: ' + result.message);
         }
 
     } catch (error) {
-        console.error(error);
-        alert('Er is een fout opgetreden bij het inloggen.');
+        console.error("❌ Fout tijdens inlogproces:", error);
+        alert('Er is een fout opgetreden bij het verbinden met de inlogserver.');
     }
 });
-
-if (role === 'klant') {
-    window.location.href = '../portals/Klant/dashboard.html';
-
-} else if (role === 'taxi' || role === 'driver' || role === 'chauffeur') {
-    window.location.href = '../portals/driver/dashboard.html';
-
-} else if (role === 'admin') {
-    window.location.href = '../portals/admin/dashboard.html';
-
-} else {
-    alert('Systeemfout: onbekende gebruikersrol.');
-}

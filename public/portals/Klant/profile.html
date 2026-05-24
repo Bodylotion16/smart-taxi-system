@@ -30,7 +30,7 @@
                 <a href="settings.html" class="nav-item">Instellingen</a>
                 <a href="support.html" class="nav-item">Support</a>
 
-                <a href="../../auth/login.html" class="nav-item logout-link">Uitloggen</a>
+                <a href="../../auth/login.html" class="nav-item logout-link" id="logoutBtn">Uitloggen</a>
             </nav>
         </aside>
 
@@ -47,12 +47,10 @@
                     <h3>Profieloverzicht</h3>
 
                     <div class="profile-summary">
-                        <div class="profile-avatar">
-                            AP
-                        </div>
+                        <div class="profile-avatar" id="profileInitials">--</div>
 
                         <div>
-                            <h2>Anisha Patandin</h2>
+                            <h2 id="summaryFullName">Laden...</h2>
                             <p>Klantaccount</p>
                             <span class="profile-status">Actief</span>
                         </div>
@@ -61,22 +59,22 @@
                     <div class="profile-info-list">
                         <div class="profile-info-row">
                             <span>Klant ID</span>
-                            <strong>KL-001</strong>
+                            <strong id="summaryKlantId">KL-000</strong>
                         </div>
 
                         <div class="profile-info-row">
                             <span>Lid sinds</span>
-                            <strong>Mei 2026</strong>
+                            <strong id="summaryLidSinds">Mei 2026</strong>
                         </div>
 
                         <div class="profile-info-row">
                             <span>Totaal aantal ritten</span>
-                            <strong>12</strong>
+                            <strong id="summaryTotaalRitten">0</strong>
                         </div>
 
                         <div class="profile-info-row">
                             <span>Laatste rit</span>
-                            <strong>22-05-2026</strong>
+                            <strong id="summaryLaatsteRit">Geen</strong>
                         </div>
                     </div>
                 </div>
@@ -87,22 +85,22 @@
                     <form class="quick-form" id="profileForm">
                         <div class="input-group">
                             <label>Volledige naam</label>
-                            <input type="text" id="profileName" value="Anisha Patandin" required>
+                            <input type="text" id="profileName" value="" required>
                         </div>
 
                         <div class="input-group">
                             <label>E-mailadres</label>
-                            <input type="email" id="profileEmail" value="anisha@example.com" required>
+                            <input type="email" id="profileEmail" value="" required>
                         </div>
 
                         <div class="input-group">
                             <label>Telefoonnummer</label>
-                            <input type="text" id="profilePhone" value="+597 7777777" required>
+                            <input type="text" id="profilePhone" value="" required>
                         </div>
 
                         <div class="input-group">
                             <label>Adres</label>
-                            <input type="text" id="profileAddress" value="Paramaribo Centrum">
+                            <input type="text" id="profileAddress" value="">
                         </div>
 
                         <button type="submit" class="btn-primary">Gegevens bijwerken</button>

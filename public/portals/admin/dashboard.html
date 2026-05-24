@@ -13,7 +13,6 @@
 <div class="container">
     <aside class="sidebar">
         <h2>Admin Portal</h2>
-
         <a href="dashboard.html" class="active">Dashboard</a>
         <a href="gebruikers.html">Gebruikers</a>
         <a href="chauffeurs.html">Chauffeurs</a>
@@ -34,31 +33,31 @@
             </div>
         </div>
 
-        <div class="cards">
-            <div class="card kpi-card">
-                <span class="kpi-label">Gebruikers</span>
-                <p class="value">128</p>
-                <small>+12 deze maand</small>
-            </div>
+       <div class="cards">
+    <div class="card kpi-card">
+        <span class="kpi-label">Gebruikers</span>
+        <p class="value" id="kpiGebruikers">...</p>
+        <small>Totaal geregistreerd</small>
+    </div>
 
-            <div class="card kpi-card">
-                <span class="kpi-label">Chauffeurs online</span>
-                <p class="value">24</p>
-                <small>6 chauffeurs momenteel bezet</small>
-            </div>
+    <div class="card kpi-card">
+        <span class="kpi-label">Chauffeurs</span>
+        <p class="value" id="kpiChauffeurs">...</p>
+        <small>Inclusief actieve status</small>
+    </div>
 
-            <div class="card kpi-card">
-                <span class="kpi-label">Ritten vandaag</span>
-                <p class="value">37</p>
-                <small>31 afgerond, 6 actief</small>
-            </div>
+    <div class="card kpi-card">
+        <span class="kpi-label">Paid Omzet</span>
+        <p class="value" id="kpiOmzet" style="color: #f1c40f;">...</p>
+        <small id="kpiRittenCount">0 ritten betaald</small>
+    </div>
 
-            <div class="card kpi-card">
-                <span class="kpi-label">Open meldingen</span>
-                <p class="value warning-value">4</p>
-                <small>Aandacht vereist</small>
-            </div>
-        </div>
+    <div class="card kpi-card">
+        <span class="kpi-label">Platform status</span>
+        <p class="value warning-value" id="kpiStatus" style="font-size: 1.5rem; margin-top: 10px;">Actief</p>
+        <small>Systeem operationeel</small>
+    </div>
+</div>
 
         <div class="admin-layout">
             <section class="section">
