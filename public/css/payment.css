@@ -1,188 +1,132 @@
-:root {
-    --primary: #f1c40f;
-    --primary-hover: #d4ac0d;
+/* ==========================================================================
+   BESTAND: public/css/klant/payment.css
+   STYLING VOOR DE GEBUNCKERDE BETALINGSPAGINA
+   ========================================================================== */
 
-    --card-bg: rgba(255, 255, 255, 0.05);
-
-    --text-light: #ffffff;
-    --text-dim: #a0a0a0;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-
-    background: radial-gradient(circle at top right, #1a1a1a, #000000);
-
-    color: var(--text-light);
-
-    min-height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-}
-
-/* Container */
-
-.payment-container {
-    background: var(--card-bg);
-
-    backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(255,255,255,0.1);
-
-    padding: 40px;
-
-    border-radius: 24px;
-
-    width: 100%;
-    max-width: 450px;
-
-    text-align: center;
-
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.payment-container h1 {
-    color: var(--primary);
-
-    margin-bottom: 10px;
-
-    text-transform: uppercase;
-}
-
-.subtitle {
-    color: var(--text-dim);
-
-    margin-bottom: 25px;
-}
-
-/* Payment box */
-
-.payment-box {
-    background: rgba(255,255,255,0.04);
-
-    border: 1px solid rgba(255,255,255,0.1);
-
+/* Het centrale paneel waar de factuur in staat */
+.payment-box-panel {
+    background: #121212;
     padding: 30px;
-
-    border-radius: 20px;
-}
-
-.price-display {
-    font-size: 3rem;
-
-    font-weight: 800;
-
-    color: var(--primary);
-
-    margin: 20px 0;
-
-    text-shadow: 0 0 20px rgba(241,196,15,0.3);
-}
-
-.detail-row {
-    display: flex;
-
-    justify-content: space-between;
-
-    padding: 10px 0;
-
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-
-    font-size: 0.9rem;
-}
-
-.highlight-text {
-    color: var(--primary);
-
-    font-weight: bold;
-}
-
-.method-text {
-    font-weight: bold;
-
-    text-transform: uppercase;
-}
-
-/* Status */
-
-.status-badge {
-    background: #f39c12;
-
-    color: black;
-
-    padding: 4px 12px;
-
-    border-radius: 50px;
-
-    font-weight: 700;
-
-    font-size: 0.7rem;
-
-    text-transform: uppercase;
-}
-
-/* Actions */
-
-.payment-actions {
-    margin-top: 30px;
-}
-
-.pay-btn {
-    width: 100%;
-
-    background: #2ecc71;
-
-    color: white;
-
-    border: none;
-
-    padding: 14px;
-
     border-radius: 12px;
+    border: 1px solid #1a1a1a;
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
 
-    font-size: 1rem;
+/* Header van de factuur */
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 15px;
+}
 
+.payment-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.waiting {
+    background: rgba(241, 194, 15, 0.11);
+    color: #f1c40f;
+    border: 1px solid #f1c40f;
+}
+
+/* Grote geldbedrag weergave */
+.price-display-large {
+    text-align: center;
+    font-size: 2.8rem;
     font-weight: 800;
+    color: #f1c40f; /* Smart Taxi Goudgeel */
+    margin: 35px 0;
+    letter-spacing: -1px;
+}
 
+/* Factuur specificaties lijst */
+.invoice-details-list {
+    margin-bottom: 30px;
+}
+
+.invoice-detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+}
+
+.detail-label {
+    color: #888;
+}
+
+.detail-value-white {
+    font-weight: 700;
+    color: #fff;
+}
+
+.detail-value-gold {
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #f1c40f;
+}
+
+.detail-value-normal {
+    color: #ddd;
+}
+
+/* De grote Bevestigingsknop */
+.btn-confirm-payment {
+    width: 100%;
+    background: #f1c40f;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-
-    transition: 0.3s;
+    transition: background 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 12px rgba(241, 194, 15, 0.2);
 }
 
-.pay-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow: 0 5px 15px rgba(46,204,113,0.4);
+.btn-confirm-payment:hover {
+    background: #e67e22;
 }
 
-/* Success */
+.btn-confirm-payment:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
-#successMessage {
+/* Succesmelding tekst */
+.payment-success-msg {
     display: none;
-
+    text-align: center;
     color: #2ecc71;
-
-    font-weight: bold;
-
+    font-weight: 700;
     margin-top: 20px;
+    font-size: 1.15rem;
+    animation: fadeIn 0.4s ease forwards;
 }
 
-/* Footer */
-
-.footer-text {
-    margin-top: 20px;
-
-    color: var(--text-dim);
-
-    font-size: 0.85rem;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }

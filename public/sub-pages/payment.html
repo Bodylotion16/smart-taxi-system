@@ -1,124 +1,81 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betaling Voltooien | Smart Taxi</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Betaling Voltooien | Smart Taxi
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="../css/payment.css"
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"
-        rel="stylesheet"
-    >
-
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/book-ride.css">
+    <link rel="stylesheet" href="../../css/klant/payment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    <div class="payment-container">
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2>Customer Portal</h2>
+        </div>
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">Dashboard Home</a>
+            <a href="book-ride.html" class="nav-item">Book a Ride</a>
+            <a href="ride-history.html" class="nav-item">Ride History</a>
+            <a href="favorites.html" class="nav-item">Favorites</a>
+            <a href="payment.html" class="nav-item active">Payments</a>
+            <a href="profile.html" class="nav-item">Profile</a>
+            <a href="settings.html" class="nav-item">Settings</a>
+            <a href="support.html" class="nav-item">Support</a>
+        </nav>
+    </aside>
 
-        <h1>Betaling</h1>
-
-        <p class="subtitle">
-            Bevestig uw betaling om de rit af te sluiten.
-        </p>
-
-        <div class="payment-box">
-
-            <span class="status-badge">
-                Wachten op betaling
-            </span>
-
-            <div class="price-display">
-
-                SRD
-
-                <span id="amountDisplay">
-                    0.00
-                </span>
-
-            </div>
-
-            <div class="detail-row">
-
-                <span>
-                    Rit ID (booking_id):
-                </span>
-
-                <span
-                    id="bookingIdDisplay"
-                    class="highlight-text"
-                >
-                    #0
-                </span>
-
-            </div>
-
-            <div class="detail-row">
-
-                <span>
-                    Methode (payment_method):
-                </span>
-
-                <span
-                    id="methodDisplay"
-                    class="method-text"
-                >
-                    CASH
-                </span>
-
-            </div>
-
-            <div class="detail-row">
-
-                <span>
-                    Datum:
-                </span>
-
-                <span id="dateDisplay">
-                    --/--/----
-                </span>
-
-            </div>
-
+    <main class="main-content">
+        <div class="topbar">
+            <h2 class="page-title">Betaling</h2>
         </div>
 
-        <div class="payment-actions">
+        <p class="subtitle">Bevestig uw betaling om uw ritverzoek definitief te activeren.</p>
 
-            <button
-                id="payButton"
-                onclick="verwerkBetaling()"
-                class="pay-btn"
-            >
-                Bevestig Betaling
-            </button>
+        <div class="book-ride-layout">
+            <div class="payment-box-panel">
+                <div class="payment-header">
+                    <h3>Factuur Details</h3>
+                    <span class="status-badge waiting">Wachten op betaling</span>
+                </div>
 
-            <p id="successMessage">
-                ✅ Betaling Succesvol Verwerkt!
-            </p>
+                <div class="price-display-large">
+                    SRD <span id="amountDisplay">0.00</span>
+                </div>
 
-            <p class="footer-text">
-                Hulp nodig? Neem contact op met support.
-            </p>
+                <div class="invoice-details-list">
+                    <div class="invoice-detail-row">
+                        <span class="detail-label">Rit ID:</span>
+                        <span id="bookingIdDisplay" class="detail-value-white">#0</span>
+                    </div>
 
+                    <div class="invoice-detail-row">
+                        <span class="detail-label">Betaalmethode:</span>
+                        <span id="methodDisplay" class="detail-value-gold">CASH</span>
+                    </div>
+
+                    <div class="invoice-detail-row">
+                        <span class="detail-label">Datum:</span>
+                        <span id="dateDisplay" class="detail-value-normal">--/--/----</span>
+                    </div>
+                </div>
+
+                <button type="button" id="payButton" onclick="verwerkBetaling()" class="btn-confirm-payment">
+                    Bevestig Betaling
+                </button>
+
+                <p id="successMessage" class="payment-success-msg">
+                    ✅ Betaling Succesvol Verwerkt!
+                </p>
+            </div>
         </div>
+    </main>
+</div>
 
-    </div>
-
-    <script src="../js/payment.js"></script>
-
+<script src="../../js/klant/payment.js"></script>
 </body>
 </html>
