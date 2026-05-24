@@ -24,7 +24,7 @@
         <a href="reviews.html">Reviews</a>
 
         <a href="../../auth/login.html" class="logout-link" onclick="return confirm('Weet je zeker dat je wilt uitloggen?')">Uitloggen</a>
-    </aside>
+    </</aside>
 
     <main class="main">
         <div class="header">
@@ -38,7 +38,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Datum</th>
+                        <th>Rit ID</th>
                         <th>Klant</th>
                         <th>Route</th>
                         <th>Prijs</th>
@@ -46,39 +46,9 @@
                         <th>Actie</th>
                     </tr>
                 </thead>
-
-                <tbody>
+                <tbody id="geschiedenisTbody">
                     <tr>
-                        <td>20 mei 2026</td>
-                        <td>Anisha</td>
-                        <td>Paramaribo Centrum → Zorg en Hoop</td>
-                        <td>SRD 150</td>
-                        <td><span class="status">Afgerond</span></td>
-                        <td>
-                            <button onclick="viewRideDetails('Anisha')">Details</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>19 mei 2026</td>
-                        <td>Simran</td>
-                        <td>Latour → Lelydorp</td>
-                        <td>SRD 220</td>
-                        <td><span class="status">Afgerond</span></td>
-                        <td>
-                            <button onclick="viewRideDetails('Simran')">Details</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>18 mei 2026</td>
-                        <td>Aman</td>
-                        <td>Flora → Centrum</td>
-                        <td>SRD 120</td>
-                        <td><span class="status">Afgerond</span></td>
-                        <td>
-                            <button onclick="viewRideDetails('Aman')">Details</button>
-                        </td>
+                        <td colspan="6" style="color: #888; text-align: center; padding: 20px;">Ritgeschiedenis laden...</td>
                     </tr>
                 </tbody>
             </table>
@@ -86,9 +56,9 @@
 
         <div class="section">
             <h2>Samenvatting</h2>
-            <p><strong>Totaal afgeronde ritten:</strong> 3</p>
-            <p><strong>Totaal verdiend:</strong> SRD 490</p>
-            <p><strong>Gemiddelde ritprijs:</strong> SRD 163</p>
+            <p><strong>Totaal afgeronde ritten:</strong> <span id="statTotaalRitten">0</span></p>
+            <p><strong>Totaal verdiend:</strong> <span id="statTotaalVerdiend">SRD 0.00</span></p>
+            <p><strong>Gemiddelde ritprijs:</strong> <span id="statGemiddeldePrijs">SRD 0.00</span></p>
         </div>
     </main>
 </div>
