@@ -107,3 +107,98 @@ button[type="submit"]:active {
 .reg-link:hover {
     text-decoration: underline;
 }
+
+/* ==========================================================================
+   DYNAMISCHE MODAL POP-UP STYLING (Toegevoegd voor Profiel & Wachtwoord)
+   ========================================================================== */
+
+/* Achtergrond overlay die het hele scherm bedekt */
+.custom-modal {
+    display: none; /* Wordt 'flex' via JavaScript */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Donkere dimming */
+    z-index: 9999; /* Zorgt dat hij altijd bovenop ligt */
+    justify-content: center;
+    align-items: center;
+}
+
+/* De pop-up container zelf */
+.modal-content {
+    background: #121212;
+    padding: 35px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #f1c40f;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Formulier groepen binnen de modal */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+    text-align: left; /* Zorgt dat labels netjes links uitlijnen */
+}
+
+.form-group label {
+    color: #888;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Knoppensectie onderaan de modal */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.modal-actions button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+/* Annuleerknop */
+.btn-cancel {
+    background: #1e1e1e;
+    color: #888;
+    border: 1px solid #2a2a2a !important;
+}
+
+.btn-cancel:hover {
+    background: #252525;
+    color: #fff;
+}
+
+/* Opslaan / Bijwerken knop */
+.btn-save {
+    background: #f1c40f;
+    color: #000;
+}
+
+.btn-save:hover {
+    background: #e67e22;
+}

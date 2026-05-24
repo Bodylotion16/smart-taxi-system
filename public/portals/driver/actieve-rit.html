@@ -35,39 +35,41 @@
         <div class="section">
             <h2>Ritgegevens</h2>
 
-            <p><strong>Klant:</strong> <span id="customerName">Anisha</span></p>
-            <p><strong>Telefoon:</strong> <span id="customerPhone">+597 7777777</span></p>
-            <p><strong>Ophaallocatie:</strong> <span id="pickupLocation">Paramaribo Centrum</span></p>
-            <p><strong>Bestemming:</strong> <span id="destination">Zorg en Hoop</span></p>
-            <p><strong>Prijsindicatie:</strong> <span id="price">SRD 150</span></p>
-            <p><strong>Status:</strong> <span class="status" id="rideStatus">Geaccepteerd</span></p>
+            <p><strong>Klant:</strong> <span id="customerName">Laden...</span></p>
+            <p><strong>Telefoon:</strong> <span id="customerPhone">Laden...</span></p>
+            <p><strong>Ophaallocatie:</strong> <span id="pickupLocation">Laden...</span></p>
+            <p><strong>Bestemming:</strong> <span id="destination">Laden...</span></p>
+            <p><strong>Prijsindicatie:</strong> <span id="price">Laden...</span></p>
+            <p><strong>Status:</strong> <span class="status" id="rideStatus">Geen</span></p>
         </div>
 
         <div class="section">
             <h2>Ritstatus wijzigen</h2>
 
-            <button onclick="changeRideStatus('Onderweg naar klant')">
-                Onderweg naar klant
-            </button>
+            <div>
+                <button onclick="changeRideStatus('Onderweg naar klant')">
+                    Onderweg naar klant
+                </button>
 
-            <button onclick="changeRideStatus('Aangekomen')">
-                Aangekomen
-            </button>
+                <button onclick="changeRideStatus('Aangekomen')">
+                    Aangekomen
+                </button>
 
-            <button onclick="changeRideStatus('Rit gestart')">
-                Rit gestart
-            </button>
+                <button onclick="changeRideStatus('Rit gestart')">
+                    Rit gestart
+                </button>
 
-            <button onclick="changeRideStatus('Afgerond')">
-                Rit afronden
-            </button>
+                <button onclick="changeRideStatus('Afgerond')">
+                    Rit afronden
+                </button>
+            </div>
         </div>
 
         <div class="section">
             <h2>Route</h2>
 
-            <p><strong>Van:</strong> Paramaribo Centrum</p>
-            <p><strong>Naar:</strong> Zorg en Hoop</p>
+            <p><strong>Van:</strong> <span id="routeVan">Laden...</span></p>
+            <p><strong>Naar:</strong> <span id="routeNaar">Laden...</span></p>
 
             <a href="kaart.html">
                 <button>Bekijk kaart</button>
