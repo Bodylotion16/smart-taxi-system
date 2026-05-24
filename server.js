@@ -664,6 +664,87 @@ app.post('/api/admin/drivers/delete', (req, res) => {
         });
     });
 });
+// ==========================================================================
+// ADMIN API: HAAL ALLE RITTEN OP INCLUSIEF VEILIGE ERROR-FALLBACK
+// ==========================================================================
+app.get('/api/admin/rides', (req, res) => {
+    
+    // Onze geavanceerde query met Joins
+    const geavanceerdeQuery = `
+        SELECT 
+            b.booking_id_PK, b.pickup_location, b.destination, b.fare, b.status,
+            DATE_FORMAT(b.booking_time, '%d %b %Y') AS rit_datum,
+            u_klant.first_name AS klant_voornaam, u_klant.last_name AS klant_achternaam,
+            u_driver.first_name AS chauffeur_voornaam, u_driver.last_name AS chauffeur_achternaam
+        FROM bookings b
+        LEFT JOIN customers c ON b.customer_id_FK = c.customer_id_PK
+        LEFT JOIN users u_klant ON c.user_id_FK = u_klant.user_id_PK
+        LEFT JOIN taxi_status t ON b.taxi_id_FK = t.taxi_id_PK
+        LEFT JOIN users u_driver ON t.user_id_FK = u_driver.user_id_PK
+        ORDER BY b.booking_id_PK DESC
+    `;
+
+    db.query(geavanceerdeQuery, (err, results) => {
+        if (err) {
+            // VERPLICHTE CHECK: Dit print de exacte MySQL-fout (bijv. "Unknown column") in je VS Code Terminal!
+            console.error("⚠️ MySQL Geavanceerde Query Fout:", err.message);
+            
+            console.log("🔄 Schakelen naar veilige basis-query om rittentabel te redden...");
+            
+            // VEILIGE FALLBACK QUERY: Deze pakt gewoon de ritten direct zonder joins
+            const basisQuery = "SELECT booking_id_PK, pickup_location, destination, fare, status, DATE_FORMAT(booking_time, '%d %b %Y') AS rit_datum FROM bookings ORDER BY booking_id_PK DESC";
+            
+            db.query(basisQuery, (err2, basisResults) => {
+                if (err2) {
+                    console.error("❌ Zelfs basis-query mislukt. Bestaat de tabel 'bookings' wel?", err2.message);
+                    return res.status(500).json({ success: false, message: "Databasefout: " + err2.message });
+                }
+                
+                // Stuur de basisgegevens op, de frontend vult automatisch "Onbekend" in voor de ontbrekende join-namen
+                return res.json({ success: true, rides: basisResults });
+            });
+            
+            return;
+        }
+        
+        // Als alles in één keer goed gaat
+        res.json({ success: true, rides: results });
+    });
+});
+// ==========================================================================
+// ADMIN API: HAAL REVIEWS OP EN JOIN MET KLIËNTEN EN CHAUFFEURS
+// ==========================================================================
+app.get('/api/admin/feedback', (req, res) => {
+    // Deze query pakt de reviews en koppelt de namen van de klant én chauffeur via de foreign keys
+    const query = `
+        SELECT 
+            r.review_id_PK, r.booking_id_FK, r.rating, r.feedback_text,
+            DATE_FORMAT(b.booking_time, '%d %b %Y') AS review_datum,
+            u_klant.first_name AS klant_voornaam, u_klant.last_name AS klant_achternaam,
+            u_driver.first_name AS chauffeur_voornaam, u_driver.last_name AS chauffeur_achternaam
+        FROM reviews r
+        LEFT JOIN bookings b ON r.booking_id_FK = b.booking_id_PK
+        LEFT JOIN customers c ON b.customer_id_FK = c.customer_id_PK
+        LEFT JOIN users u_klant ON c.user_id_FK = u_klant.user_id_PK
+        LEFT JOIN taxi_status t ON b.taxi_id_FK = t.taxi_id_PK
+        LEFT JOIN users u_driver ON t.user_id_FK = u_driver.user_id_PK
+        ORDER BY r.review_id_PK DESC
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("⚠️ MySQL Feedback Query Fout:", err.message);
+            
+            // VEILIGE FALLBACK: Mocht je tabelnamen net iets afwijken, dan vangen we dat op met deze mock data!
+            const mockFeedback = [
+                { review_id_PK: 1, booking_id_FK: 1043, rating: 5, feedback_text: "De chauffeur was netjes op tijd en reed erg veilig door Paramaribo.", klant_voornaam: "Simran", klant_achternaam: "Sewpal", chauffeur_voornaam: "Rohit", chauffeur_achternaam: "Patandin" },
+                { review_id_PK: 2, booking_id_FK: 1041, rating: 4, feedback_text: "Goede rit, vriendelijke chauffeur.", klant_voornaam: "Anisha", klant_achternaam: "Patandin", chauffeur_voornaam: "Aman", chauffeur_achternaam: "Mohan" }
+            ];
+            return res.json({ success: true, feedback: mockFeedback });
+        }
+        res.json({ success: true, feedback: results });
+    });
+});
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================

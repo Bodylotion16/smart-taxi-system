@@ -37,17 +37,17 @@
         <div class="feedback-overview">
             <div class="feedback-stat">
                 <h3>Gemiddelde score</h3>
-                <p class="stars">★★★★☆</p>
+                <p class="stars" id="avgScore">...</p>
             </div>
 
             <div class="feedback-stat">
                 <h3>Totaal feedback</h3>
-                <p>4</p>
+                <p id="totalFeedback">...</p>
             </div>
 
             <div class="feedback-stat">
                 <h3>Laatste score</h3>
-                <p class="stars">★★★★★</p>
+                <p class="stars" id="lastScore">...</p>
             </div>
         </div>
 
@@ -66,37 +66,7 @@
                 </div>
 
                 <div class="feedback-list" id="feedbackList">
-                    <div class="feedback-card" data-customer="simran" data-driver="rohit" onclick="showFeedback('FB-001')">
-                        <div>
-                            <h3>Simran → Rohit</h3>
-                            <p>Rit: RT-1043 • 20 mei 2026</p>
-                        </div>
-                        <span class="stars">★★★★★</span>
-                    </div>
-
-                    <div class="feedback-card" data-customer="anisha" data-driver="aman" onclick="showFeedback('FB-002')">
-                        <div>
-                            <h3>Anisha → Aman</h3>
-                            <p>Rit: RT-1041 • 19 mei 2026</p>
-                        </div>
-                        <span class="stars">★★★★☆</span>
-                    </div>
-
-                    <div class="feedback-card" data-customer="aman" data-driver="vyaas" onclick="showFeedback('FB-003')">
-                        <div>
-                            <h3>Aman → Vyaas</h3>
-                            <p>Rit: RT-1042 • 18 mei 2026</p>
-                        </div>
-                        <span class="stars">★★★☆☆</span>
-                    </div>
-
-                    <div class="feedback-card" data-customer="jayden" data-driver="rohit" onclick="showFeedback('FB-004')">
-                        <div>
-                            <h3>Jayden → Rohit</h3>
-                            <p>Rit: RT-1039 • 17 mei 2026</p>
-                        </div>
-                        <span class="stars">★★★★★</span>
-                    </div>
+                    <p style="text-align: center; color: #888; padding: 20px;">Live reviews worden ingeladen...</p>
                 </div>
             </section>
 

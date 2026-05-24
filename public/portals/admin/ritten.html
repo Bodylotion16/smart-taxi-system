@@ -39,7 +39,7 @@
                 <span class="status-dot dot-yellow"></span>
                 <div>
                     <h3>Gepland</h3>
-                    <p id="plannedCount">2</p>
+                    <p id="plannedCount">...</p>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <span class="status-dot dot-blue"></span>
                 <div>
                     <h3>Onderweg</h3>
-                    <p id="activeRideCount">1</p>
+                    <p id="activeRideCount">...</p>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                 <span class="status-dot dot-green"></span>
                 <div>
                     <h3>Afgerond</h3>
-                    <p id="completedCount">3</p>
+                    <p id="completedCount">...</p>
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
                 <span class="status-dot dot-red"></span>
                 <div>
                     <h3>Geannuleerd</h3>
-                    <p id="cancelledCount">1</p>
+                    <p id="cancelledCount">...</p>
                 </div>
             </div>
         </div>
@@ -101,56 +101,8 @@
                     </thead>
 
                     <tbody id="rideTable">
-                        <tr data-id="RT-1041" data-customer="anisha" data-driver="rohit" data-status="completed">
-                            <td>
-                                <strong>RT-1041</strong><br>
-                                <span class="muted-text">20 mei 2026</span>
-                            </td>
-                            <td>Anisha</td>
-                            <td>Rohit</td>
-                            <td><span class="status active">Afgerond</span></td>
-                            <td>
-                                <button class="btn-small" onclick="showRideDetails('RT-1041')">Details</button>
-                            </td>
-                        </tr>
-
-                        <tr data-id="RT-1042" data-customer="simran" data-driver="aman" data-status="active">
-                            <td>
-                                <strong>RT-1042</strong><br>
-                                <span class="muted-text">20 mei 2026</span>
-                            </td>
-                            <td>Simran</td>
-                            <td>Aman</td>
-                            <td><span class="status pending">Onderweg</span></td>
-                            <td>
-                                <button class="btn-small" onclick="showRideDetails('RT-1042')">Details</button>
-                            </td>
-                        </tr>
-
-                        <tr data-id="RT-1043" data-customer="jayden" data-driver="vyaas" data-status="planned">
-                            <td>
-                                <strong>RT-1043</strong><br>
-                                <span class="muted-text">21 mei 2026</span>
-                            </td>
-                            <td>Jayden</td>
-                            <td>Vyaas</td>
-                            <td><span class="status pending">Gepland</span></td>
-                            <td>
-                                <button class="btn-small" onclick="showRideDetails('RT-1043')">Details</button>
-                            </td>
-                        </tr>
-
-                        <tr data-id="RT-1044" data-customer="aman" data-driver="rohit" data-status="cancelled">
-                            <td>
-                                <strong>RT-1044</strong><br>
-                                <span class="muted-text">19 mei 2026</span>
-                            </td>
-                            <td>Aman</td>
-                            <td>Rohit</td>
-                            <td><span class="status cancelled">Geannuleerd</span></td>
-                            <td>
-                                <button class="btn-small" onclick="showRideDetails('RT-1044')">Details</button>
-                            </td>
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888;">Live rittenoverzicht wordt ingeladen...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -192,13 +144,13 @@
                     </div>
                 </div>
 
-                 <div class="ride-status-control">
+                <div class="ride-status-control">
                     <h3>Admin controle</h3>
                     <p class="muted-text">
-                  De ritstatus wordt aangepast door de chauffeur. Admin kan deze rit alleen controleren.
-                   </p>
+                        De ritstatus wordt aangepast door de chauffeur. Admin kan deze rit alleen controleren.
+                    </p>
 
-                 <button onclick="flagRide()">Markeer voor controle</button>
+                    <button onclick="flagRide()">Markeer voor controle</button>
                 </div>
             </aside>
         </div>
