@@ -745,6 +745,11 @@ app.get('/api/admin/feedback', (req, res) => {
         res.json({ success: true, feedback: results });
     });
 });
+// Importeer de admin routes
+const adminRoutes = require('./routes/adminRoutes');
+
+// Koppel de admin routes aan het "/api/admin" pad
+app.use('/api/admin', adminRoutes);
 // ==========================================
 // 6. SERVER ACTIVATIE
 // ==========================================
