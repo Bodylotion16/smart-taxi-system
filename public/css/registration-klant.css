@@ -15,7 +15,7 @@
 body {
     font-family: 'Inter', sans-serif;
     /* Combined your gradient and image directly on the body */
-    background: radial-gradient(circle at top right, rgba(26, 26, 26, 0.75), rgba(0, 0, 0, 0.9)), url('../img/login-background.png'), #000000;
+    background: radial-gradient(circle at top right, rgba(26, 26, 26, 0.75), rgba(0, 0, 0, 0.9)), url('../../../img/login-background.png'), #000000;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
