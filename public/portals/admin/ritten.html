@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ritten beheren - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/admin/admin-base.css">
+    <link rel="stylesheet" href="../../css/admin/admin-components.css">
+    <link rel="stylesheet" href="../../css/admin/admin-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Admin Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="gebruikers.html">Gebruikers</a>
+        <a href="chauffeurs.html">Chauffeurs</a>
+        <a href="ritten.html" class="active">Ritten</a>
+        <a href="feedback.html">feedbacks</a>
+        
+        <a href="../../../index.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header admin-header">
+            <div>
+                <h1>Rittenbeheer</h1>
+                <p>Controleer actieve, geplande en afgeronde ritten binnen het platform.</p>
+            </div>
+
+            <div class="admin-badge">
+                Realtime overzicht
+            </div>
+        </div>
+
+        <div class="ride-status-grid">
+            <div class="ride-status-card">
+                <span class="status-dot dot-yellow"></span>
+                <div>
+                    <h3>Gepland</h3>
+                    <p id="plannedCount">...</p>
+                </div>
+            </div>
+
+            <div class="ride-status-card">
+                <span class="status-dot dot-blue"></span>
+                <div>
+                    <h3>Onderweg</h3>
+                    <p id="activeRideCount">...</p>
+                </div>
+            </div>
+
+            <div class="ride-status-card">
+                <span class="status-dot dot-green"></span>
+                <div>
+                    <h3>Afgerond</h3>
+                    <p id="completedCount">...</p>
+                </div>
+            </div>
+
+            <div class="ride-status-card">
+                <span class="status-dot dot-red"></span>
+                <div>
+                    <h3>Geannuleerd</h3>
+                    <p id="cancelledCount">...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="rides-layout">
+            <section class="section">
+                <div class="section-top">
+                    <div>
+                        <h2>Rittenoverzicht</h2>
+                        <p>Selecteer een rit om details te bekijken.</p>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" id="searchRide" placeholder="Zoek rit, klant of chauffeur">
+                        <select id="rideStatusFilter">
+                            <option value="all">Alle ritten</option>
+                            <option value="planned">Gepland</option>
+                            <option value="active">Onderweg</option>
+                            <option value="completed">Afgerond</option>
+                            <option value="cancelled">Geannuleerd</option>
+                        </select>
+                        <button onclick="filterRides()">Filter</button>
+                    </div>
+                </div>
+
+                <table class="admin-table compact-table">
+                    <thead>
+                        <tr>
+                            <th>Rit</th>
+                            <th>Klant</th>
+                            <th>Chauffeur</th>
+                            <th>Status</th>
+                            <th>Actie</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rideTable">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888;">Live rittenoverzicht wordt ingeladen...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <aside class="ride-details-panel">
+                <h2>Ritdetails</h2>
+                <p class="muted-text">Klik op een rit om details te bekijken.</p>
+
+                <div class="ride-detail-box">
+                    <div class="detail-row">
+                        <span>Rit ID</span>
+                        <strong id="detailRideId">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Klant</span>
+                        <strong id="detailCustomer">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Chauffeur</span>
+                        <strong id="detailDriver">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Route</span>
+                        <strong id="detailRoute">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Prijs</span>
+                        <strong id="detailPrice">-</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Status</span>
+                        <strong id="detailStatus">-</strong>
+                    </div>
+                </div>
+
+                <div class="ride-status-control">
+                    <h3>Admin controle</h3>
+                    <p class="muted-text">
+                        De ritstatus wordt aangepast door de chauffeur. Admin kan deze rit alleen controleren.
+                    </p>
+
+                    <button onclick="flagRide()">Markeer voor controle</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/admin/ritten.js"></script>
+</body>
+</html>

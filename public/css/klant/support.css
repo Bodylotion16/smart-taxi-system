@@ -1,0 +1,79 @@
+/* =========================
+   SUPPORT CSS
+   Support pagina
+   ========================= */
+
+.support-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.tickets-list {
+    display: grid;
+    gap: 16px;
+}
+
+.ticket-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid #333333;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.ticket-id {
+    color: #facc15;
+    font-weight: 900;
+}
+
+.ticket-card h4 {
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.ticket-card p {
+    color: #d4d4d4;
+    font-size: 14px;
+}
+
+.ticket-date {
+    color: #a3a3a3;
+    font-size: 13px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.status-open {
+    color: #facc15;
+    border: 1px solid #facc15;
+    background-color: rgba(250, 204, 21, 0.12);
+}
+
+.status-pending {
+    color: #60a5fa;
+    border: 1px solid #60a5fa;
+    background-color: rgba(96, 165, 250, 0.12);
+}
+
+@media (max-width: 1000px) {
+    .support-layout {
+        grid-template-columns: 1fr;
+    }
+}

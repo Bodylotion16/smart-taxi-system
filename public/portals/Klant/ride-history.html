@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn ritten | Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link rel="stylesheet" href="../../css/klant/ride-history.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Klantportaal</h2>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="ride-history.html" class="nav-item active">Mijn ritten</a>
+                <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
+                <a href="review.html" class="nav-item">Review</a>
+                <a href="profile.html" class="nav-item">Mijn profiel</a>
+                <a href="settings.html" class="nav-item">Instellingen</a>
+                <a href="support.html" class="nav-item">Support</a>
+
+                <a href="../../../index.html" class="nav-item logout-link">Uitloggen</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h2 class="page-title">Mijn ritten</h2>
+            </div>
+
+            <p class="subtitle">Bekijk je afgeronde, geplande en geannuleerde ritten.</p>
+
+            <div class="dashboard-grid full-width">
+
+                <div class="content-panel panel-glow">
+                    <h3>Ritgeschiedenis</h3>
+
+                    <div class="table-container">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Route</th>
+                                    <th>Prijs</th>
+                                    <th>Status</th>
+                                    <th>Actie</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="historyTableBody">
+                                <tr>
+                                    <td class="ride-date">Vandaag</td>
+                                    <td>Paramaribo Centrum → Zorg en Hoop</td>
+                                    <td>SRD 150</td>
+                                    <td><span class="status-badge completed">Afgerond</span></td>
+                                    <td><button type="button" class="btn-small">Opnieuw boeken</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="ride-date">18 mei</td>
+                                    <td>Maretraite → Centrum</td>
+                                    <td>SRD 120</td>
+                                    <td><span class="status-badge completed">Afgerond</span></td>
+                                    <td><button type="button" class="btn-small">Opnieuw boeken</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="ride-date">14 mei</td>
+                                    <td>Uitvlugt → Lelydorp</td>
+                                    <td>SRD 300</td>
+                                    <td><span class="status-badge cancelled">Geannuleerd</span></td>
+                                    <td><button type="button" class="btn-small">Opnieuw boeken</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../../js/klant/ride-history.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Actieve rit - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/driver/driver-base.css">
+    <link rel="stylesheet" href="../../css/driver/driver-components.css">
+    <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+        <a href="actieve-rit.html" class="active">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+        <a href="review.html">Reviews</a>
+
+        <a href="../../../index.html" class="logout-link" onclick="return confirm('Weet je zeker dat je wilt uitloggen?')">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Actieve rit</h1>
+            <p>Beheer de rit die nu bezig is.</p>
+        </div>
+
+        <div class="section">
+            <h2>Ritgegevens</h2>
+
+            <p><strong>Klant:</strong> <span id="customerName">Laden...</span></p>
+            <p><strong>Telefoon:</strong> <span id="customerPhone">Laden...</span></p>
+            <p><strong>Ophaallocatie:</strong> <span id="pickupLocation">Laden...</span></p>
+            <p><strong>Bestemming:</strong> <span id="destination">Laden...</span></p>
+            <p><strong>Prijsindicatie:</strong> <span id="price">Laden...</span></p>
+            <p><strong>Status:</strong> <span class="status" id="rideStatus">Geen</span></p>
+        </div>
+
+        <div class="section">
+            <h2>Ritstatus wijzigen</h2>
+
+            <div>
+                <button onclick="changeRideStatus('Onderweg naar klant')">
+                    Onderweg naar klant
+                </button>
+
+                <button onclick="changeRideStatus('Aangekomen')">
+                    Aangekomen
+                </button>
+
+                <button onclick="changeRideStatus('Rit gestart')">
+                    Rit gestart
+                </button>
+
+                <button onclick="changeRideStatus('Afgerond')">
+                    Rit afronden
+                </button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Route</h2>
+
+            <p><strong>Van:</strong> <span id="routeVan">Laden...</span></p>
+            <p><strong>Naar:</strong> <span id="routeNaar">Laden...</span></p>
+
+            <a href="kaart.html">
+                <button>Bekijk kaart</button>
+            </a>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/actieve-rit.js"></script>
+</body>
+</html>

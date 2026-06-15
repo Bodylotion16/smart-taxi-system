@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Gebruikers beheren - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/admin/admin-base.css">
+    <link rel="stylesheet" href="../../css/admin/admin-components.css">
+    <link rel="stylesheet" href="../../css/admin/admin-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Admin Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="gebruikers.html" class="active">Gebruikers</a>
+        <a href="chauffeurs.html">Chauffeurs</a>
+        <a href="ritten.html">Ritten</a>
+        <a href="feedback.html">feedbacks</a>
+        
+        <a href="../../../index.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Gebruikersbeheer</h1>
+            <p>Beheer klantaccounts, accountstatussen en toegangsrechten.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Totaal gebruikers</h3>
+                <p class="value" id="totalCount">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Actieve accounts</h3>
+                <p class="value" id="activeCount">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Geblokkeerd</h3>
+                <p class="value" id="blockedCount">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Nieuwe gebruikers</h3>
+                <p class="value" id="newCount">0</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-top">
+                <div>
+                    <h2>Gebruikerslijst</h2>
+                    <p>Zoek, controleer en beheer klantaccounts.</p>
+                </div>
+
+                <div class="filter-bar">
+                    <input type="text" id="searchUser" placeholder="Zoek op naam of e-mail">
+                    <select id="statusFilter">
+                        <option value="all">Alle statussen</option>
+                        <option value="active">Actief</option>
+                        <option value="blocked">Geblokkeerd</option>
+                    </select>
+                    <button onclick="filterUsers()">Filter</button>
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Gebruiker</th>
+                        <th>Contact</th>
+                        <th>Registratiedatum</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+
+                <tbody id="userTable">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #888;">Live data wordt geladen uit de database...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/admin/gebruikers.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klantportaal | Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/klant/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>Klantportaal</h2>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item active">Dashboard</a>
+                <a href="ride-history.html" class="nav-item">Mijn ritten</a>
+                <a href="../sub-pages/payment.html" class="nav-item">Betalingen</a>
+                <a href="review.html" class="nav-item">Review</a>
+                <a href="profile.html" class="nav-item">Mijn profiel</a>
+                <a href="settings.html" class="nav-item">Instellingen</a>
+                <a href="support.html" class="nav-item">Support</a>
+
+                <a href="../../../index.html" class="nav-item logout-link">Uitloggen</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <div class="topbar">
+                <div>
+                    <h2 id="welcomeUser">Welkom</h2>
+                    <p class="subtitle">Boek snel een rit en bekijk je actuele ritinformatie.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="content-panel">
+                    <h3>Actuele status</h3>
+                    <div id="liveStatusContainer" class="status-box empty">
+                        <p>Je hebt momenteel geen actieve rit.</p>
+                        <span class="link-yellow">Boek hieronder een nieuwe rit.</span>
+                    </div>
+                </div>
+
+                <div class="content-panel" id="lastRideBox">
+                    <h3>Laatste rit</h3>
+                    <p><strong>Van:</strong> <span id="lastVan">-</span></p>
+                    <p><strong>Naar:</strong> <span id="lastNaar">-</span></p>
+                    <p><strong>Prijs:</strong> <span id="lastPrijs">-</span></p>
+                    <p><strong>Status:</strong> <span id="lastStatus" class="status">-</span></p>
+                </div>
+            </div>
+
+            <div class="book-ride-layout">
+                <div class="content-panel panel-glow">
+                    <h3>Rit boeken</h3>
+
+                    <form id="bookingForm" class="quick-form">
+                        <div class="input-group">
+                            <label>Ophaallocatie</label>
+                            <input type="text" id="pickup_location" placeholder="GPS-locatie bepalen..." autocomplete="off">
+                            <ul id="pickup_suggestions" class="suggestions-list hidden"></ul>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Bestemming</label>
+                            <input type="text" id="destination" placeholder="Typ je bestemming..." autocomplete="off">
+                            <ul id="destination_suggestions" class="suggestions-list hidden"></ul>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Betaalmethode</label>
+                            <select id="payment_method">
+                                <option value="cash">Contant</option>
+                                <option value="card">Bankpas</option>
+                                <option value="online">Online betaling</option>
+                            </select>
+                        </div>
+
+                        <div id="priceBox" class="price-tag" style="display: none;">
+                            <div class="price-row">
+                                <span>Afstand: <strong id="distText">0</strong> km</span>
+                                <span>Totaal: <strong id="fareText">SRD 0.00</strong></span>
+                            </div>
+                        </div>
+
+                        <button type="button" id="calcBtn">Bereken ritprijs</button>
+                        <button type="submit" id="payBtn" class="pay-btn hidden">Rit aanvragen</button>
+                    </form>
+                </div>
+
+                <div class="content-panel panel-glow map-panel">
+                    <div class="map-header">
+                        <h3>Kaartoverzicht</h3>
+                        <button id="clearMap">Locaties wissen</button>
+                    </div>
+                    <div id="map"></div>
+                </div>
+            </div>
+
+            <div class="content-panel recent-rides">
+                <h3>Recente ritten</h3>
+                <div class="table-container">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rit ID</th>
+                                <th>Van</th>
+                                <th>Naar</th>
+                                <th>Prijs</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentRidesTbody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #888; padding: 20px;">Rittenhistorie inladen...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="../../js/Klant/dashboard.js"></script>
+</body>
+</html>

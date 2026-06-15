@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Chauffeurs beheren - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/admin/admin-base.css">
+    <link rel="stylesheet" href="../../css/admin/admin-components.css">
+    <link rel="stylesheet" href="../../css/admin/admin-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Admin Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="gebruikers.html">Gebruikers</a>
+        <a href="chauffeurs.html" class="active">Chauffeurs</a>
+        <a href="ritten.html">Ritten</a>
+        <a href="feedback.html">feedbacks</a>
+        
+        <a href="../../../index.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Chauffeursbeheer</h1>
+            <p>Beheer chauffeurs, voertuiggegevens networks en accountstatussen.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Totaal chauffeurs</h3>
+                <p class="value" id="totalDrivers">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Actief</h3>
+                <p class="value" id="activeDrivers">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Geblokkeerd</h3>
+                <p class="value" id="blockedDrivers">...</p>
+            </div>
+
+            <div class="card">
+                <h3>Online</h3>
+                <p class="value" id="onlineDrivers">0</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-top">
+                <div>
+                    <h2>Chauffeurslijst</h2>
+                    <p>Controleer chauffeurs, voertuigen en beschikbaarheid.</p>
+                </div>
+
+                <div class="filter-bar">
+                    <input type="text" id="searchDriver" placeholder="Zoek chauffeur of kenteken">
+                    <select id="driverStatusFilter">
+                        <option value="all">Alle statussen</option>
+                        <option value="active">Actief</option>
+                        <option value="blocked">Geblokkeerd</option>
+                    </select>
+                    <button onclick="filterDrivers()">Filter</button>
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Chauffeur</th>
+                        <th>Contact</th>
+                        <th>Voertuig</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+
+                <tbody id="driverTable">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #888;">Live chauffeursdata wordt ingeladen...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/admin/chauffeurs.js"></script>
+</body>
+</html>

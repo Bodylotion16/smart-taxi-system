@@ -1,0 +1,411 @@
+/* =========================
+   ADMIN COMPONENTS CSS
+   Herbruikbare onderdelen
+   ========================= */
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 28px;
+}
+
+.card,
+.section {
+    background: rgba(15, 15, 15, 0.58);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.card {
+    padding: 24px;
+}
+
+.card h3 {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.value {
+    color: var(--yellow);
+    font-size: 32px;
+    font-weight: 900;
+}
+
+/* Sections */
+.section {
+    padding: 24px 30px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+}
+
+.section h2,
+.main h2 {
+    color: var(--yellow);
+    font-size: 25px;
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.section p {
+    color: var(--text-light);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+strong {
+    color: var(--white);
+}
+
+/* Buttons */
+button,
+.btn {
+    border: none;
+    background-color: var(--yellow);
+    color: #000000;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.25s ease;
+    margin-right: 8px;
+    margin-top: 10px;
+}
+
+button:hover,
+.btn:hover {
+    background-color: var(--yellow-dark);
+    transform: translateY(-2px);
+}
+
+.btn-small {
+    padding: 9px 13px;
+    font-size: 13px;
+    margin-top: 0;
+}
+
+.btn-danger {
+    background-color: var(--red);
+}
+
+.btn-success {
+    background-color: var(--green);
+}
+
+.btn-info {
+    background-color: var(--blue);
+}
+
+.btn-warning {
+    background-color: var(--yellow);
+    color: #000000;
+}
+
+/* Status labels */
+.status {
+    display: inline-block;
+    background-color: rgba(250, 204, 21, 0.15);
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.status.active {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.status.blocked,
+.status.cancelled {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.status.pending {
+    background-color: rgba(250, 204, 21, 0.15);
+    color: var(--yellow);
+    border-color: var(--yellow);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 18px;
+}
+
+th,
+td {
+    color: var(--white);
+    font-size: 16px;
+    padding: 16px 24px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+th {
+    font-weight: 900;
+}
+
+.admin-table th {
+    color: var(--muted);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-table td {
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.admin-table td:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px 0 0 14px;
+}
+
+.admin-table td:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0 14px 14px 0;
+}
+
+.compact-table {
+    min-width: 760px;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 14px 18px;
+}
+
+.compact-table td {
+    background-color: rgba(0, 0, 0, 0.35);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.compact-table td:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px 0 0 14px;
+}
+
+.compact-table td:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0 14px 14px 0;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-light);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-sm);
+    background-color: rgba(0, 0, 0, 0.45);
+    color: var(--white);
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.12);
+}
+
+/* Section top */
+.section-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+/* Filters */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    margin-bottom: 24px;
+}
+
+.filter-bar input,
+.filter-bar select {
+    height: 52px;
+    min-width: 230px;
+    padding: 0 16px;
+    background-color: rgba(0, 0, 0, 0.45);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.filter-bar input::placeholder {
+    color: var(--muted);
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.12);
+}
+
+.filter-bar button {
+    height: 52px;
+    margin-top: 0;
+    padding: 0 26px;
+    border-radius: 14px;
+    white-space: nowrap;
+}
+
+/* Detail rows */
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    padding-bottom: 10px;
+    background-color: transparent;
+}
+
+.detail-row span {
+    color: var(--muted);
+}
+
+.detail-row strong {
+    color: var(--white);
+    text-align: right;
+}
+
+.detail-row span,
+.detail-row strong {
+    font-size: 15px;
+}
+
+/* Text helpers */
+.muted-text {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.stars {
+    color: var(--yellow);
+    font-size: 22px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    font-weight: 900;
+}
+
+/* Logout */
+.logout-link {
+    margin-top: auto;
+    border: 1px solid var(--red);
+    color: var(--red) !important;
+    text-align: center;
+}
+
+.logout-link:hover {
+    background-color: var(--red) !important;
+    color: #000000 !important;
+}
+
+/* Extra transparent admin elements */
+.panel,
+.activity-item,
+.admin-actions a,
+.settings-tab {
+    background-color: rgba(15, 15, 15, 0.45);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.admin-actions a:hover,
+.settings-tab:hover,
+.settings-tab.active-tab {
+    background-color: var(--yellow) !important;
+    color: #000000 !important;
+    border-color: var(--yellow) !important;
+}
+
+/* Scrollbar */
+.section::-webkit-scrollbar {
+    height: 12px;
+}
+
+.section::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 999px;
+}
+
+.section::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.20);
+    border-radius: 999px;
+}
+
+.section::-webkit-scrollbar-thumb:hover {
+    background: var(--yellow);
+}
+
+.section {
+    scrollbar-color: rgba(255, 255, 255, 0.20) rgba(0, 0, 0, 0.55);
+    scrollbar-width: thin;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .section-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    table {
+        min-width: 900px;
+    }
+}

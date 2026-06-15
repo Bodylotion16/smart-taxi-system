@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Dashboard</title>
+    
+    <link rel="stylesheet" href="../../css/driver/driver-base.css">
+    <link rel="stylesheet" href="../../css/driver/driver-components.css">
+    <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Driver Portal</h2>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+            <a href="actieve-rit.html">Actieve rit</a>
+            <a href="ritverzoeken.html">Ritverzoeken</a>
+            <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+            <a href="kaart.html">Kaart</a>
+            <a href="status-beheer.html">Status beheer</a>
+            <a href="review.html">Reviews</a>
+
+            <a href="../../../index.html" class="logout-link" onclick="return confirm('Weet je zeker dat je wilt uitloggen?')">
+                Uitloggen
+            </a>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <h1>Welkom, <span id="driverName"></span></h1>
+                <p>Hier zie je jouw overzicht als chauffeur.</p>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Huidige status</h3>
+                    <p class="value" id="driverStatus">Laden...</p>
+                </div>
+
+                <div class="card">
+                    <h3>Ritten vandaag</h3>
+                    <p class="value" id="todayRides">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Nieuwe verzoeken</h3>
+                    <p class="value" id="newRequests">0</p>
+                </div>
+            </div>
+
+            <div class="section" id="activeRideSection">
+                <h2>Actieve rit</h2>
+                <p><strong>Klant:</strong> <span id="activeCustomer">Geen actieve rit</span></p>
+                <p><strong>Ophaallocatie:</strong> <span id="activePickup">-</span></p>
+                <p><strong>Bestemming:</strong> <span id="activeDestination">-</span></p>
+                <p><strong>Tarief:</strong> <span id="activeFare">-</span></p>
+                <a href="actieve-rit.html" id="activeRideLink" style="display: none;"><button>Bekijk actieve rit</button></a>
+            </div>
+
+            <div class="section">
+                <h2>Snelle acties</h2>
+                <a href="ritverzoeken.html"><button>Bekijk ritverzoeken</button></a>
+                <a href="#" id="btnWijzigStatus"><button>Status wijzigen</button></a>
+            </div>
+        </main>
+    </div>
+
+   <script src="/js/driver/dashboard.js"></script>
+</body>
+</html>

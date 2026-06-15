@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Klant Registratie - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../css/registration-klant.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="login-container registration-container">
+
+        <h1>Passagier Worden</h1>
+
+        <p class="subtitle">
+            Maak een account aan om ritten te boeken.
+        </p>
+
+        <form id="klantRegForm">
+
+            <div class="name-row">
+
+                <input
+                    type="text"
+                    id="first_name"
+                    placeholder="Voornaam"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="last_name"
+                    placeholder="Achternaam"
+                    required
+                >
+
+            </div>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="E-mailadres"
+                required
+            >
+
+            <input
+                type="tel"
+                id="phone_number"
+                placeholder="Telefoonnummer"
+                required
+            >
+
+            <input
+                type="text"
+                id="address"
+                placeholder="Woonadres"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Wachtwoord"
+                required
+            >
+
+            <button type="submit">
+                Account Aanmaken
+            </button>
+
+            <p class="footer-text">
+
+                Al een account?
+
+                <a href="../../index.html" class="reg-link">
+                    Log hier in
+                </a>
+
+            </p>
+
+        </form>
+
+    </div>
+
+    <script src="../js/registration-klant.js"></script>
+
+</body>
+</html>

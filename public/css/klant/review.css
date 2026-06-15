@@ -1,0 +1,34 @@
+/* =========================
+   REVIEW CSS
+   Klant review pagina
+   ========================= */
+
+.review-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 780px);
+}
+
+.panel-desc {
+    color: #a3a3a3;
+    margin-bottom: 24px;
+}
+
+.rating-select-wrapper select {
+    color: #facc15;
+    font-weight: 800;
+}
+
+#reviewText {
+    min-height: 150px;
+}
+
+#customerReviewForm button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .review-layout {
+        grid-template-columns: 1fr;
+    }
+}

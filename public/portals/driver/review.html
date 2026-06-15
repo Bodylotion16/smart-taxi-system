@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/driver/driver-base.css">
+    <link rel="stylesheet" href="../../css/driver/driver-components.css">
+    <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+        <a href="review.html" class="active">Reviews</a>
+
+        <a href="../../../index.html" class="logout-link">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Reviews</h1>
+            <p>Bekijk beoordelingen die klanten na hun rit hebben gegeven.</p>
+        </div>
+
+        <div class="cards" style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <div class="card" style="background: #121212; padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #1a1a1a;">
+                <h3>Gemiddelde score</h3>
+                <p class="value" id="averageRating" style="font-size: 2rem; font-weight: bold; color: #f1c40f; margin: 10px 0;">0.0</p>
+            </div>
+
+            <div class="card" style="background: #121212; padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #1a1a1a;">
+                <h3>Aantal reviews</h3>
+                <p class="value" id="totalReviews" style="font-size: 2rem; font-weight: bold; color: #f1c40f; margin: 10px 0;">0</p>
+            </div>
+
+            <div class="card" style="background: #121212; padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #1a1a1a;">
+                <h3>Laatste score</h3>
+                <p class="value stars" id="lastRating" style="font-size: 2rem; font-weight: bold; color: #f1c40f; margin: 10px 0;">-</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Laatste reviews</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Klant</th>
+                        <th>Score</th>
+                        <th>Review</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewsTable">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #888; padding: 20px;">Reviews laden uit database...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/driver/review.js"></script>
+</body>
+</html>

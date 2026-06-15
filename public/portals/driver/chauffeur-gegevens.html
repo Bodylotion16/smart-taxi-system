@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Chauffeur gegevens - Smart Taxi</title>
+
+    <link rel="stylesheet" href="../../css/driver/driver-base.css">
+    <link rel="stylesheet" href="../../css/driver/driver-components.css">
+    <link rel="stylesheet" href="../../css/driver/driver-pages.css">
+    <link rel="stylesheet" href="../../css/driver/chauffeur-gegevens.css">
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>Driver Portal</h2>
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chauffeur-gegevens.html" class="active">Chauffeur gegevens</a>
+        <a href="actieve-rit.html">Actieve rit</a>
+        <a href="ritverzoeken.html">Ritverzoeken</a>
+        <a href="ritgeschiedenis.html">Ritgeschiedenis</a>
+        <a href="kaart.html">Kaart</a>
+        <a href="status-beheer.html">Status beheer</a>
+        <a href="review.html">Reviews</a>
+
+        <a href="../../../index.html" class="logout-link" onclick="return confirm('Weet je zeker dat je wilt uitloggen?')">Uitloggen</a>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h1>Chauffeur gegevens</h1>
+            <p>Bekijk jouw persoonlijke gegevens en voertuiggegevens.</p>
+        </div>
+
+        <div class="section">
+            <div class="driver-photo-box" id="driverInitials">--</div>
+
+            <h2 id="headerDriverName">Laden...</h2>
+            <p><strong>Status:</strong> <span class="status" id="driverStatusLabel">Laden...</span></p>
+            <p><strong>Rol:</strong> Chauffeur</p>
+        </div>
+
+        <div class="profile-grid">
+            <div class="profile-card">
+                <h3>Persoonlijke gegevens</h3>
+
+                <div class="profile-row">
+                    <span class="profile-label">Volledige naam</span>
+                    <span class="profile-value" id="profileFullName">-</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">E-mailadres</span>
+                    <span class="profile-value" id="profileEmail">-</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Telefoonnummer</span>
+                    <span class="profile-value" id="profilePhone">-</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Adres</span>
+                    <span class="profile-value" id="profileAddress">Niet opgegeven</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Rijbewijsnummer</span>
+                    <span class="profile-value" id="profileLicense">Beschikbaar via beheer</span>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <h3>Voertuiggegevens</h3>
+
+                <div class="profile-row">
+                    <span class="profile-label">Voertuig</span>
+                    <span class="profile-value" id="vehicleModel">-</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Kenteken</span>
+                    <span class="profile-value" id="vehiclePlate">-</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Kleur</span>
+                    <span class="profile-value" id="vehicleColor">Standaard</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Aantal zitplaatsen</span>
+                    <span class="profile-value" id="vehicleSeats">4</span>
+                </div>
+
+                <div class="profile-row">
+                    <span class="profile-label">Voertuigstatus</span>
+                    <span class="profile-value" id="vehicleStatus">Actief</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/js/driver/chauffeur-gegevens.js"></script>
+</body>
+</html>
